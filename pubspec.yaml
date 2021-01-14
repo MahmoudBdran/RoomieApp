@@ -32,6 +32,7 @@ dependencies:
   liquid_swipe: ^1.5.0
   flutter_range_slider: ^1.5.0
   group_radio_button: ^1.0.1
+  intl: ^0.16.1
 
 dev_dependencies:
   flutter_test:
