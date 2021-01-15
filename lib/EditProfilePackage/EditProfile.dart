@@ -50,7 +50,6 @@ class _EditProfileState extends State<EditProfile> {
       ),
     );
   }
-  @override
   Future<void> _selectDate(BuildContext context) async {
     final DateTime pickedDate = await showDatePicker(
         context: context,
@@ -117,8 +116,7 @@ class _EditProfileState extends State<EditProfile> {
         onPressed: (){
           if (_formKey.currentState.validate()) {
             // If the form is valid, display a Snackbar.
-            Scaffold.of(context)
-                .showSnackBar(SnackBar(content: Text('Data is in processing.')));
+
           }
         },
       ),
@@ -126,7 +124,6 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Widget build(BuildContext context) {
-    final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
