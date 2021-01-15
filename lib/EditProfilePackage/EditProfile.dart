@@ -13,18 +13,6 @@ class _EditProfileState extends State<EditProfile> {
   DateTime currentDate = DateTime.now();
   final f = new DateFormat('dd/MM/yyyy');
   String selectedGender="male";
-  @override
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime pickedDate = await showDatePicker(
-        context: context,
-        initialDate: currentDate,
-        firstDate: DateTime(2015),
-        lastDate: DateTime(2050));
-    if (pickedDate != null && pickedDate != currentDate)
-      setState(() {
-        currentDate = pickedDate;
-      });
-  }
   Widget GenderWidget(){
     List<DropdownMenuItem> genderList=[
       DropdownMenuItem(value: "male", child: Text("male"),),
@@ -62,6 +50,19 @@ class _EditProfileState extends State<EditProfile> {
       ),
     );
   }
+  @override
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime pickedDate = await showDatePicker(
+        context: context,
+        initialDate: currentDate,
+        firstDate: DateTime(2015),
+        lastDate: DateTime(2050));
+    if (pickedDate != null && pickedDate != currentDate)
+      setState(() {
+        currentDate = pickedDate;
+      });
+  }
+
   Widget EditProfileImage(){
     return Container(
       height: 40,
