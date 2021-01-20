@@ -19,7 +19,7 @@ class _SearchResultState extends State<SearchResult> {
   String selectedSmokingOption="default";
   String selectedGenderOption="default";
   String selectedPetsOption="default";
-  RangeValues _currentRangeValues = const RangeValues(0, 10000);
+  RangeValues _currentRangeValues = const RangeValues(0, 100000);
 
   Widget SpecifiedAddressField() {
     return TextField(
@@ -318,7 +318,7 @@ class _SearchResultState extends State<SearchResult> {
             child: RangeSlider(
               values: _currentRangeValues,
               min:0,
-              max: 10000,
+              max: 100000,
               divisions: 50,
               labels: RangeLabels(
                 _currentRangeValues.start.round().toString(),

@@ -8,7 +8,8 @@ class AddAd extends StatefulWidget {
 }
 
 class _AddAdState extends State<AddAd> {
-  final _formKey = GlobalKey<FormState>();
+  RangeValues _currentRangeValues = const RangeValues(0, 10000);
+final _formKey = GlobalKey<FormState>();
   String SelectedRegion="Alexandria";
   var photos_selected=9;
   String selectedTypeOption="flat";
@@ -323,6 +324,7 @@ class _AddAdState extends State<AddAd> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -365,6 +367,7 @@ class _AddAdState extends State<AddAd> {
                 key: _formKey,
                 child: Column(
                   children: [
+
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -527,6 +530,52 @@ class _AddAdState extends State<AddAd> {
                         ],
                       ),
                     ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Price",
+                            style: GoogleFonts.poppins(
+                              fontSize: 15,
+                              color: Colors.grey[500],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          TextFormField(
+                              keyboardType: TextInputType.number,
+                              validator: (val) {
+                                if (val.isEmpty) {
+                                  return 'please fill this field';
+                                } else if (val.contains('-') ||
+                                    val.contains(' ') ||
+                                    val.contains(',') ||
+                                    val.contains('.')) {
+                                  return 'enter valid price';
+                                } else if (int.parse(val)>100000) {
+                                  return 'enter price between 1 and 100,000';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              decoration: InputDecoration(
+                                  prefixIcon: Icon(
+                                    Icons.attach_money,
+                                    color: Colors.teal,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  fillColor: Color(0xfff3f3f4),
+                                  filled: true))
+                        ],
+                      ),
+                    ),
+
                     //ad product type
                     TypeWidget(),
                     PetsWidget(),
