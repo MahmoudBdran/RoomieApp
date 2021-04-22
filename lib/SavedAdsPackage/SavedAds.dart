@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:roommates/NewsFeedPackage/PostContainer.dart';
+import 'package:roommates/constant/data.dart';
 
 class SavedAds extends StatefulWidget {
   @override
@@ -14,8 +15,8 @@ class _SavedAdsState extends State<SavedAds> {
         title: Text("Saved Ads"),
       ),
       body: ListView.builder(
-        itemCount: 10,
-        itemBuilder: (context, index) => PostTemplate("images/user_avatar.png", "Israa Hamdy"),
+        itemCount: postData.length,
+        itemBuilder: (context, index) => PostTemplate(index),
       ),
     );
   }

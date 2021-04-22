@@ -2,6 +2,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:roommates/NewsFeedPackage/PostContainer.dart';
+import 'package:roommates/constant/data.dart';
 
 class UserProfile extends StatefulWidget {
   @override
@@ -214,7 +215,7 @@ class _UserProfileState extends State<UserProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView.builder(
-        itemCount: 13,
+        itemCount: postData.length+5,
         itemBuilder: (context, index) {
           if(index==0){
             return Cover_Profile_img();
@@ -227,7 +228,7 @@ class _UserProfileState extends State<UserProfile> {
           }else if(index ==4){
             return User_BasicInfo();
           }else {
-            return PostTemplate("images/user_avatar.png","Minna Tareq");
+            return PostTemplate(index-5);
           }
         },
       ),

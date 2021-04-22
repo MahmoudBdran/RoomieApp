@@ -73,7 +73,6 @@ class _EditProfileState extends State<EditProfile> {
       width: MediaQuery.of(context).size.width,
       child: FlatButton(
         child: Text("change Profile Image",style: GoogleFonts.actor(
-          fontSize: 18,
           color: Colors.white,
         ),),
         onPressed: (){},
@@ -91,7 +90,6 @@ class _EditProfileState extends State<EditProfile> {
       width: MediaQuery.of(context).size.width,
       child: FlatButton(
         child: Text("change cover Image",style: GoogleFonts.actor(
-          fontSize: 18,
           color: Colors.white,
         ),),
         onPressed: (){},

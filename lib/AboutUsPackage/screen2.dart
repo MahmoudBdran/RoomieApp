@@ -28,10 +28,9 @@ class _screen2State extends State<screen2> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0,160,0,0),
-                  child: Image.asset("images/earn-moneywhite.png",width: 120,height: 120,),
-                ),
+                Container(
+                    padding: const EdgeInsets.fromLTRB(0,160,0,0),
+                    child: Image.asset("images/earn-moneywhite.png",width: 120,height: 120,)),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0,20,0,0),
                   child: Text("Earn Money",style: GoogleFonts.poppins(
@@ -43,6 +42,7 @@ class _screen2State extends State<screen2> {
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(38,28,20,0),
+                  // padding: const EdgeInsets.fromLTRB(38,28,20,0),
                   child: Text("Lorem ipsum dolor sit amet,consectetur adipiscing elit,"
                       "seddo eiusmod tempor incididunt "
                       "utlabore et dolore magna aliqua."

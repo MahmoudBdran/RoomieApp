@@ -4,12 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:roommates/AreaSearchPackage/AreaSearchScreen.dart';
 import 'package:roommates/NewsFeedPackage/PostContainer.dart';
 import 'package:roommates/UserProfilePackage/UserProfile.dart';
-
+import 'package:roommates/constant/data.dart';
 class NewsFeed extends StatefulWidget {
   @override
   _NewsFeedState createState() => _NewsFeedState();
 }
-
 class _NewsFeedState extends State<NewsFeed> {
   Widget Search(){
     return GestureDetector(
@@ -80,17 +79,19 @@ class _NewsFeedState extends State<NewsFeed> {
     final _height=MediaQuery.of(context).size.height;
     final _width=MediaQuery.of(context).size.width;
     return ListView.builder(
-      itemCount: 10,
+      itemCount: postData.length+2,
       itemBuilder: (context, index) {
         if(index==0){
           return Header();
         }else if(index==1){
           return Search();
         }else{
-          return PostTemplate("images/user_avatar.png","Minna Tareq");
+          return PostTemplate(index-2);
+          // return PostTemplate("images/user_avatar.png","Minna Tareq");
         }
       },
 
     );
   }
+
 }

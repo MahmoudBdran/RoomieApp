@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 import 'package:roommates/NewsFeedPackage/PostContainer.dart';
+import 'package:roommates/constant/data.dart';
 
 class SearchResult extends StatefulWidget {
   // ignore: non_constant_identifier_names
@@ -358,9 +359,9 @@ class _SearchResultState extends State<SearchResult> {
         ),
       ),
       body: ListView.builder(
-        itemCount: 4,
+        itemCount: postData.length,
         itemBuilder: (context, index) {
-          return PostTemplate("images/user_avatar.png", "Aya hany");
+          return PostTemplate(index);
 
         },
       ),

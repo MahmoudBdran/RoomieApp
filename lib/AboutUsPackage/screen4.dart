@@ -63,7 +63,7 @@ class _screen4State extends State<screen4> {
                   ),
                   child: FlatButton(
                     child: Text("Get Started",style: GoogleFonts.poppins(
-                    color: Colors.white,
+                      color: Colors.white,
                       fontSize: 19,
                     ),),
                     onPressed: (){

@@ -1,6 +1,8 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:roommates/chat_package/chat_detail_page.dart';
+import 'package:roommates/constant/data.dart';
 
 class Messages extends StatefulWidget {
   @override
@@ -8,34 +10,45 @@ class Messages extends StatefulWidget {
 }
 
 class _MessagesState extends State<Messages> {
-  Widget MessageItem(){
-    return Container(
-      alignment: Alignment.topLeft,
+  Widget MessageItem(var index){
+    return InkWell(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (_) => ChatDetailPage()));
+      },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Column(
-          children: [
-            ListTile(
-              leading:CircleAvatar(child: Image.asset("images/user_avatar.png"),backgroundColor: Colors.transparent,radius: 30,),
-              title:Text('Alise Jones',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black87,
-                ),),
-              subtitle: Text('Can we talk for 5 minutes?', style:
-              TextStyle(
-                  color: Colors.black38, fontSize: 14
-              ),
-              ),
-              trailing: Text("5:30 AM",style:GoogleFonts.poppins(
-                  fontSize: 12,
-                  color: Colors.grey[500]
-              )),
+        padding: const EdgeInsets.only(top: 12,bottom: 8),
+        child: ListTile(
+          leading:Container(
+            width: 65,
+            height: 65,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                    image:
+                    NetworkImage(userMessages[index]['img']),
+                    fit: BoxFit.cover)),
+          ),
+          title:Text(
+            userMessages[index]['name'],
+            style: TextStyle(
+                fontSize: 17, fontWeight: FontWeight.w500),
+          ),
+          subtitle: Text(
+
+            userMessages[index]['message'] ,
+            style: TextStyle(
+                fontSize: 15, color: Colors.blueGrey.withOpacity(0.8)
             ),
-            Divider(
+            overflow: TextOverflow.ellipsis,
+          ),
+          trailing: Text(
+
+            userMessages[index]['created_at'],
+            style: TextStyle(
+                fontSize: 15, color: Colors.grey.withOpacity(0.8)
             ),
-          ],
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
       ),
     );
@@ -44,7 +57,7 @@ class _MessagesState extends State<Messages> {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: 10,
-      itemBuilder: (context, index) => MessageItem(),
+      itemBuilder: (context, index) => MessageItem(index),
     );
   }
 }

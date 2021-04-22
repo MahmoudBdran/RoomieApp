@@ -94,6 +94,8 @@ class _ContactUsState extends State<ContactUs> {
       ),
       body: Center(
         child: Container(
+            width: _width,
+          height: _height,
           margin: EdgeInsets.symmetric(horizontal: 20),
           alignment: Alignment.center,
             child: Column(
@@ -118,7 +120,6 @@ class _ContactUsState extends State<ContactUs> {
                         color: Colors.teal,
                         onPressed: () {  },
                         child: Text("roommates.reports@gmail.com",style:TextStyle(
-                          fontSize: 20,
                           color: Colors.white,
 
                         )),

@@ -40,7 +40,9 @@ class _screen1State extends State<screen1> {
     return Scaffold(
       backgroundColor: Colors.white,
       body:SingleChildScrollView(
-        child:Center(
+        child:Container(
+          height: _height,
+          width: _width,
           child: Stack(
             children: [
               Container(
@@ -51,18 +53,16 @@ class _screen1State extends State<screen1> {
                 ),
                 alignment: Alignment.center,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-
                   children: <Widget>[
                     Image.asset("images/woman.png",fit: BoxFit.cover,height: 300,width: _width,),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(0,40,0,0),
+                      padding: const EdgeInsets.fromLTRB(0,10,0,0),
                       child: Icon(Icons.location_on,size: 90,color: Colors.orange[800],),
                     ),
                     _title(),
-                    SizedBox(
-                      height: 50,
-                    ),
+                    // SizedBox(
+                    //   height: 50,
+                    // ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: Container(

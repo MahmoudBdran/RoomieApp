@@ -1,8 +1,11 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:roommates/EditProfilePackage/EditProfile.dart';
 import 'package:roommates/FriendRequestsPackage/FriendRequest.dart';
+import 'package:roommates/FriendsPackage/Friends.dart';
 import 'package:roommates/NewsFeedPackage/PostContainer.dart';
+import 'package:roommates/constant/data.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -91,7 +94,11 @@ class _ProfileState extends State<Profile> {
             color: Colors.white,
           ),),
           color: Colors.teal[400],
-          onPressed: (){},
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) => EditProfile(),
+            ));
+          },
         ),
       ),
     );
@@ -236,15 +243,21 @@ class _ProfileState extends State<Profile> {
       width: MediaQuery.of(context).size.width,
       child: Row(
         children: [
-          Chip(
-            backgroundColor: Colors.grey[200],
-            elevation: 3,
-            label: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text("Friends",style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 15
-              ),),
+          GestureDetector(
+            onTap: (){
+
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Friends(),));
+            },
+            child: Chip(
+              backgroundColor: Colors.grey[200],
+              elevation: 3,
+              label: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Friends",style: TextStyle(
+                    color: Colors.black87,
+                    fontSize: 15
+                ),),
+              ),
             ),
           ),
           SizedBox(width: 20,),
@@ -270,7 +283,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 13,
+      itemCount: postData.length+6,
       itemBuilder: (context, index) {
         if(index==0){
           return Cover_Profile_img();
@@ -285,7 +298,7 @@ class _ProfileState extends State<Profile> {
         }else if(index==5){
           return FriendshipChips();
         }else {
-          return PostTemplate("images/profile_image.png","Mahmoud Bdran");
+          return PostTemplate(index-6);
         }
       },
     );

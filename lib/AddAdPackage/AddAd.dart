@@ -52,26 +52,31 @@ final _formKey = GlobalKey<FormState>();
     padding: EdgeInsets.all(18),
     child: Row(
       children: [
-        Container(
-          child: Text("Address :",style: GoogleFonts.poppins(
-            fontSize: 15,
-            color: Colors.grey[500],
-          ),),
-        ),Spacer(flex:1),
-        Container(
-          width: 320,
-          margin: EdgeInsets.fromLTRB(5, 0, 0,0),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(5)
+        Expanded(
+          flex: 2,
+          child: Container(
+            child: Text("Address :",style: GoogleFonts.poppins(
+              fontSize: 15,
+              color: Colors.grey[500],
+            ),),
           ),
-          child: DropdownButton(
-            value: SelectedRegion,
-            items: regionList, onChanged: (value) { setState(() {
-            SelectedRegion=value;
-          });},
+        ),
+        Expanded(
+          flex: 5,
+          child: Container(
+            margin: EdgeInsets.fromLTRB(15, 0, 0,0),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(5)
+            ),
+            child: DropdownButton(
+              value: SelectedRegion,
+              items: regionList, onChanged: (value) { setState(() {
+              SelectedRegion=value;
+            });},
 
+            ),
           ),
         ),
 
@@ -90,27 +95,31 @@ final _formKey = GlobalKey<FormState>();
       padding: EdgeInsets.all(18),
       child: Row(
         children: [
-          Container(
-            child: Text("Type :",style: GoogleFonts.poppins(
-              fontSize: 15,
-              color: Colors.grey[500],
-            ),),
-          ),
-          Spacer(flex: 1,),
-          Container(
-            width: 320,
-            margin: EdgeInsets.fromLTRB(15, 0, 0,0),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(5)
+          Expanded(
+            flex: 2,
+            child: Container(
+              child: Text("Type :",style: GoogleFonts.poppins(
+                fontSize: 15,
+                color: Colors.grey[500],
+              ),),
             ),
-            child: DropdownButton(
-              value: selectedTypeOption,
-              items: Typeoptions, onChanged: (value) { setState(() {
-              selectedTypeOption=value;
-            });},
+          ),
+          Expanded(
+            flex: 5,
+            child: Container(
+              margin: EdgeInsets.fromLTRB(15, 0, 0,0),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(5)
+              ),
+              child: DropdownButton(
+                value: selectedTypeOption,
+                items: Typeoptions, onChanged: (value) { setState(() {
+                selectedTypeOption=value;
+              });},
 
+              ),
             ),
           ),
         ],
@@ -127,27 +136,32 @@ final _formKey = GlobalKey<FormState>();
       padding: EdgeInsets.all(18),
       child: Row(
         children: [
-          Container(
-            child: Text("Pets :",style: GoogleFonts.poppins(
-              fontSize: 16,
-              color: Colors.grey[500],
-            ),),
-          ),
-          Spacer(flex: 1,),
-          Container(
-            width: 320,
-            margin: EdgeInsets.fromLTRB(15, 0, 0,0),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(5)
+          Expanded(
+            flex: 2,
+            child: Container(
+              child: Text("Pets :",style: GoogleFonts.poppins(
+                fontSize: 16,
+                color: Colors.grey[500],
+              ),),
             ),
-            child: DropdownButton(
-              value: selectedPetsOption,
-              items: petsoptions, onChanged: (value) { setState(() {
-              selectedPetsOption=value;
-            });},
+          ),
 
+          Expanded(
+            flex: 5,
+            child: Container(
+              margin: EdgeInsets.fromLTRB(15, 0, 0,0),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(5)
+              ),
+              child: DropdownButton(
+                value: selectedPetsOption,
+                items: petsoptions, onChanged: (value) { setState(() {
+                selectedPetsOption=value;
+              });},
+
+              ),
             ),
           ),
         ],
@@ -164,28 +178,32 @@ final _formKey = GlobalKey<FormState>();
       padding: EdgeInsets.all(18),
       child: Row(
         children: [
-          Container(
-            child: Text("Guests :",style: GoogleFonts.poppins(
-              fontSize: 15,
-              color: Colors.grey[500],
-            ),),
-          ),
-          Spacer(flex:1),
-          Container(
-            width: 320,
-            margin: EdgeInsets.fromLTRB(15, 0, 0,0),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(10)
+          Expanded(
+            flex: 2,
+            child: Container(
+              child: Text("Guests :",style: GoogleFonts.poppins(
+                fontSize: 15,
+                color: Colors.grey[500],
+              ),),
             ),
-            child: DropdownButton(
+          ),
+          Expanded(
+            flex: 5,
+            child: Container(
+              margin: EdgeInsets.fromLTRB(15, 0, 0,0),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(10)
+              ),
+              child: DropdownButton(
 
-              value: selectedGuestsOption,
-              items: Guestsoptions, onChanged: (value) { setState(() {
-              selectedGuestsOption=value;
-            });},
+                value: selectedGuestsOption,
+                items: Guestsoptions, onChanged: (value) { setState(() {
+                selectedGuestsOption=value;
+              });},
 
+              ),
             ),
           ),
         ],
@@ -241,26 +259,31 @@ final _formKey = GlobalKey<FormState>();
       padding: EdgeInsets.all(18),
       child: Row(
         children: [
-          Container(
-            child: Text("Smoking :",style: GoogleFonts.poppins(
-              fontSize: 15,
-              color: Colors.grey[500],
-            ),),
-          ),Spacer(flex:1),
-          Container(
-            width: 320,
-            margin: EdgeInsets.fromLTRB(15, 0, 0,0),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(10)
+          Expanded(
+            flex: 2,
+            child: Container(
+              child: Text("Smoking :",style: GoogleFonts.poppins(
+                fontSize: 15,
+                color: Colors.grey[500],
+              ),),
             ),
-            child: DropdownButton(
-              value: selectedSmokingOption,
-              items: smokingoptions, onChanged: (value) { setState(() {
-              selectedSmokingOption=value;
-            });},
+          ),
+          Expanded(
+            flex: 5,
+            child: Container(
+              margin: EdgeInsets.fromLTRB(15, 0, 0,0),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(10)
+              ),
+              child: DropdownButton(
+                value: selectedSmokingOption,
+                items: smokingoptions, onChanged: (value) { setState(() {
+                selectedSmokingOption=value;
+              });},
 
+              ),
             ),
           ),
         ],
@@ -277,25 +300,29 @@ final _formKey = GlobalKey<FormState>();
       padding: EdgeInsets.all(18),
       child: Row(
         children: [
-          Container(
-            child: Text("Gender :",style: GoogleFonts.poppins(
-              fontSize: 15,
-              color: Colors.grey[500],
-            ),),
-          ),Spacer(flex: 1,),
-          Container(
-            width: 320,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(10)
+          Expanded(
+            flex: 2,
+            child: Container(
+              child: Text("Gender :",style: GoogleFonts.poppins(
+                fontSize: 15,
+                color: Colors.grey[500],
+              ),),
             ),
-            child: DropdownButton(
-              value: selectedGenderOption,
-              items: genderoptions, onChanged: (value) { setState(() {
-              selectedGenderOption=value;
-            });},
+          ),Expanded(
+            flex: 5,
+            child: Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(10)
+              ),
+              child: DropdownButton(
+                value: selectedGenderOption,
+                items: genderoptions, onChanged: (value) { setState(() {
+                selectedGenderOption=value;
+              });},
 
+              ),
             ),
           ),
         ],
