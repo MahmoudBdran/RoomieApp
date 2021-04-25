@@ -1,52 +1,52 @@
 // users story list
-List userStories = [
-  {
-    "id" : 1,
-    "name" : "Michael",
-    "img" : "https://images.unsplash.com/photo-1571741140674-8949ca7df2a7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
-    "online" : true,
-    "story" : true,
-  },
-  {
-    "id" : 2,
-    "name" : "Kirill",
-    "img" : "https://images.unsplash.com/photo-1536763843054-126cc2d9d3b0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-    "online" : false,
-    "story" : false,
-  },
-  {
-    "id" : 3,
-    "name" : "Lesly",
-    "img" : "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80",
-    "online" : true,
-    "story" : false,
-    
-  },
-  {
-    "id" : 4,
-    "name" : "Valerie",
-    "img" : "https://images.unsplash.com/photo-1523264939339-c89f9dadde2e?ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80",
-    "online" : true,
-    "story" : true,
-    
-  },
-  {
-    "id" : 5,
-    "name" : "Frank",
-    "img" : "https://images.unsplash.com/photo-1458696352784-ffe1f47c2edc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1951&q=80",
-    "online" : false,
-    "story" : false,
-   
-  },
-  {
-    "id" : 6,
-    "name" : "Joanna",
-    "img" : "https://images.unsplash.com/photo-1519531591569-b84b8174b508?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
-    "online" : false,
-    "story" : true,
-    
-  }
-];
+// List userStories = [
+//   {
+//     "id" : 1,
+//     "name" : "Michael",
+//     "img" : "https://images.unsplash.com/photo-1571741140674-8949ca7df2a7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
+//     "online" : true,
+//     "story" : true,
+//   },
+//   {
+//     "id" : 2,
+//     "name" : "Kirill",
+//     "img" : "https://images.unsplash.com/photo-1536763843054-126cc2d9d3b0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+//     "online" : false,
+//     "story" : false,
+//   },
+//   {
+//     "id" : 3,
+//     "name" : "Lesly",
+//     "img" : "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80",
+//     "online" : true,
+//     "story" : false,
+//
+//   },
+//   {
+//     "id" : 4,
+//     "name" : "Valerie",
+//     "img" : "https://images.unsplash.com/photo-1523264939339-c89f9dadde2e?ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80",
+//     "online" : true,
+//     "story" : true,
+//
+//   },
+//   {
+//     "id" : 5,
+//     "name" : "Frank",
+//     "img" : "https://images.unsplash.com/photo-1458696352784-ffe1f47c2edc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1951&q=80",
+//     "online" : false,
+//     "story" : false,
+//
+//   },
+//   {
+//     "id" : 6,
+//     "name" : "Joanna",
+//     "img" : "https://images.unsplash.com/photo-1519531591569-b84b8174b508?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
+//     "online" : false,
+//     "story" : true,
+//
+//   }
+// ];
 
 // users message list
 List userMessages = [
@@ -72,7 +72,7 @@ List userMessages = [
     "id" : 3,
     "name" : "Tyler Nix",
     "img" : "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80",
-    "online" : false,
+    "online" : true,
     "story" : true,
     "message": "Glad to know you in person!",
     "created_at" : "3:30 pm"

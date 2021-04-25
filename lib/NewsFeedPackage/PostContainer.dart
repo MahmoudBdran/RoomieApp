@@ -205,11 +205,27 @@ class _PostTemplateState extends State<PostTemplate> {
                       ),
                     ),
                   ),
-                  Text(
-                    postData[index]['phone'],
-                    style: TextStyle(
-                      color: Colors.lightBlueAccent,
-                      fontSize: 20,
+                      InkWell(
+                        onLongPress: (){
+                          setState(() {
+                            Clipboard.setData(new ClipboardData(text: postData[index]['phone']))
+                                .then((_) => print("copied"));
+                            Fluttertoast.showToast(
+                                msg: "phone number in clipboard",
+                                toastLength: Toast.LENGTH_LONG,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.grey,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
+                          });
+                        },
+                    child: Text(
+                      postData[index]['phone'],
+                      style: TextStyle(
+                        color: Colors.lightBlueAccent,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                   Row(
@@ -220,7 +236,7 @@ class _PostTemplateState extends State<PostTemplate> {
                           icon: Icon(Icons.copy_outlined),
                           onPressed: () {
                             setState(() {
-                              Clipboard.setData(new ClipboardData(text: phone))
+                              Clipboard.setData(new ClipboardData(text: postData[index]['phone']))
                                   .then((_) => print("copied"));
                               Fluttertoast.showToast(
                                   msg: "phone number in clipboard",

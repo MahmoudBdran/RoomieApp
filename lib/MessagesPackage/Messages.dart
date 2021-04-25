@@ -18,7 +18,33 @@ class _MessagesState extends State<Messages> {
       child: Padding(
         padding: const EdgeInsets.only(top: 12,bottom: 8),
         child: ListTile(
-          leading:Container(
+          leading:userMessages[index]['online']?Stack(
+            children: [
+              Container(
+                width: 65,
+                height: 65,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image:
+                        NetworkImage(userMessages[index]['img']),
+                        fit: BoxFit.cover)),
+              ),
+              Positioned(
+                  bottom: 5,
+                  right: 5,
+                  child: Container(
+                    width: 12,
+                    height: 12,
+                    decoration: BoxDecoration(
+                      color: Colors.lightGreenAccent[200],
+                      shape: BoxShape.circle,
+
+                    ),
+                  )
+              )
+            ],
+          ):Container(
             width: 65,
             height: 65,
             decoration: BoxDecoration(

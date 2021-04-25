@@ -26,6 +26,11 @@ dependencies:
   google_fonts: ^0.3.5
   carousel_pro: ^1.0.0
   line_icons:
+  google_maps_flutter:
+  geolocator:
+  geocoder:
+  dio:
+  flutter_polyline_points:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
@@ -34,6 +39,7 @@ dependencies:
   flutter_range_slider: ^1.5.0
   group_radio_button: ^1.0.1
   photo_view:
+  shared_preferences: ^0.5.12+4
   fluttertoast:
   intl: ^0.16.1
   toast: ^0.1.5
