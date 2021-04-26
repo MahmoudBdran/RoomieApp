@@ -4,6 +4,7 @@ import 'package:roommates/APIServices/login_model.dart';
 import 'package:roommates/APIServices/login_service.dart';
 import 'package:roommates/APIServices/shared_service.dart';
 import 'package:roommates/HomePackage/HomePage.dart';
+import 'package:roommates/theme/colors.dart';
 import 'signup.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -61,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Text(
           "Log in",
           style: GoogleFonts.poppins(
-            color: Colors.white,
+            color: white,
             fontSize: 19,
           ),
         ),

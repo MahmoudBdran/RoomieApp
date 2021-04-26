@@ -265,14 +265,14 @@ List postData=[
     "gender" : "female",
     "time":"24:22:28 Thu 8 Apr",
     "images_length":6,
-    "images": {
-      "1": "https://reqres.in/img/faces/7-image.jpg",
-      "2": "https://reqres.in/img/faces/7-image.jpg",
-      "3": "https://reqres.in/img/faces/7-image.jpg",
-      "4": "https://reqres.in/img/faces/7-image.jpg",
-      "5": "https://reqres.in/img/faces/7-image.jpg",
-      "6": "https://reqres.in/img/faces/7-image.jpg"
-    },
+    "images":[
+      "https://reqres.in/img/faces/1-image.jpg",
+      "https://reqres.in/img/faces/2-image.jpg",
+      "https://reqres.in/img/faces/3-image.jpg",
+      "https://reqres.in/img/faces/4-image.jpg",
+      "https://reqres.in/img/faces/5-image.jpg",
+      "https://reqres.in/img/faces/6-image.jpg",
+    ],
     "description": """Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed do eiusmod
     tempor incididunt ut labore et dolore magna
     aliqua.""",
@@ -298,14 +298,14 @@ List postData=[
     "gender" : "default",
     "time":"24:22:28 Thu 8 Apr",
     "images_length":6,
-    "images": {
-      "1": "https://reqres.in/img/faces/7-image.jpg",
-      "2": "https://reqres.in/img/faces/7-image.jpg",
-      "3": "https://reqres.in/img/faces/7-image.jpg",
-      "4": "https://reqres.in/img/faces/7-image.jpg",
-      "5": "https://reqres.in/img/faces/7-image.jpg",
-      "6": "https://reqres.in/img/faces/7-image.jpg"
-    },
+    "images":[
+      "https://reqres.in/img/faces/1-image.jpg",
+      "https://reqres.in/img/faces/2-image.jpg",
+      "https://reqres.in/img/faces/3-image.jpg",
+      "https://reqres.in/img/faces/4-image.jpg",
+      "https://reqres.in/img/faces/5-image.jpg",
+      "https://reqres.in/img/faces/6-image.jpg",
+    ],
     "description": """Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed do eiusmod
     tempor incididunt ut labore et dolore magna
     aliqua.""",
@@ -316,7 +316,8 @@ List postData=[
       "1":"vsrwbuvEXcewZCxZJtAcuOnNrux2",
       "2":"8MOdr7oHhHgmK0iYWxmFKMEERi63",
     },
-  },{
+  },
+  {
     "post_id": 3,
     "email": "ahmed.hassan@reqres.in",
     "username": "ahmed hassan",
@@ -330,14 +331,14 @@ List postData=[
     "gender" : "default",
     "time":"24:22:28 Thu 8 Apr",
     "images_length":6,
-    "images": {
-      "1": "https://reqres.in/img/faces/7-image.jpg",
-      "2": "https://reqres.in/img/faces/7-image.jpg",
-      "3": "https://reqres.in/img/faces/7-image.jpg",
-      "4": "https://reqres.in/img/faces/7-image.jpg",
-      "5": "https://reqres.in/img/faces/7-image.jpg",
-      "6": "https://reqres.in/img/faces/7-image.jpg"
-    },
+    "images":[
+      "https://reqres.in/img/faces/1-image.jpg",
+      "https://reqres.in/img/faces/2-image.jpg",
+      "https://reqres.in/img/faces/3-image.jpg",
+      "https://reqres.in/img/faces/4-image.jpg",
+      "https://reqres.in/img/faces/5-image.jpg",
+      "https://reqres.in/img/faces/6-image.jpg",
+    ],
     "description": """Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed do eiusmod
     tempor incididunt ut labore et dolore magna
     aliqua.""",

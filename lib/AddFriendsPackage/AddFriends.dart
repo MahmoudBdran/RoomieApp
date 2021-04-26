@@ -51,7 +51,7 @@ Widget FriendRequestTemplate(){
       trailing: RaisedButton(
         onPressed: (){},
         color: Colors.teal[500],
-        child: Text("Add friend",style: TextStyle(
+        child: Text("Follow",style: TextStyle(
           color: Colors.white
         ),),
       ),
@@ -70,7 +70,7 @@ Widget FriendRequestTemplate(){
             children: [
               Positioned(bottom: 0,top: 0,left: 2,child: IconButton(onPressed: (){Navigator.pop(context);},icon: Icon(EvaIcons.arrowIosBack),color: Colors.white,)),
               Container(alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width,child: Text("Add friends"))
+                  width: MediaQuery.of(context).size.width,child: Text("Follow"))
             ],
           ),
         ),

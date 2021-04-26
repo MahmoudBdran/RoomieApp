@@ -1,12 +1,13 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:roommates/constant/users.dart';
 
-class Friends extends StatefulWidget {
+class Followers extends StatefulWidget {
   @override
-  _FriendsState createState() => _FriendsState();
+  _FollowersState createState() => _FollowersState();
 }
 
-class _FriendsState extends State<Friends> {
+class _FollowersState extends State<Followers> {
   Widget Search(){
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
@@ -17,7 +18,7 @@ class _FriendsState extends State<Friends> {
         child: TextField(
           decoration: InputDecoration(
               prefixIcon:Icon(EvaIcons.searchOutline,color: Colors.grey,size: 28,),
-              hintText: "Search in friends...",
+              hintText: "Search in Followers...",
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide.none
@@ -28,7 +29,7 @@ class _FriendsState extends State<Friends> {
     );
   }
 
-  Widget FriendRequestTemplate(){
+  Widget FollowersTemplate(index){
     return Container(
       margin: EdgeInsets.all(10),
       padding: EdgeInsets.fromLTRB(0, 0, 0, 4),
@@ -42,10 +43,18 @@ class _FriendsState extends State<Friends> {
       ),
       width: MediaQuery.of(context).size.width,
       child: ListTile(
-        leading: CircleAvatar(radius:35,backgroundColor: Colors.transparent,child: Image.asset("images/user_avatar.png"),),
+        leading: Container(
+          width: 70,
+          height: 70,
+          decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                  image: NetworkImage(users[index]['avatar']),
+                  fit: BoxFit.cover)),
+        ),
         title: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text("Asmaa omar",style: TextStyle(
+          child: Text(users[index]['username'],style: TextStyle(
               fontSize: 20
           ),),
         ),
@@ -65,18 +74,18 @@ class _FriendsState extends State<Friends> {
             children: [
               Positioned(bottom: 0,top: 0,left: 2,child: IconButton(onPressed: (){Navigator.pop(context);},icon: Icon(EvaIcons.arrowIosBack),color: Colors.white,)),
               Container(alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width,child: Text("Friends"))
+                  width: MediaQuery.of(context).size.width,child: Text("Followers"))
             ],
           ),
         ),
       ),
       body: ListView.builder(
-        itemCount: 20,
+        itemCount: users.length+1,
         itemBuilder: (context, index) {
           if(index==0){
             return Search();
           }else{
-            return FriendRequestTemplate();
+            return FollowersTemplate(index-1);
           }
         },
       ),

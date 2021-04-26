@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:roommates/PostDetailsPackage/Image_Carousel.dart';
-import 'package:roommates/PostDetailsPackage/post_details.dart';
 import 'package:roommates/PostDetailsPackage/post_photos_only.dart';
 import 'package:roommates/UserProfilePackage/UserProfile.dart';
 import 'package:roommates/constant/data.dart';
@@ -38,7 +37,12 @@ class _PostTemplateState extends State<PostTemplate> {
     'images/cover_image.jpg'
   ];
   int get index => widget.index;
-
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(postData[0]['images']);
+  }
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
@@ -117,12 +121,12 @@ class _PostTemplateState extends State<PostTemplate> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => PostPhotosOnly(imagesList),
+                        builder: (context) => PostPhotosOnly(postData[index]['images']),
                       ));
                 },
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                  child: Image_Carousel(imagesList),
+                  child: Image_Carousel(postData[index]['images']),
                 ),
               ),
               Row(

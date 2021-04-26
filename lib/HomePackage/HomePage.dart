@@ -5,7 +5,8 @@ import 'package:roommates/APIServices/shared_service.dart';
 import 'package:roommates/AddAdPackage/AddAd.dart';
 import 'package:roommates/AddFriendsPackage/AddFriends.dart';
 import 'package:roommates/ContactUsPackage/ContactUs.dart';
-import 'package:roommates/FriendRequestsPackage/FriendRequest.dart';
+import 'package:roommates/FollowersPackage/Followers.dart';
+import 'package:roommates/FollowingPackage/Following.dart';
 import 'package:roommates/MessagesPackage/Messages.dart';
 import 'package:roommates/NewsFeedPackage/NewsFeed.dart';
 import 'package:roommates/NotificationsPackage/Notifications.dart';
@@ -85,11 +86,24 @@ class _HomePageState extends State<HomePage> {
                 ListTile(
                   onTap: (){
                     Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => FriendRequest(),
+                      builder: (context) => Following(),
                     ));
                   },
                   leading: Icon(EvaIcons.personOutline,size: 25,color: Colors.teal[800]),
-                  title: Text("Friend requests",style: TextStyle(
+                  title: Text("Following",style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.normal
+                  ),),
+                ),
+                ListTile(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => Followers(),
+                    ));
+                  },
+                  leading: Icon(EvaIcons.personOutline,size: 25,color: Colors.teal[800]),
+                  title: Text("Followers",style: TextStyle(
                       fontSize: 18,
                       color: Colors.black54,
                       fontWeight: FontWeight.normal

@@ -2,8 +2,8 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:roommates/EditProfilePackage/EditProfile.dart';
-import 'package:roommates/FriendRequestsPackage/FriendRequest.dart';
-import 'package:roommates/FriendsPackage/Friends.dart';
+import 'package:roommates/FollowingPackage/Following.dart';
+import 'package:roommates/FollowersPackage/Followers.dart';
 import 'package:roommates/NewsFeedPackage/PostContainer.dart';
 import 'package:roommates/constant/data.dart';
 
@@ -44,7 +44,7 @@ class _ProfileState extends State<Profile> {
       color: Colors.black38
     ),));
   }
-  Widget Addfriend_more_btns(){
+  Widget Following_more_btns(){
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 15),
       child: Row(
@@ -54,7 +54,7 @@ class _ProfileState extends State<Profile> {
             height: 40,
             width: MediaQuery.of(context).size.width-130,
             child: FlatButton(
-              child: Text("Add friend",style: GoogleFonts.actor(
+              child: Text("Following",style: GoogleFonts.actor(
                 fontSize: 18,
                 color: Colors.white,
               ),),
@@ -246,14 +246,14 @@ class _ProfileState extends State<Profile> {
           GestureDetector(
             onTap: (){
 
-              Navigator.push(context, MaterialPageRoute(builder: (context) => Friends(),));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Followers(),));
             },
             child: Chip(
               backgroundColor: Colors.grey[200],
               elevation: 3,
               label: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("Friends",style: TextStyle(
+                child: Text("Followers",style: TextStyle(
                     color: Colors.black87,
                     fontSize: 15
                 ),),
@@ -262,14 +262,14 @@ class _ProfileState extends State<Profile> {
           ),
           SizedBox(width: 20,),
           GestureDetector(onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => FriendRequest(),));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => Following(),));
           },
             child: Chip(
               backgroundColor: Colors.grey[200],
               elevation: 3,
               label: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("Friend Requests",style: TextStyle(
+                child: Text("Following",style: TextStyle(
                     color: Colors.black87,
                     fontSize: 15
                 ),),

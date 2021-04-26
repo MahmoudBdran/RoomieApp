@@ -1,15 +1,25 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:roommates/Maps_package/adAdd_Map_screen.dart';
 
 class AddAd extends StatefulWidget {
+  String subAddressGeneratedFromMap;
+  double subAddressLatitude;
+  double subAddressLongtude;
+
+  AddAd(
+      {this.subAddressGeneratedFromMap,
+      this.subAddressLatitude,
+      this.subAddressLongtude});
+
   @override
   _AddAdState createState() => _AddAdState();
 }
 
 class _AddAdState extends State<AddAd> {
   RangeValues _currentRangeValues = const RangeValues(0, 10000);
-final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   String SelectedRegion="Alexandria";
   var photos_selected=9;
   String selectedTypeOption="flat";
@@ -476,6 +486,7 @@ final _formKey = GlobalKey<FormState>();
                     RegionWidget(),
                     //specific address in selected region
                     Container(
+                      width:MediaQuery.of(context).size.width,
                       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -490,25 +501,74 @@ final _formKey = GlobalKey<FormState>();
                           SizedBox(
                             height: 10,
                           ),
-                          TextFormField(
-                              validator: (val) {
-                                if (val.isEmpty) {
-                                  return 'please fill this field';
-                                } else {
-                                  return null;
-                                }
-                              },
-                              decoration: InputDecoration(
-                                  prefixIcon: Icon(
-                                    Icons.location_on,
-                                    color: Colors.teal,
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  fillColor: Color(0xfff3f3f4),
-                                  filled: true))
+
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 10,
+                                child: Stack(
+                                  children: [
+                                    TextFormField(
+                                      enabled: false
+                                        ,validator: (val) {
+                                          if (val.isEmpty) {
+                                            return 'please fill this field';
+                                          } else {
+                                            return null;
+                                          }
+                                        },
+                                        decoration: InputDecoration(
+                                            // prefixIcon: Icon(
+                                            //   Icons.location_on,
+                                            //   color: Colors.teal,
+                                            // ),
+                                            border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(10),
+                                              borderSide: BorderSide.none,
+                                            ),
+                                            fillColor: Color(0xfff3f3f4),
+                                            filled: true)
+                                    ),
+                                    Text(widget.subAddressGeneratedFromMap!=null?widget.subAddressGeneratedFromMap:""),
+                                  ],
+                                )
+                                // TextFormField(
+                                //     validator: (val) {
+                                //       if (val.isEmpty) {
+                                //         return 'please fill this field';
+                                //       } else {
+                                //         return null;
+                                //       }
+                                //     },
+                                //     decoration: InputDecoration(
+                                //         prefixIcon: Icon(
+                                //           Icons.location_on,
+                                //           color: Colors.teal,
+                                //         ),
+                                //         border: OutlineInputBorder(
+                                //           borderRadius: BorderRadius.circular(10),
+                                //           borderSide: BorderSide.none,
+                                //         ),
+                                //         fillColor: Color(0xfff3f3f4),
+                                //         filled: true)
+                                // ),
+                              ),
+                              Expanded(flex:1,child: SizedBox()),
+                              Expanded(
+                                  flex: 2,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.teal,
+                                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                    ),
+                                    child: IconButton(
+                                        icon: Icon(Icons.pin_drop_outlined,color: Colors.white,), onPressed: (){
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => AdAddMapScreen(),));
+                                    }),
+                                  ))
+                            ],
+                          ),
+
                         ],
                       ),
                     ),
