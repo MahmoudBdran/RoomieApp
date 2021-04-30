@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:roommates/theme/colors.dart';
 
 class ContactUs extends StatefulWidget {
   @override
@@ -67,6 +68,7 @@ class _ContactUsState extends State<ContactUs> {
     final _height=MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: applicationColor,
         automaticallyImplyLeading: false,
         title: Container(
           height: 40,
@@ -114,10 +116,10 @@ class _ContactUsState extends State<ContactUs> {
                   child:Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.contact_mail,color: Colors.teal,size: 45,),
+                      Icon(Icons.contact_mail,color:applicationColor,size: 45,),
                       SizedBox(width: 20,),
                       RaisedButton(
-                        color: Colors.teal,
+                        color: applicationColor,
                         onPressed: () {  },
                         child: Text("roommates.reports@gmail.com",style:TextStyle(
                           color: Colors.white,

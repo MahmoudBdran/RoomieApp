@@ -14,6 +14,7 @@ import 'package:roommates/ProfilePackage/Profile.dart';
 import 'package:roommates/SavedAdsPackage/SavedAds.dart';
 import 'package:roommates/EditProfilePackage/EditProfile.dart';
 import 'package:roommates/src/loginPage.dart';
+import 'package:roommates/theme/colors.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -186,7 +187,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         appBar: AppBar(
-          backgroundColor: Colors.teal[500],
+          backgroundColor: applicationColor,
           bottom: TabBar(
             labelColor: Colors.white,
             unselectedLabelColor: Colors.teal[200],
@@ -212,7 +213,7 @@ class _HomePageState extends State<HomePage> {
 
           },
           child:Icon(Icons.add,color: Colors.white,)
-          ,backgroundColor: Colors.teal,
+          ,backgroundColor: applicationColor,
 
         ),
 

@@ -17,4 +17,16 @@ class SharedService{
   static Future<void>logout()async{
     await setLoginDetails(null);
   }
+  static Future<void> setMapDetails(String address ,double latitude,double longtude)async{
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString("map_address", address!=null?address:null);
+    prefs.setDouble("map_address_latitude", latitude!=0?latitude:0);
+    prefs.setDouble("map_address_longtude", longtude!=0?longtude:0);
+  }
+  static Future<List> getMapDetails()async{
+    final prefs = await SharedPreferences.getInstance();
+    List addressData=[prefs.getString("map_address"),prefs.getDouble("map_address_latitude"),prefs.getDouble("map_address_longtude")];
+    return addressData;
+  }
+
 }

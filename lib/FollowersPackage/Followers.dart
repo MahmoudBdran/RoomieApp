@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:roommates/constant/users.dart';
+import 'package:roommates/theme/colors.dart';
 
 class Followers extends StatefulWidget {
   @override
@@ -66,6 +67,7 @@ class _FollowersState extends State<Followers> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: applicationColor,
         automaticallyImplyLeading: false,
         title: Container(
           height: 40,

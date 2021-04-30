@@ -1,5 +1,6 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:roommates/theme/colors.dart';
 
 class AddFriends extends StatefulWidget {
   @override
@@ -50,7 +51,7 @@ Widget FriendRequestTemplate(){
       ),
       trailing: RaisedButton(
         onPressed: (){},
-        color: Colors.teal[500],
+        color: applicationColor,
         child: Text("Follow",style: TextStyle(
           color: Colors.white
         ),),
@@ -62,6 +63,7 @@ Widget FriendRequestTemplate(){
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: applicationColor,
         automaticallyImplyLeading: false,
         title: Container(
           height: 40,

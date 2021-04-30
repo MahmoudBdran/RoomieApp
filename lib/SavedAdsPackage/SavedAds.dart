@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:roommates/NewsFeedPackage/PostContainer.dart';
 import 'package:roommates/constant/data.dart';
+import 'package:roommates/theme/colors.dart';
 
 class SavedAds extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class _SavedAdsState extends State<SavedAds> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Saved Ads"),
+        backgroundColor: applicationColor,
       ),
       body: ListView.builder(
         itemCount: postData.length,

@@ -8,6 +8,7 @@ import 'package:roommates/PostDetailsPackage/Image_Carousel.dart';
 import 'package:roommates/PostDetailsPackage/post_photos_only.dart';
 import 'package:roommates/UserProfilePackage/UserProfile.dart';
 import 'package:roommates/constant/data.dart';
+import 'package:roommates/theme/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PostTemplate extends StatefulWidget {
@@ -136,7 +137,7 @@ class _PostTemplateState extends State<PostTemplate> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.fromLTRB(3, 0, 0, 0),
-                        child: Icon(Icons.location_on, color: Colors.teal[300]),
+                        child: Icon(Icons.location_on, color: applicationColor),
                       ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(3, 5, 0, 5),
@@ -144,7 +145,7 @@ class _PostTemplateState extends State<PostTemplate> {
                           postData[index]['address'],
                           style: TextStyle(
                             color: Colors.black54,
-                            fontSize: 25,
+                            fontSize: 21,
                           ),
                         ),
                       ),
@@ -153,10 +154,10 @@ class _PostTemplateState extends State<PostTemplate> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 5, 8, 5),
                     child: Text(
-                      postData[index]['price'] + "\$",
+                      postData[index]['price'] + " EGP",
                       style: TextStyle(
                         color: Colors.green[600],
-                        fontSize: 23,
+                        fontSize: 20,
                       ),
                     ),
                   ),
@@ -178,7 +179,7 @@ class _PostTemplateState extends State<PostTemplate> {
                     padding: const EdgeInsets.fromLTRB(3, 0, 0, 5),
                     child: Icon(
                       Icons.home,
-                      color: Colors.teal[300],
+                      color: applicationColor,
                     ),
                   ),
                   Padding(
@@ -187,7 +188,7 @@ class _PostTemplateState extends State<PostTemplate> {
                       postData[index]['type'],
                       style: TextStyle(
                         color: Colors.black54,
-                        fontSize: 25,
+                        fontSize: 21,
                       ),
                     ),
                   ),
@@ -197,7 +198,7 @@ class _PostTemplateState extends State<PostTemplate> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.fromLTRB(3, 0, 0, 5),
-                    child: Icon(Icons.phone_iphone, color: Colors.teal[300]),
+                    child: Icon(Icons.phone_iphone, color: applicationColor),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(3, 5, 0, 5),

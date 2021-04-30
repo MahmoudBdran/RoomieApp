@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_downloader/image_downloader.dart';
@@ -14,6 +16,7 @@ class ImageOnlyPage extends StatefulWidget {
 }
 
 class _ImageOnlyPageState extends State<ImageOnlyPage> {
+  File _image;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +37,7 @@ class _ImageOnlyPageState extends State<ImageOnlyPage> {
                   child: IconButton(
                 icon: Icon(Icons.download_sharp,color: Colors.white,),
                 onPressed: (){
-                  downloadImage(widget.image_link);
+                 loadImage(widget.image_link);
                 },
               ))
             ],
@@ -44,7 +47,28 @@ class _ImageOnlyPageState extends State<ImageOnlyPage> {
     );
   }
   downloadImage(url)async{
-    await ImageDownloader.downloadImage(url).then((_) {
+    try{
+      await ImageDownloader.downloadImage(url).then((_) {
+        Fluttertoast.showToast(
+            msg: "Downloaded Successfully",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.grey,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      });
+    }catch(e){
+      throw Exception("failed to download image");
+    }
+
+  }
+  void loadImage(url) async{
+    var imageId= await ImageDownloader.downloadImage(url);
+    var path = await ImageDownloader.findPath(imageId);
+    File image = File(path);
+    setState(() {
+      _image=image;
       Fluttertoast.showToast(
           msg: "Downloaded Successfully",
           toastLength: Toast.LENGTH_LONG,
@@ -53,7 +77,6 @@ class _ImageOnlyPageState extends State<ImageOnlyPage> {
           backgroundColor: Colors.grey,
           textColor: Colors.white,
           fontSize: 16.0);
-    }
-    );
+    });
   }
 }

@@ -1,27 +1,26 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:roommates/APIServices/shared_service.dart';
 import 'package:roommates/Maps_package/adAdd_Map_screen.dart';
+import 'package:roommates/theme/colors.dart';
 
 class AddAd extends StatefulWidget {
-  String subAddressGeneratedFromMap;
-  double subAddressLatitude;
-  double subAddressLongtude;
-
-  AddAd(
-      {this.subAddressGeneratedFromMap,
-      this.subAddressLatitude,
-      this.subAddressLongtude});
 
   @override
   _AddAdState createState() => _AddAdState();
 }
 
 class _AddAdState extends State<AddAd> {
+  //Add ad functions and variables
   RangeValues _currentRangeValues = const RangeValues(0, 10000);
   final _formKey = GlobalKey<FormState>();
   String SelectedRegion="Alexandria";
   var photos_selected=9;
+  String desc="",add="",phone="",price="",type="",pets="",guests="",smoking="",gender="";
   String selectedTypeOption="flat";
   String selectedGuestsOption="default";
   String selectedSmokingOption="default";
@@ -344,7 +343,7 @@ class _AddAdState extends State<AddAd> {
       height: 50,
       margin: const EdgeInsets.symmetric(horizontal: 50,vertical: 15),
       decoration: BoxDecoration(
-          color: Colors.teal[400],
+          color: applicationColor,
           borderRadius: BorderRadius.circular(8)
       ),
       width: MediaQuery.of(context).size.width,
@@ -362,10 +361,101 @@ class _AddAdState extends State<AddAd> {
     );
   }
 
+  //switch between map and add ad page variables
+  bool _isMap=false;
+  bool _isAddAd=true;
+
+  //map functions and variables
+  double userLocation_latitude =0;
+  double userLocation_longtude =0;
+  String subaddress="";
+  double target_latitude=0,tareget_longtude=0;
+  var mapAddress;
+  var mapAddressLatitude;
+  var mapAddressLongtude;
+  Marker _marker;
+  Marker _homeMarker;
+  var homeMarkerIcon;
+  static var _initialCameraPosition =
+  CameraPosition(target: LatLng(37.773972, -122.431297), zoom: 11.5);
+  GoogleMapController _googleMapController;
+  Future<CameraPosition> getCurrentLocation()async{
+    final geoPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    setState(() {
+      userLocation_latitude=geoPosition.latitude;
+      userLocation_longtude=geoPosition.longitude;
+      _initialCameraPosition =
+          CameraPosition(target: LatLng(userLocation_latitude,userLocation_longtude), zoom: 15.5);
+    });
+    _homeMarker = Marker(markerId: MarkerId("home"),
+        position: _initialCameraPosition.target,
+        icon:BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+        infoWindow: InfoWindow(title: "current Location"));
+    return _initialCameraPosition;
+  }
+
+  getMarkLocation(double lat,double lon)async{
+    //final geoPosition = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    final coordinates =Coordinates(lat,lon);
+    var addresses =  await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    setState(() {
+      subaddress = addresses.first.addressLine;
+      target_latitude=lat;
+      tareget_longtude=lon;
+      print("address is "+subaddress);
+      print("cordnts is : "+target_latitude.toString()+" , "+tareget_longtude.toString());
+    });
+  }
+  void _addMarker(LatLng pos) {
+    if(_marker==null){
+      //Origin is not set OR origin & destination are both set
+      //set Origin
+
+      setState(() {
+        _marker=Marker(markerId: MarkerId('address'),
+          draggable: true,
+          onDragEnd: (value) => getMarkLocation(value.latitude, value.longitude),
+          position: pos,
+        );
+        getMarkLocation(pos.latitude,pos.longitude);
+
+      }
+      );
+    }else{
+      _marker=null;
+      subaddress="";
+      setState(() {
+        _marker=Marker(markerId: MarkerId('address'),
+          draggable: true,
+          onDragEnd: (value) => getMarkLocation(value.latitude, value.longitude),
+          position: pos,
+        );
+        getMarkLocation(pos.latitude,pos.longitude);
+
+      }
+      );
+    }
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //getMapData();
+    getCurrentLocation();
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _googleMapController.dispose();
+    super.dispose();
+
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return _isAddAd?Scaffold(
       appBar: AppBar(
+        backgroundColor: applicationColor,
         automaticallyImplyLeading: false,
         title: Container(
           height: 40,
@@ -404,7 +494,6 @@ class _AddAdState extends State<AddAd> {
                 key: _formKey,
                 child: Column(
                   children: [
-
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -412,7 +501,7 @@ class _AddAdState extends State<AddAd> {
                           Container(
                             height: 40
                             ,decoration: BoxDecoration(
-                            color: Colors.teal,
+                            color: applicationColor,
                             borderRadius: BorderRadius.circular(5),
                           ),
                             child: FlatButton(
@@ -464,6 +553,10 @@ class _AddAdState extends State<AddAd> {
                           ),
                           TextFormField(
                               maxLines: 10,
+                              initialValue: desc,
+                              onChanged: (val){
+                                desc=val;
+                              },
                               validator: (val) {
                                 if (val.isEmpty) {
                                   return 'please fill this field';
@@ -529,7 +622,7 @@ class _AddAdState extends State<AddAd> {
                                             fillColor: Color(0xfff3f3f4),
                                             filled: true)
                                     ),
-                                    Text(widget.subAddressGeneratedFromMap!=null?widget.subAddressGeneratedFromMap:""),
+                                    Text(subaddress!=null?subaddress:""),
                                   ],
                                 )
                                 // TextFormField(
@@ -558,13 +651,17 @@ class _AddAdState extends State<AddAd> {
                                   flex: 2,
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.teal,
+                                      color: applicationColor,
                                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                                     ),
                                     child: IconButton(
                                         icon: Icon(Icons.pin_drop_outlined,color: Colors.white,), onPressed: (){
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => AdAddMapScreen(),));
-                                    }),
+                                          //Navigator.push(context, MaterialPageRoute(builder: (context) => AdAddMapScreen(),));
+                                          setState(() {
+                                            _isAddAd=false;
+                                            _isMap=true;
+                                          });
+                                        }),
                                   ))
                             ],
                           ),
@@ -589,6 +686,10 @@ class _AddAdState extends State<AddAd> {
                             height: 10,
                           ),
                           TextFormField(
+                              initialValue: phone,
+                              onChanged: (val){
+                                phone=val;
+                              },
                               keyboardType: TextInputType.number,
                               validator: (val) {
                                 if (val.isEmpty) {
@@ -606,7 +707,7 @@ class _AddAdState extends State<AddAd> {
                               decoration: InputDecoration(
                                   prefixIcon: Icon(
                                     Icons.phone_iphone,
-                                    color: Colors.teal,
+                                    color: applicationColor,
                                   ),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
@@ -617,6 +718,7 @@ class _AddAdState extends State<AddAd> {
                         ],
                       ),
                     ),
+                    //price
                     Container(
                       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                       child: Column(
@@ -633,6 +735,10 @@ class _AddAdState extends State<AddAd> {
                             height: 10,
                           ),
                           TextFormField(
+                              onChanged: (val){
+                                price=val;
+                              },
+                              initialValue: price,
                               keyboardType: TextInputType.number,
                               validator: (val) {
                                 if (val.isEmpty) {
@@ -650,8 +756,8 @@ class _AddAdState extends State<AddAd> {
                               },
                               decoration: InputDecoration(
                                   prefixIcon: Icon(
-                                    Icons.attach_money,
-                                    color: Colors.teal,
+                                    Icons.money_outlined,
+                                    color: applicationColor,
                                   ),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
@@ -662,7 +768,6 @@ class _AddAdState extends State<AddAd> {
                         ],
                       ),
                     ),
-
                     //ad product type
                     TypeWidget(),
                     PetsWidget(),
@@ -674,11 +779,110 @@ class _AddAdState extends State<AddAd> {
                   ],
                 ),
               )
-
             ],
           ),
         ),
       ),
+    ):
+    Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text("Bdran Google Maps",style: TextStyle(color: Colors.black),),
+        actions: [
+
+          if(_marker!=null)
+            IconButton(
+              tooltip: "Remove marker",
+              icon: Icon(Icons.location_off_outlined,color: Colors.red,),
+              onPressed: (){
+                _marker=null;
+                subaddress="";
+              },
+
+            ),
+          if(_marker!=null)
+            IconButton(
+              tooltip: "Save address",
+              icon: Icon(Icons.save,color: Colors.black38,),
+              onPressed: (){
+                setState(() {
+                  _isMap=false;
+                  _isAddAd=true;
+                });
+              },
+            )
+        ],
+      ),
+      body: FutureBuilder(
+        future: getCurrentLocation(),
+        builder: (context, snapshot) {
+          if(!snapshot.hasData){
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }else{
+            return SafeArea(
+              child: Stack(
+                children: [
+                  GoogleMap(
+                    myLocationButtonEnabled: false,
+                    zoomControlsEnabled: true,
+                    mapType: MapType.hybrid,
+                    onLongPress: _addMarker,
+                    onTap: _addMarker,
+                    markers: {
+                      if(_homeMarker!=null)_homeMarker,
+                      if(_marker!=null)_marker
+                    },
+                    initialCameraPosition: snapshot.data,
+                    onMapCreated: (controller)=> _googleMapController=controller,
+                  ),
+                  Positioned(
+                    top: 30.0,
+                    right: 15,
+                    left: 15.0,
+                    child:Container(
+
+                      height: 50.0,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.4),
+                            spreadRadius: 5,
+                            blurRadius: 7, // changes position of shadow
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: Colors.white,
+                      ),
+                      child: Center(child: Text(subaddress,style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                      ),)),
+                    ),
+                  ),
+                  Positioned(
+                      left: 15,
+                      bottom: 15,
+                      child: FloatingActionButton(
+                        tooltip: "Get your location",
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.black,
+                        onPressed: ()=>_googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(userLocation_latitude,userLocation_longtude),zoom:18.5,tilt: 50.0))),
+                        child: Icon(Icons.center_focus_strong),
+                      ))
+                ],
+              ),
+            );
+          }
+        },
+      ),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: Colors.white,
+      //   foregroundColor: Colors.black,
+      //   onPressed: ()=>_googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(userLocation_latitude,userLocation_longtude),zoom:18.5,tilt: 50.0))),
+      //   child: Icon(Icons.center_focus_strong),
+      // ),
     );
   }
 }

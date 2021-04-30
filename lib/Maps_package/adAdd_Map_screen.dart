@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:roommates/APIServices/shared_service.dart';
 import 'package:roommates/AddAdPackage/AddAd.dart';
 
 class AdAddMapScreen extends StatefulWidget {
@@ -17,12 +18,7 @@ class _AdAddMapScreenState extends State<AdAddMapScreen> {
   Marker _homeMarker;
   // var addresses;
   var homeMarkerIcon;
-  getIcon()async{
-    var icon= await BitmapDescriptor.fromAssetImage(ImageConfiguration(devicePixelRatio: 3.0), "assets/home_marker.png");
-    setState(() {
-      homeMarkerIcon=icon;
-    });
-  }
+
   String addr1="",addr2="";
   double target_latitude=0,tareget_longtude=0;
   static var _initialCameraPosition =
@@ -47,7 +43,7 @@ class _AdAddMapScreenState extends State<AdAddMapScreen> {
     });
     _homeMarker = Marker(markerId: MarkerId("home"),
         position: _initialCameraPosition.target,
-        icon:homeMarkerIcon!=null ? homeMarkerIcon:BitmapDescriptor.defaultMarker,
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
         infoWindow: InfoWindow(title: "current Location"));
     return _initialCameraPosition;
   }
@@ -81,7 +77,6 @@ class _AdAddMapScreenState extends State<AdAddMapScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getIcon();
     getCurrentLocation();
 
     //getAddressLocation();
@@ -91,7 +86,6 @@ class _AdAddMapScreenState extends State<AdAddMapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: toolbarHeight,
         backgroundColor: Colors.white,
         title: Text("Bdran Google Maps",style: TextStyle(color: Colors.black),),
         actions: [
@@ -113,6 +107,8 @@ class _AdAddMapScreenState extends State<AdAddMapScreen> {
               onPressed: (){
                 // AddAd(subAddressGeneratedFromMap: addr2,subAddressLatitude: target_latitude,subAddressLongtude: tareget_longtude);
                 //     Navigator.of(context).restorablePush((context, arguments) =>  AddAd(subAddressGeneratedFromMap: addr2,subAddressLatitude: target_latitude,subAddressLongtude: tareget_longtude);)
+                SharedService.setMapDetails(addr2, target_latitude, tareget_longtude);
+                Navigator.pop(context);
               },
 
             )
@@ -133,13 +129,13 @@ class _AdAddMapScreenState extends State<AdAddMapScreen> {
                 children: [
                   GoogleMap(
                     myLocationButtonEnabled: false,
-                    zoomControlsEnabled: false,
-                    mapType: MapType.hybrid,
+                    zoomControlsEnabled: true,
                     onLongPress: _addMarker,
+                    mapType: MapType.hybrid,
                     onTap: _addMarker,
                     markers: {
-                      if(_homeMarker!=null)_homeMarker,
-                      if(_marker!=null)_marker
+                       if(_homeMarker!=null)_homeMarker,
+                       if(_marker!=null)_marker
                     },
                     initialCameraPosition: snapshot.data,
                     onMapCreated: (controller)=> _googleMapController=controller,
@@ -168,19 +164,33 @@ class _AdAddMapScreenState extends State<AdAddMapScreen> {
                       ),)),
                     ),
                   ),
-
+                  Positioned(
+                    left: 15,
+                    bottom: 15,
+                    child: FloatingActionButton(
+                      tooltip: "Get your location",
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    onPressed: ()=>_googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(userLocation_latitude,userLocation_longtude),zoom:18.5,tilt: 50.0))),
+                    child: Icon(Icons.center_focus_strong),
+                  ))
                 ],
               ),
             );
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        onPressed: ()=>_googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(userLocation_latitude,userLocation_longtude),zoom:18.5,tilt: 50.0))),
-        child: Icon(Icons.center_focus_strong),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: Colors.white,
+      //
+      //   foregroundColor: Colors.black,
+      //   onPressed: ()=>_googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(userLocation_latitude,userLocation_longtude),zoom:18.5,tilt: 50.0))),
+      //   child: Icon(Icons.center_focus_strong),
+      // ),
+
+
+
+
       /*appBar: AppBar(
           backgroundColor: Colors.white,
           title: Text("Google Maps",style: TextStyle(color: Colors.black),),

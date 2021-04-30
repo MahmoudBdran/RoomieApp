@@ -2,6 +2,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:roommates/theme/colors.dart';
 
 class EditProfile extends StatefulWidget {
   @override
@@ -61,13 +62,12 @@ class _EditProfileState extends State<EditProfile> {
         currentDate = pickedDate;
       });
   }
-
   Widget EditProfileImage(){
     return Container(
       height: 40,
       margin: const EdgeInsets.symmetric(horizontal: 100,vertical: 15),
       decoration: BoxDecoration(
-          color: Colors.teal[400],
+          color: applicationColor,
           borderRadius: BorderRadius.circular(8)
       ),
       width: MediaQuery.of(context).size.width,
@@ -84,7 +84,7 @@ class _EditProfileState extends State<EditProfile> {
       height: 40,
       margin: const EdgeInsets.symmetric(horizontal: 100,vertical: 15),
       decoration: BoxDecoration(
-          color: Colors.teal[400],
+          color: applicationColor,
           borderRadius: BorderRadius.circular(8)
       ),
       width: MediaQuery.of(context).size.width,
@@ -96,13 +96,12 @@ class _EditProfileState extends State<EditProfile> {
       ),
     );
   }
-
   Widget SaveChangesButton(){
     return Container(
       height: 50,
       margin: const EdgeInsets.symmetric(horizontal: 50,vertical: 15),
       decoration: BoxDecoration(
-          color: Colors.teal[400],
+          color: applicationColor,
           borderRadius: BorderRadius.circular(8)
       ),
       width: MediaQuery.of(context).size.width,
@@ -125,6 +124,7 @@ class _EditProfileState extends State<EditProfile> {
     final _width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: applicationColor,
         automaticallyImplyLeading: false,
         title: Container(
           height: 40,
@@ -207,7 +207,7 @@ class _EditProfileState extends State<EditProfile> {
                             decoration: InputDecoration(
                                 prefixIcon: Icon(
                                   EvaIcons.personOutline,
-                                  color: Colors.teal,
+                                  color: applicationColor,
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -245,7 +245,7 @@ class _EditProfileState extends State<EditProfile> {
                             decoration: InputDecoration(
                                 prefixIcon: Icon(
                                   EvaIcons.emailOutline,
-                                  color: Colors.teal,
+                                  color: applicationColor,
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -283,7 +283,7 @@ class _EditProfileState extends State<EditProfile> {
                             decoration: InputDecoration(
                                 prefixIcon: Icon(
                                   Icons.short_text,
-                                  color: Colors.teal,
+                                  color: applicationColor,
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -322,7 +322,7 @@ class _EditProfileState extends State<EditProfile> {
                             decoration: InputDecoration(
                                 prefixIcon: Icon(
                                   Icons.vpn_key,
-                                  color: Colors.teal,
+                                  color: applicationColor,
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -361,7 +361,7 @@ class _EditProfileState extends State<EditProfile> {
                             decoration: InputDecoration(
                                 prefixIcon: Icon(
                                   Icons.vpn_key,
-                                  color: Colors.teal,
+                                  color: applicationColor,
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -405,7 +405,7 @@ class _EditProfileState extends State<EditProfile> {
                             decoration: InputDecoration(
                                 prefixIcon: Icon(
                                   Icons.phone_iphone,
-                                  color: Colors.teal,
+                                  color: applicationColor,
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -443,7 +443,7 @@ class _EditProfileState extends State<EditProfile> {
                             decoration: InputDecoration(
                                 prefixIcon: Icon(
                                   Icons.work,
-                                  color: Colors.teal,
+                                  color: applicationColor,
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -481,7 +481,7 @@ class _EditProfileState extends State<EditProfile> {
                             decoration: InputDecoration(
                                 prefixIcon: Icon(
                                   Icons.school,
-                                  color: Colors.teal,
+                                  color: applicationColor,
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -519,7 +519,7 @@ class _EditProfileState extends State<EditProfile> {
                             decoration: InputDecoration(
                                 prefixIcon: Icon(
                                   Icons.home,
-                                  color: Colors.teal,
+                                  color: applicationColor,
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -557,7 +557,7 @@ class _EditProfileState extends State<EditProfile> {
                             decoration: InputDecoration(
                                 prefixIcon: Icon(
                                   Icons.location_on,
-                                  color: Colors.teal,
+                                  color: applicationColor,
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),

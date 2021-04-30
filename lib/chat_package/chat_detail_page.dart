@@ -2,6 +2,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:roommates/constant/data.dart';
+import 'package:roommates/theme/colors.dart';
 
 class ChatDetailPage extends StatefulWidget {
   @override
@@ -14,7 +15,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal[400],
+        backgroundColor: applicationColor,
         elevation: 0,
         leading: IconButton(
           icon: Icon(
@@ -198,7 +199,7 @@ class ChatBubble extends StatelessWidget {
             Flexible(
               child: Container(
                 decoration: BoxDecoration(
-                    color: Colors.teal[400],
+                    color:applicationColor,
                     borderRadius: getMessageType(messageType)),
                 child: Padding(
                   padding: const EdgeInsets.all(13.0),

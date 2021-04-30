@@ -6,6 +6,7 @@ import 'package:roommates/FollowingPackage/Following.dart';
 import 'package:roommates/FollowersPackage/Followers.dart';
 import 'package:roommates/NewsFeedPackage/PostContainer.dart';
 import 'package:roommates/constant/data.dart';
+import 'package:roommates/theme/colors.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -93,7 +94,7 @@ class _ProfileState extends State<Profile> {
             fontSize: 18,
             color: Colors.white,
           ),),
-          color: Colors.teal[400],
+          color: applicationColor,
           onPressed: (){
             Navigator.push(context, MaterialPageRoute(
               builder: (context) => EditProfile(),
@@ -121,7 +122,7 @@ class _ProfileState extends State<Profile> {
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0,0,9,0),
-                  child: Icon(Icons.work,color: Colors.teal,),
+                  child: Icon(Icons.work,color: applicationColor),
                 ),
                 Flexible(
                   child: RichText(
@@ -151,7 +152,7 @@ class _ProfileState extends State<Profile> {
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0,0,9,0),
-                  child: Icon(Icons.school,color: Colors.teal,),
+                  child: Icon(Icons.school,color: applicationColor),
                 ),
                 Flexible(
                   child: RichText(
@@ -185,7 +186,7 @@ class _ProfileState extends State<Profile> {
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0,0,9,0),
-                  child: Icon(Icons.home,color: Colors.teal,),
+                  child: Icon(Icons.home,color: applicationColor),
                 ),
                 Flexible(
                   child: RichText(
@@ -212,7 +213,7 @@ class _ProfileState extends State<Profile> {
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0,0,9,0),
-                  child: Icon(Icons.location_on,color: Colors.teal,),
+                  child: Icon(Icons.location_on,color: applicationColor),
                 ),
                 Flexible(
                   child: RichText(
