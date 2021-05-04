@@ -13,8 +13,11 @@ class AddAd extends StatefulWidget {
   @override
   _AddAdState createState() => _AddAdState();
 }
-
+enum SingingCharacter { Separated_persons, family }
 class _AddAdState extends State<AddAd> {
+  SingingCharacter _character = SingingCharacter.Separated_persons;
+
+
   //Add ad functions and variables
   RangeValues _currentRangeValues = const RangeValues(0, 10000);
   final _formKey = GlobalKey<FormState>();
@@ -22,10 +25,10 @@ class _AddAdState extends State<AddAd> {
   var photos_selected=9;
   String desc="",add="",phone="",price="",type="",pets="",guests="",smoking="",gender="";
   String selectedTypeOption="flat";
-  String selectedGuestsOption="default";
-  String selectedSmokingOption="default";
-  String selectedGenderOption="default";
-  String selectedPetsOption="default";
+  String selectedGuestsOption="accept guests";
+  String selectedSmokingOption="smoking";
+  String selectedGenderOption="male";
+  String selectedPetsOption="pets";
   Widget RegionWidget(){
   List<DropdownMenuItem> regionList=[
     DropdownMenuItem(value: "Alexandria", child: Text("Alexandria"),),
@@ -98,124 +101,131 @@ class _AddAdState extends State<AddAd> {
       DropdownMenuItem(value: "flat", child: Text("flat"),),
       DropdownMenuItem(value: "room",child: Text("room"),),
       DropdownMenuItem(value: "bed", child: Text("bed"),),];
-    return Container(
-      width: MediaQuery.of(context).size.width,
+    return Visibility(
+      visible: (_character==SingingCharacter.family)?false:true,
+      child: Container(
+        width: MediaQuery.of(context).size.width,
 
-      padding: EdgeInsets.all(18),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 2,
-            child: Container(
-              child: Text("Type :",style: GoogleFonts.poppins(
-                fontSize: 15,
-                color: Colors.grey[500],
-              ),),
-            ),
-          ),
-          Expanded(
-            flex: 5,
-            child: Container(
-              margin: EdgeInsets.fromLTRB(15, 0, 0,0),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(5)
-              ),
-              child: DropdownButton(
-                value: selectedTypeOption,
-                items: Typeoptions, onChanged: (value) { setState(() {
-                selectedTypeOption=value;
-              });},
-
+        padding: EdgeInsets.all(18),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: Container(
+                child: Text("Type :",style: GoogleFonts.poppins(
+                  fontSize: 15,
+                  color: Colors.grey[500],
+                ),),
               ),
             ),
-          ),
-        ],
+            Expanded(
+              flex: 5,
+              child: Container(
+                margin: EdgeInsets.fromLTRB(15, 0, 0,0),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(5)
+                ),
+                child: DropdownButton(
+                  value: selectedTypeOption,
+                  items: Typeoptions, onChanged: (value) { setState(() {
+                  selectedTypeOption=value;
+                });},
+
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
   Widget PetsWidget(){
-    List<DropdownMenuItem> petsoptions=[DropdownMenuItem(value: "default", child: Text("default"),),
-      DropdownMenuItem(value: "pets", child: Text("pets"),),
+    List<DropdownMenuItem> petsoptions=[DropdownMenuItem(value: "pets", child: Text("pets"),),
       DropdownMenuItem(value: "no pets",child: Text("no pets"),)];
-    return Container(
-      width: MediaQuery.of(context).size.width,
+    return Visibility(
+      visible: (_character==SingingCharacter.family)?false:true,
+      child: Container(
+        width: MediaQuery.of(context).size.width,
 
-      padding: EdgeInsets.all(18),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 2,
-            child: Container(
-              child: Text("Pets :",style: GoogleFonts.poppins(
-                fontSize: 16,
-                color: Colors.grey[500],
-              ),),
-            ),
-          ),
-
-          Expanded(
-            flex: 5,
-            child: Container(
-              margin: EdgeInsets.fromLTRB(15, 0, 0,0),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(5)
-              ),
-              child: DropdownButton(
-                value: selectedPetsOption,
-                items: petsoptions, onChanged: (value) { setState(() {
-                selectedPetsOption=value;
-              });},
-
+        padding: EdgeInsets.all(18),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: Container(
+                child: Text("Pets :",style: GoogleFonts.poppins(
+                  fontSize: 16,
+                  color: Colors.grey[500],
+                ),),
               ),
             ),
-          ),
-        ],
+
+            Expanded(
+              flex: 5,
+              child: Container(
+                margin: EdgeInsets.fromLTRB(15, 0, 0,0),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(5)
+                ),
+                child: DropdownButton(
+                  value: selectedPetsOption,
+                  items: petsoptions, onChanged: (value) { setState(() {
+                  selectedPetsOption=value;
+                });},
+
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
   Widget AcceptGuestsWidget(){
-    List<DropdownMenuItem> Guestsoptions=[DropdownMenuItem(value: "default", child: Text("default"),),
-      DropdownMenuItem(value: "accept guests", child: Text("accept guests"),),
+    List<DropdownMenuItem> Guestsoptions=[DropdownMenuItem(value: "accept guests", child: Text("accept guests"),),
       DropdownMenuItem(value: "don't accept guests",child: Text("don't accept guests"),)];
-    return Container(
-      width: MediaQuery.of(context).size.width,
+    return Visibility(
+      visible: (_character==SingingCharacter.family)?false:true,
+      child: Container(
+        width: MediaQuery.of(context).size.width,
 
-      padding: EdgeInsets.all(18),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 2,
-            child: Container(
-              child: Text("Guests :",style: GoogleFonts.poppins(
-                fontSize: 15,
-                color: Colors.grey[500],
-              ),),
-            ),
-          ),
-          Expanded(
-            flex: 5,
-            child: Container(
-              margin: EdgeInsets.fromLTRB(15, 0, 0,0),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(10)
-              ),
-              child: DropdownButton(
-
-                value: selectedGuestsOption,
-                items: Guestsoptions, onChanged: (value) { setState(() {
-                selectedGuestsOption=value;
-              });},
-
+        padding: EdgeInsets.all(18),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: Container(
+                child: Text("Guests :",style: GoogleFonts.poppins(
+                  fontSize: 15,
+                  color: Colors.grey[500],
+                ),),
               ),
             ),
-          ),
-        ],
+            Expanded(
+              flex: 5,
+              child: Container(
+                margin: EdgeInsets.fromLTRB(15, 0, 0,0),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(10)
+                ),
+                child: DropdownButton(
+
+                  value: selectedGuestsOption,
+                  items: Guestsoptions, onChanged: (value) { setState(() {
+                  selectedGuestsOption=value;
+                });},
+
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
     /*
@@ -259,82 +269,89 @@ class _AddAdState extends State<AddAd> {
       */
   }
   Widget SmokingWdiget(){
-    List<DropdownMenuItem> smokingoptions=[DropdownMenuItem(value: "default", child: Text("default"),),
-      DropdownMenuItem(value: "smoking", child: Text("smoking"),),
+    List<DropdownMenuItem> smokingoptions=[DropdownMenuItem(value: "smoking", child: Text("smoking"),),
       DropdownMenuItem(value: "no smoking",child: Text("no smoking"),)];
-    return Container(
-      width: MediaQuery.of(context).size.width,
+    return Visibility(
+      visible: (_character==SingingCharacter.family)?false:true,
+      child: Container(
+        width: MediaQuery.of(context).size.width,
 
-      padding: EdgeInsets.all(18),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 2,
-            child: Container(
-              child: Text("Smoking :",style: GoogleFonts.poppins(
-                fontSize: 15,
-                color: Colors.grey[500],
-              ),),
-            ),
-          ),
-          Expanded(
-            flex: 5,
-            child: Container(
-              margin: EdgeInsets.fromLTRB(15, 0, 0,0),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(10)
-              ),
-              child: DropdownButton(
-                value: selectedSmokingOption,
-                items: smokingoptions, onChanged: (value) { setState(() {
-                selectedSmokingOption=value;
-              });},
-
+        padding: EdgeInsets.all(18),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: Container(
+                child: Text("Smoking :",style: GoogleFonts.poppins(
+                  fontSize: 15,
+                  color: Colors.grey[500],
+                ),),
               ),
             ),
-          ),
-        ],
+            Expanded(
+              flex: 5,
+              child: Container(
+                margin: EdgeInsets.fromLTRB(15, 0, 0,0),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(10)
+                ),
+                child: DropdownButton(
+                  value: selectedSmokingOption,
+                  items: smokingoptions, onChanged: (value) { setState(() {
+                  selectedSmokingOption=value;
+                });},
+
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
   Widget GenderWidget(){
-    List<DropdownMenuItem> genderoptions=[DropdownMenuItem(value: "default", child: Text("default"),),
-      DropdownMenuItem(value: "male", child: Text("male"),),
+    List<DropdownMenuItem> genderoptions=[DropdownMenuItem(value: "male", child: Text("male"),),
       DropdownMenuItem(value: "female",child: Text("female"),)];
-    return Container(
-      width: MediaQuery.of(context).size.width,
+    return Visibility(
+      visible: (_character==SingingCharacter.family)?false:true,
+      child: Container(
+        width: MediaQuery.of(context).size.width,
 
-      padding: EdgeInsets.all(18),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 2,
-            child: Container(
-              child: Text("Gender :",style: GoogleFonts.poppins(
-                fontSize: 15,
-                color: Colors.grey[500],
-              ),),
-            ),
-          ),Expanded(
-            flex: 5,
-            child: Container(
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(10)
-              ),
-              child: DropdownButton(
-                value: selectedGenderOption,
-                items: genderoptions, onChanged: (value) { setState(() {
-                selectedGenderOption=value;
-              });},
-
+        padding: EdgeInsets.all(18),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: Container(
+                child: Text("Gender :",style: GoogleFonts.poppins(
+                  fontSize: 15,
+                  color: Colors.grey[500],
+                ),
+                ),
               ),
             ),
-          ),
-        ],
+            Expanded(
+              flex: 5,
+              child: Container(
+                margin: EdgeInsets.fromLTRB(15, 0, 0,0),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(10)
+                ),
+                child: DropdownButton(
+                  value: selectedGenderOption,
+                  items: genderoptions, onChanged: (value) { setState(() {
+                  selectedGenderOption=value;
+                });},
+
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -769,6 +786,40 @@ class _AddAdState extends State<AddAd> {
                       ),
                     ),
                     //ad product type
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0,15,0,0),
+                          child: Text("NOTE: Choose type of these 2 types to continue",style: TextStyle(
+                            color: Colors.grey
+                          ),),
+                        ),
+                        ListTile(
+                          title: const Text('Separated persons'),
+                          leading: Radio(
+                            value: SingingCharacter.Separated_persons,
+                            groupValue: _character,
+                            onChanged: (SingingCharacter value) {
+                              setState(() {
+                                _character = value;
+                              });
+                            },
+                          ),
+                        ),
+                        ListTile(
+                          title: const Text('Family'),
+                          leading: Radio<SingingCharacter>(
+                            value: SingingCharacter.family,
+                            groupValue: _character,
+                            onChanged: (SingingCharacter value) {
+                              setState(() {
+                                _character = value;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                     TypeWidget(),
                     PetsWidget(),
                     AcceptGuestsWidget(),

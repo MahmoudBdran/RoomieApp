@@ -5,7 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:roommates/APIServices/shared_service.dart';
 import 'package:roommates/HomePackage/HomePage.dart';
-import 'package:roommates/src/loginPage.dart';
+import 'file:///E:/flutter_projects/roommates/lib/login_package/loginPage.dart';
 import 'file:///E:/flutter_projects/roommates/lib/AboutUsPackage/screen1.dart';
 import 'file:///E:/flutter_projects/roommates/lib/AboutUsPackage/screen2.dart';
 import 'file:///E:/flutter_projects/roommates/lib/AboutUsPackage/screen3.dart';
@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Dashboard',
         theme: ThemeData(
         primarySwatch: Colors.teal,
         accentColor: Colors.teal,

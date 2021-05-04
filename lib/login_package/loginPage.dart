@@ -6,10 +6,10 @@ import 'package:roommates/APIServices/shared_service.dart';
 import 'package:roommates/HomePackage/HomePage.dart';
 import 'package:roommates/login_package/constants.dart';
 import 'package:roommates/theme/colors.dart';
-import 'signup.dart';
+import '../signup_package/signup.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'Widget/bezierContainer.dart';
+import '../src/Widget/bezierContainer.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);

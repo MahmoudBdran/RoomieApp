@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:roommates/NewsFeedPackage/PostContainer.dart';
+import 'file:///E:/flutter_projects/roommates/lib/PostDetailsPackage/PostContainer.dart';
 import 'package:roommates/constant/data.dart';
 import 'package:roommates/theme/colors.dart';
 

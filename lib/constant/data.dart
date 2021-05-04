@@ -121,8 +121,8 @@ List userMessages = [
     "story" : true,
     "message": "I just arrived home.",
     "created_at" : "1:12 am"
-  }
-  ,{
+  },
+  {
     "id" : 9,
     "name" : "Kirill Bishop",
     "img" : "https://images.unsplash.com/photo-1536763843054-126cc2d9d3b0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
@@ -257,7 +257,102 @@ List postData=[
     "username": "sara johnne",
     "avatar": "https://reqres.in/img/faces/7-image.jpg",
     "phone":"01478523698",
+    "people_type":"Separated_persons",
+    "availability":"enable",
     "price":"100",
+    "type" : "bed",
+    "pets":" no pets",
+    "guests": "accept guests",
+    "smoking" : "smoking",
+    "gender" : "male",
+    "time":"24:22:28 Thu 8 Apr",
+    "images_length":6,
+    "images":[
+      "https://images.livmatrix.com/https://jumanji.livspace-cdn.com/magazine/wp-content/uploads/2017/07/27163539/clean-upholstered-furniture.jpg",
+      "https://www.betterhomeindia.com/wp-content/uploads/2019/03/angels-bedroomset-betterhomeindia-min.jpg",
+      "https://i.pinimg.com/originals/61/95/5b/61955b37741ebd96bd440a65d7ffc75b.jpg",
+    ],
+    "description": """Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna
+    aliqua.""",
+    "address": "alexandria",
+    "sub address" : "25 khaled ebn elwaleedd,sedi beshr",
+    "likes_uid":[
+      "vsrwbuvEXcewZCxZJtAcuOnNrux2",
+      "8MOdr7oHhHgmK0iYWxmFKMEERi63"
+    ]
+  },
+  {
+    "post_id": 2,
+    "email": "michael.lawson@reqres.in",
+    "username": "Michael Lawson",
+    "availability":"enable",
+    "avatar": "https://reqres.in/img/faces/8-image.jpg",
+    "phone":"01205057427",
+    "price":"3000",
+    "people_type":"family",
+    "type" : "flat",
+    "pets":" pets",
+    "guests": "accept guests",
+    "smoking" : "smoking",
+    "gender" : "male",
+    "time":"24:22:28 Thu 8 Apr",
+    "images_length":6,
+    "images":[
+      "https://images.livmatrix.com/https://jumanji.livspace-cdn.com/magazine/wp-content/uploads/2017/07/27163539/clean-upholstered-furniture.jpg",
+      "https://www.betterhomeindia.com/wp-content/uploads/2019/03/angels-bedroomset-betterhomeindia-min.jpg",
+      "https://i.pinimg.com/originals/61/95/5b/61955b37741ebd96bd440a65d7ffc75b.jpg",
+    ],
+    "description": """Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna
+    aliqua.""",
+    "address": "cairo",
+    "sub address" : "26 elreyad tower,6october",
+    "likes_uid":[
+      "vsrwbuvEXcewZCxZJtAcuOnNrux2",
+      "8MOdr7oHhHgmK0iYWxmFKMEERi63"
+    ]
+  },
+  {
+    "post_id": 3,
+    "email": "ahmed.hassan@reqres.in",
+    "username": "ahmed hassan",
+    "availability":"enable",
+    "avatar": "https://reqres.in/img/faces/9-image.jpg",
+    "phone":"01552530353",
+    "price":"500",
+    "people_type":"family",
+    "type" : "flat",
+    "pets":" pets",
+    "guests": "accept guests",
+    "smoking" : "smoking",
+    "gender" : "male",
+    "time":"24:22:28 Thu 8 Apr",
+    "images_length":6,
+    "images":[
+      "https://images.livmatrix.com/https://jumanji.livspace-cdn.com/magazine/wp-content/uploads/2017/07/27163539/clean-upholstered-furniture.jpg",
+      "https://www.betterhomeindia.com/wp-content/uploads/2019/03/angels-bedroomset-betterhomeindia-min.jpg",
+      "https://i.pinimg.com/originals/61/95/5b/61955b37741ebd96bd440a65d7ffc75b.jpg",
+    ],
+    "description": """Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna
+    aliqua.""",
+    "address": "cairo",
+    "sub address" : "26 elreyad tower,6october",
+    "likes_uid":[
+      "vsrwbuvEXcewZCxZJtAcuOnNrux2",
+      "8MOdr7oHhHgmK0iYWxmFKMEERi63"
+    ]
+  },
+  {
+    "post_id": 4,
+    "email": "johnne.ramzy@reqres.in",
+    "username": "johnne ramzy",
+    "availability":"enable",
+    "avatar": "https://reqres.in/img/faces/6-image.jpg",
+    "phone":"01023456789",
+    "people_type":"Separated_persons",
+    "price":"230",
     "type" : "bed",
     "pets":" no pets",
     "guests": "accept guests",
@@ -275,71 +370,10 @@ List postData=[
     aliqua.""",
     "address": "alexandria",
     "sub address" : "25 khaled ebn elwaleedd,sedi beshr",
-    "likes":2,
-    "likes_uid":{
-      "1":"vsrwbuvEXcewZCxZJtAcuOnNrux2",
-      "2":"8MOdr7oHhHgmK0iYWxmFKMEERi63",
-    },
-  },
-  {
-    "post_id": 2,
-    "email": "michael.lawson@reqres.in",
-    "username": "Michael Lawson",
-    "avatar": "https://reqres.in/img/faces/8-image.jpg",
-    "phone":"01205057427",
-    "price":"3000",
-    "type" : "flat",
-    "pets":" default",
-    "guests": "accept guests",
-    "smoking" : "no smoking",
-    "gender" : "default",
-    "time":"24:22:28 Thu 8 Apr",
-    "images_length":6,
-    "images":[
-      "https://images.livmatrix.com/https://jumanji.livspace-cdn.com/magazine/wp-content/uploads/2017/07/27163539/clean-upholstered-furniture.jpg",
-      "https://www.betterhomeindia.com/wp-content/uploads/2019/03/angels-bedroomset-betterhomeindia-min.jpg",
-      "https://i.pinimg.com/originals/61/95/5b/61955b37741ebd96bd440a65d7ffc75b.jpg",
-    ],
-    "description": """Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna
-    aliqua.""",
-    "address": "cairo",
-    "sub address" : "26 elreyad tower,6october",
-    "likes":2,
-    "likes_uid":{
-      "1":"vsrwbuvEXcewZCxZJtAcuOnNrux2",
-      "2":"8MOdr7oHhHgmK0iYWxmFKMEERi63",
-    },
-  },
-  {
-    "post_id": 3,
-    "email": "ahmed.hassan@reqres.in",
-    "username": "ahmed hassan",
-    "avatar": "https://reqres.in/img/faces/9-image.jpg",
-    "phone":"01552530353",
-    "price":"500",
-    "type" : "room",
-    "pets":" pets",
-    "guests": "don't accept guests",
-    "smoking" : "no smoking",
-    "gender" : "default",
-    "time":"24:22:28 Thu 8 Apr",
-    "images_length":6,
-    "images":[
-      "https://images.livmatrix.com/https://jumanji.livspace-cdn.com/magazine/wp-content/uploads/2017/07/27163539/clean-upholstered-furniture.jpg",
-      "https://www.betterhomeindia.com/wp-content/uploads/2019/03/angels-bedroomset-betterhomeindia-min.jpg",
-      "https://i.pinimg.com/originals/61/95/5b/61955b37741ebd96bd440a65d7ffc75b.jpg",
-    ],
-    "description": """Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna
-    aliqua.""",
-    "address": "cairo",
-    "sub address" : "26 elreyad tower,6october",
-    "likes":2,
-    "likes_uid":{
-      "1":"vsrwbuvEXcewZCxZJtAcuOnNrux2",
-      "2":"8MOdr7oHhHgmK0iYWxmFKMEERi63",
-    },
-  },
+    "likes_uid":[
+      "vsrwbuvEXcewZCxZJtAcuOnNrux2",
+      "8MOdr7oHhHgmK0iYWxmFKMEERi63"
+    ]
+  }
 
 ];

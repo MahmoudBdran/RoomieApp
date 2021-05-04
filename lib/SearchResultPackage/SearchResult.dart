@@ -2,7 +2,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:group_radio_button/group_radio_button.dart';
-import 'package:roommates/NewsFeedPackage/PostContainer.dart';
+import 'file:///E:/flutter_projects/roommates/lib/PostDetailsPackage/PostContainer.dart';
 import 'package:roommates/constant/data.dart';
 
 class SearchResult extends StatefulWidget {

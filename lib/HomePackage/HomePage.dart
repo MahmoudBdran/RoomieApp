@@ -13,7 +13,7 @@ import 'package:roommates/NotificationsPackage/Notifications.dart';
 import 'package:roommates/ProfilePackage/Profile.dart';
 import 'package:roommates/SavedAdsPackage/SavedAds.dart';
 import 'package:roommates/EditProfilePackage/EditProfile.dart';
-import 'package:roommates/src/loginPage.dart';
+import 'file:///E:/flutter_projects/roommates/lib/login_package/loginPage.dart';
 import 'package:roommates/theme/colors.dart';
 
 class HomePage extends StatefulWidget {
