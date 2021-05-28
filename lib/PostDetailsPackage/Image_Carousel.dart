@@ -30,6 +30,8 @@ class _Image_CarouselState extends State<Image_Carousel> {
         }),
     autoplay: false,
     dotSize: 4,
+    indicatorBgPadding: 5.0,
+    dotBgColor: Colors.grey.withOpacity(0),
     animationDuration: Duration(microseconds: 1000),
     animationCurve: Curves.fastOutSlowIn,
 

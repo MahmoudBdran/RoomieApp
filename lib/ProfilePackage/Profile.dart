@@ -16,17 +16,48 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   Widget Cover_Profile_img(){
     return Container(
-      height: 250,
+      height: 260,
       width: MediaQuery.of(context).size.width,
       child: Stack(
         children: [
-          Image.asset("images/cover_image.jpg",width: MediaQuery.of(context).size.width,height: 200,fit: BoxFit.cover,),
+          Container(
+              child: ClipRRect(
+                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft:  Radius.circular(20)),child: Image.asset("images/cover_image.jpg",width: MediaQuery.of(context).size.width,height: 180,fit: BoxFit.cover,))),
           Positioned(
-            top: 100,
+            top: 110,
             left: 0,
             right: 0,
-            child: CircleAvatar(radius: 70,backgroundColor: Colors.transparent,child: Image.asset("images/profile_image.png"),),
+            child: Container(
+              width: 140,
+              height: 140,
+              decoration: BoxDecoration(
+                border:Border.all(color: Colors.white,width: 4),
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                      image: AssetImage("images/profile_image.png"))),
+            ),
           ),
+          Positioned(
+            top: 180,
+            left: 30,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Text("280K",style: TextStyle(
+                    color: Color(0xFF393939),
+                    letterSpacing: 1.5,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'OpenSans',
+                  ),),
+                  Text("Followers",style: TextStyle(
+                    color: Color(0xFF515151),
+                    letterSpacing: 1.5,
+                    fontFamily: 'OpenSans',
+                  ),),
+                ],
+              ),
+            )),
         ],
       ),
     );
