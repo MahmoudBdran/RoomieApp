@@ -6,7 +6,6 @@ import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:roommates/APIServices/shared_service.dart';
-import 'package:roommates/AddAdPackage/AddAd.dart';
 
 class AdAddMapScreen extends StatefulWidget {
   @override
@@ -137,7 +136,7 @@ class _AdAddMapScreenState extends State<AdAddMapScreen> {
                        if(_homeMarker!=null)_homeMarker,
                        if(_marker!=null)_marker
                     },
-                    initialCameraPosition: snapshot.data,
+                    initialCameraPosition:CameraPosition(target: LatLng(12.342,12.233)),
                     onMapCreated: (controller)=> _googleMapController=controller,
                   ),
                   Positioned(

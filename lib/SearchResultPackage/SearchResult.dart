@@ -2,7 +2,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:group_radio_button/group_radio_button.dart';
-import 'file:///E:/flutter_projects/roommates/lib/PostDetailsPackage/PostContainer.dart';
+import 'package:roommates/PostDetailsPackage/PostContainer.dart';
 import 'package:roommates/constant/data.dart';
 
 class SearchResult extends StatefulWidget {
@@ -63,7 +63,7 @@ class _SearchResultState extends State<SearchResult> {
               ),
               child: DropdownButton(
                 value: selectedPetsOption,
-                items: petsoptions, onChanged: (value) { setState(() {
+                items: petsoptions, onChanged: (dynamic value) { setState(() {
                 selectedPetsOption=value;
               });},
 
@@ -100,7 +100,7 @@ class _SearchResultState extends State<SearchResult> {
               ),
               child: DropdownButton(
                 value: selectedTypeOption,
-                items: Typeoptions, onChanged: (value) { setState(() {
+                items: Typeoptions, onChanged: (dynamic value) { setState(() {
                 selectedTypeOption=value;
               });},
 
@@ -136,7 +136,7 @@ class _SearchResultState extends State<SearchResult> {
               ),
               child: DropdownButton(
                 value: selectedGuestsOption,
-                items: Guestsoptions, onChanged: (value) { setState(() {
+                items: Guestsoptions, onChanged: (dynamic value) { setState(() {
                 selectedGuestsOption=value;
               });},
 
@@ -211,7 +211,7 @@ class _SearchResultState extends State<SearchResult> {
               ),
               child: DropdownButton(
                 value: selectedSmokingOption,
-                items: smokingoptions, onChanged: (value) { setState(() {
+                items: smokingoptions, onChanged: (dynamic value) { setState(() {
                 selectedSmokingOption=value;
               });},
 
@@ -247,7 +247,7 @@ class _SearchResultState extends State<SearchResult> {
               ),
               child: DropdownButton(
                 value: selectedGenderOption,
-                items: genderoptions, onChanged: (value) { setState(() {
+                items: genderoptions, onChanged: (dynamic value) { setState(() {
                 selectedGenderOption=value;
               });},
 

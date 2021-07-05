@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'file:///E:/flutter_projects/roommates/lib/login_package/loginPage.dart';
+import 'package:roommates/login_package/loginPage.dart';
 class screen4 extends StatefulWidget {
   @override
   _screen4State createState() => _screen4State();

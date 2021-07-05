@@ -30,72 +30,72 @@ class _AddAdState extends State<AddAd> {
   String selectedGenderOption="male";
   String selectedPetsOption="pets";
   Widget RegionWidget(){
-  List<DropdownMenuItem> regionList=[
-    DropdownMenuItem(value: "Alexandria", child: Text("Alexandria"),),
-    DropdownMenuItem(value: "Aswan",child: Text("Aswan"),),
-    DropdownMenuItem(value: "Asyut", child: Text("Asyut"),),
-    DropdownMenuItem(value: "Beheira",child: Text("Beheira"),),
-    DropdownMenuItem(value: "Beni suef", child: Text("Beni suef"),),
-    DropdownMenuItem(value: "Cairo",child: Text("Cairo"),),
-    DropdownMenuItem(value: "Dakahlia", child: Text("Dakahlia"),),
-    DropdownMenuItem(value: "Demietta",child: Text("Demietta"),),
-    DropdownMenuItem(value: "Faiyum", child: Text("Faiyum"),),
-    DropdownMenuItem(value: "Gharbia",child: Text("Gharbia"),),
-    DropdownMenuItem(value: "Giza", child: Text("Giza"),),
-    DropdownMenuItem(value: "Ismaillia",child: Text("Ismaillia"),),
-    DropdownMenuItem(value: "Kafr El Sheikh", child: Text("Kafr El Sheikh"),),
-    DropdownMenuItem(value: "Luxor",child: Text("Luxor"),),
-    DropdownMenuItem(value: "Matrouh", child: Text("Matrouh"),),
-    DropdownMenuItem(value: "Minya",child: Text("Minya"),),
-    DropdownMenuItem(value: "Monufia", child: Text("Monufia"),),
-    DropdownMenuItem(value: "New Valley",child: Text("New Valley"),),
-    DropdownMenuItem(value: "North Sinai", child: Text("North Sinai"),),
-    DropdownMenuItem(value: "Port Said",child: Text("Port Said"),),
-    DropdownMenuItem(value: "Qalyubia", child: Text("Qalyubia"),),
-    DropdownMenuItem(value: "Qena",child: Text("Qena"),),
-    DropdownMenuItem(value: "Red Sea", child: Text("Red Sea"),),
-    DropdownMenuItem(value: "Sharqia",child: Text("Sharqia"),),
-    DropdownMenuItem(value: "Sohag",child: Text("Sohag"),),
-    DropdownMenuItem(value: "South Sinai", child: Text("South Sinai"),),
-    DropdownMenuItem(value: "Suez",child: Text("Suez"),),];
-  return Container(
-    width: MediaQuery.of(context).size.width,
+    List<DropdownMenuItem> regionList=[
+      DropdownMenuItem(value: "Alexandria", child: Text("Alexandria"),),
+      DropdownMenuItem(value: "Aswan",child: Text("Aswan"),),
+      DropdownMenuItem(value: "Asyut", child: Text("Asyut"),),
+      DropdownMenuItem(value: "Beheira",child: Text("Beheira"),),
+      DropdownMenuItem(value: "Beni suef", child: Text("Beni suef"),),
+      DropdownMenuItem(value: "Cairo",child: Text("Cairo"),),
+      DropdownMenuItem(value: "Dakahlia", child: Text("Dakahlia"),),
+      DropdownMenuItem(value: "Demietta",child: Text("Demietta"),),
+      DropdownMenuItem(value: "Faiyum", child: Text("Faiyum"),),
+      DropdownMenuItem(value: "Gharbia",child: Text("Gharbia"),),
+      DropdownMenuItem(value: "Giza", child: Text("Giza"),),
+      DropdownMenuItem(value: "Ismaillia",child: Text("Ismaillia"),),
+      DropdownMenuItem(value: "Kafr El Sheikh", child: Text("Kafr El Sheikh"),),
+      DropdownMenuItem(value: "Luxor",child: Text("Luxor"),),
+      DropdownMenuItem(value: "Matrouh", child: Text("Matrouh"),),
+      DropdownMenuItem(value: "Minya",child: Text("Minya"),),
+      DropdownMenuItem(value: "Monufia", child: Text("Monufia"),),
+      DropdownMenuItem(value: "New Valley",child: Text("New Valley"),),
+      DropdownMenuItem(value: "North Sinai", child: Text("North Sinai"),),
+      DropdownMenuItem(value: "Port Said",child: Text("Port Said"),),
+      DropdownMenuItem(value: "Qalyubia", child: Text("Qalyubia"),),
+      DropdownMenuItem(value: "Qena",child: Text("Qena"),),
+      DropdownMenuItem(value: "Red Sea", child: Text("Red Sea"),),
+      DropdownMenuItem(value: "Sharqia",child: Text("Sharqia"),),
+      DropdownMenuItem(value: "Sohag",child: Text("Sohag"),),
+      DropdownMenuItem(value: "South Sinai", child: Text("South Sinai"),),
+      DropdownMenuItem(value: "Suez",child: Text("Suez"),),];
+    return Container(
+      width: MediaQuery.of(context).size.width,
 
-    padding: EdgeInsets.all(18),
-    child: Row(
-      children: [
-        Expanded(
-          flex: 2,
-          child: Container(
-            child: Text("Address :",style: GoogleFonts.poppins(
-              fontSize: 15,
-              color: Colors.grey[500],
-            ),),
-          ),
-        ),
-        Expanded(
-          flex: 5,
-          child: Container(
-            margin: EdgeInsets.fromLTRB(15, 0, 0,0),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(5)
-            ),
-            child: DropdownButton(
-              value: SelectedRegion,
-              items: regionList, onChanged: (value) { setState(() {
-              SelectedRegion=value;
-            });},
-
+      padding: EdgeInsets.all(18),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: Container(
+              child: Text("Address :",style: GoogleFonts.poppins(
+                fontSize: 15,
+                color: Colors.grey[500],
+              ),),
             ),
           ),
-        ),
+          Expanded(
+            flex: 5,
+            child: Container(
+              margin: EdgeInsets.fromLTRB(15, 0, 0,0),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(5)
+              ),
+              child: DropdownButton(
+                value: SelectedRegion,
+                items: regionList, onChanged: (value) { setState(() {
+                SelectedRegion=value;
+              });},
 
-      ],
-    ),
-  );
-}
+              ),
+            ),
+          ),
+
+        ],
+      ),
+    );
+  }
   Widget TypeWidget(){
     List<DropdownMenuItem> Typeoptions=[
       DropdownMenuItem(value: "flat", child: Text("flat"),),
@@ -486,7 +486,7 @@ class _AddAdState extends State<AddAd> {
                   child: IconButton(
                     onPressed: (){
                       Navigator.pop(context);
-                      },
+                    },
                     icon: Icon(
                         EvaIcons.arrowIosBack
                     ),
@@ -615,33 +615,33 @@ class _AddAdState extends State<AddAd> {
                           Row(
                             children: [
                               Expanded(
-                                flex: 10,
-                                child: Stack(
-                                  children: [
-                                    TextFormField(
-                                      enabled: false
-                                        ,validator: (val) {
-                                          if (val.isEmpty) {
-                                            return 'please fill this field';
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        decoration: InputDecoration(
+                                  flex: 10,
+                                  child: Stack(
+                                    children: [
+                                      TextFormField(
+                                          enabled: false
+                                          ,validator: (val) {
+                                        if (val.isEmpty) {
+                                          return 'please fill this field';
+                                        } else {
+                                          return null;
+                                        }
+                                      },
+                                          decoration: InputDecoration(
                                             // prefixIcon: Icon(
                                             //   Icons.location_on,
                                             //   color: Colors.teal,
                                             // ),
-                                            border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.circular(10),
-                                              borderSide: BorderSide.none,
-                                            ),
-                                            fillColor: Color(0xfff3f3f4),
-                                            filled: true)
-                                    ),
-                                    Text(subaddress!=null?subaddress:""),
-                                  ],
-                                )
+                                              border: OutlineInputBorder(
+                                                borderRadius: BorderRadius.circular(10),
+                                                borderSide: BorderSide.none,
+                                              ),
+                                              fillColor: Color(0xfff3f3f4),
+                                              filled: true)
+                                      ),
+                                      Text(subaddress!=null?subaddress:""),
+                                    ],
+                                  )
                                 // TextFormField(
                                 //     validator: (val) {
                                 //       if (val.isEmpty) {
@@ -673,12 +673,12 @@ class _AddAdState extends State<AddAd> {
                                     ),
                                     child: IconButton(
                                         icon: Icon(Icons.pin_drop_outlined,color: Colors.white,), onPressed: (){
-                                          //Navigator.push(context, MaterialPageRoute(builder: (context) => AdAddMapScreen(),));
-                                          setState(() {
-                                            _isAddAd=false;
-                                            _isMap=true;
-                                          });
-                                        }),
+                                      //Navigator.push(context, MaterialPageRoute(builder: (context) => AdAddMapScreen(),));
+                                      setState(() {
+                                        _isAddAd=false;
+                                        _isMap=true;
+                                      });
+                                    }),
                                   ))
                             ],
                           ),
@@ -791,7 +791,7 @@ class _AddAdState extends State<AddAd> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0,15,0,0),
                           child: Text("NOTE: Choose type of these 2 types to continue",style: TextStyle(
-                            color: Colors.grey
+                              color: Colors.grey
                           ),),
                         ),
                         ListTile(

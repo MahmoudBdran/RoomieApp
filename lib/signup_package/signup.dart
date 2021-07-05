@@ -319,7 +319,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Widget _buildSocialBtn(Function onTap, AssetImage logo) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: onTap as void Function(),
       child: Container(
         height: 60.0,
         width: 60.0,
@@ -870,7 +870,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                        image:_profileImage==null?AssetImage("images/no_image_avatar.png"):FileImage(_profileImage),
+                                        image:(_profileImage==null?AssetImage("images/no_image_avatar.png"):FileImage(_profileImage)) as ImageProvider<Object>,
                                         fit: BoxFit.cover)),
                               ),
                               Positioned(

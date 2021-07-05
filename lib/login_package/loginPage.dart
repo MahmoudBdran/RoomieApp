@@ -664,63 +664,63 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      key: scaffoldKey,
+        key: scaffoldKey,
         body: !isApiCallProcess?Container(
           height: height,
           child: Stack(
-        children: <Widget>[
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xFF47CABD),
-                  Color(0xFF2ACFBF),
-                  Color(0xFF0CB8A8),
-                  Color(0xFF009688),
-                ],
-                stops: [0.1, 0.4, 0.7, 0.9],
-              ),
-            ),
-          ),
-          Container(
-            height: double.infinity,
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(
-                horizontal: 40.0,
-                vertical: 120.0,),
-              physics: AlwaysScrollableScrollPhysics(),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    _title(),
-                    SizedBox(height: 30.0),
-                    _buildEmailTF(),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-                    _buildPasswordTF(),
-                    _buildForgotPasswordBtn(),
-                    _buildRememberMeCheckbox(),
-                    _buildLoginBtn(),
-                    _buildSignInWithText(),
-                    _buildSocialBtnRow(),
-                    _buildSignupBtn(),
-                  ],
+            children: <Widget>[
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFF47CABD),
+                      Color(0xFF2ACFBF),
+                      Color(0xFF0CB8A8),
+                      Color(0xFF009688),
+                    ],
+                    stops: [0.1, 0.4, 0.7, 0.9],
+                  ),
                 ),
               ),
-            ),
+              Container(
+                height: double.infinity,
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 40.0,
+                    vertical: 120.0,),
+                  physics: AlwaysScrollableScrollPhysics(),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        _title(),
+                        SizedBox(height: 30.0),
+                        _buildEmailTF(),
+                        SizedBox(
+                          height: 30.0,
+                        ),
+                        _buildPasswordTF(),
+                        _buildForgotPasswordBtn(),
+                        _buildRememberMeCheckbox(),
+                        _buildLoginBtn(),
+                        _buildSignInWithText(),
+                        _buildSocialBtnRow(),
+                        _buildSignupBtn(),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              // Positioned(top: 40, left: 0, child: _backButton()),
+            ],
           ),
-          // Positioned(top: 40, left: 0, child: _backButton()),
-        ],
-      ),
-    ):Container(
+        ):Container(
           color: Colors.grey.withOpacity(0.1),
           child: Center(
             child: CircularProgressIndicator(),

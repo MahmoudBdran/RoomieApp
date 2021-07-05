@@ -601,7 +601,7 @@ class _EditProfileState extends State<EditProfile> {
                       ],
                     ),
                   ),
-                 GenderWidget(),
+                  GenderWidget(),
                   Divider(),
                 ],
               ),

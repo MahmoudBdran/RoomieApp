@@ -41,7 +41,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                           fit: BoxFit.cover)),
                 ),
                 Positioned(
-                  bottom: 0,
+                    bottom: 0,
                     right: 0,
                     child: Container(
                       width: 10,
@@ -117,7 +117,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                 Container(
                   width: MediaQuery.of(context).size.width - 180,
                   decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                  BoxDecoration(borderRadius: BorderRadius.circular(20)),
                   child: TextField(
                     cursorColor: Colors.black,
                     controller: _sendMessageController,

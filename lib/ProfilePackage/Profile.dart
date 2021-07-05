@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:roommates/EditProfilePackage/EditProfile.dart';
 import 'package:roommates/FollowingPackage/Following.dart';
 import 'package:roommates/FollowersPackage/Followers.dart';
-import 'file:///E:/flutter_projects/roommates/lib/PostDetailsPackage/PostContainer.dart';
+import 'package:roommates/PostDetailsPackage/PostContainer.dart';
 import 'package:roommates/constant/data.dart';
 import 'package:roommates/theme/colors.dart';
 

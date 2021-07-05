@@ -23,27 +23,27 @@ class _PostPhotosOnlyState extends State<PostPhotosOnly> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: ListView.builder(
-              itemCount: imagesList.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ImageOnlyPage(imagesList[index])));
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: Image.network(imagesList[index],fit: BoxFit.cover,),
-                  ),
-                );
-              },
-            ),
-          )
-          ),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: ListView.builder(
+                itemCount: imagesList.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ImageOnlyPage(imagesList[index])));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Image.network(imagesList[index],fit: BoxFit.cover,),
+                    ),
+                  );
+                },
+              ),
+            )
         ),
-      );
+      ),
+    );
 
   }
 }

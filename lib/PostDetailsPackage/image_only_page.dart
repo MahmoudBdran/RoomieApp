@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -64,8 +65,8 @@ class _ImageOnlyPageState extends State<ImageOnlyPage> {
 
   }
   void loadImage(url) async{
-    var imageId= await ImageDownloader.downloadImage(url);
-    var path = await ImageDownloader.findPath(imageId);
+    var imageId= await (ImageDownloader.downloadImage(url) as FutureOr<String>);
+    var path = await (ImageDownloader.findPath(imageId) as FutureOr<String>);
     File image = File(path);
     setState(() {
       _image=image;

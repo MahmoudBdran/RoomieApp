@@ -12,14 +12,14 @@ class SharedService{
   }
   static Future<void> setLoginDetails(LoginResponeModel model)async{
     final prefs= await SharedPreferences.getInstance();
-    return prefs.setString("login_details", model !=null ? jsonEncode(model.toJson()):null);
+    prefs.setString("login_details", model !=null ? jsonEncode(model.toJson()):"no");
   }
   static Future<void>logout()async{
     await setLoginDetails(null);
   }
   static Future<void> setMapDetails(String address ,double latitude,double longtude)async{
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString("map_address", address!=null?address:null);
+    prefs.setString("map_address", address!=null?address:"no");
     prefs.setDouble("map_address_latitude", latitude!=0?latitude:0);
     prefs.setDouble("map_address_longtude", longtude!=0?longtude:0);
   }
