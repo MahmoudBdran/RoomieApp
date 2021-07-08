@@ -9,6 +9,7 @@ import 'package:roommates/PostDetailsPackage/post_likes_page.dart';
 import 'package:roommates/PostDetailsPackage/post_photos_only.dart';
 import 'package:roommates/UserProfilePackage/UserProfile.dart';
 import 'package:roommates/constant/data.dart';
+import 'package:roommates/images_in_post.dart';
 import 'package:roommates/theme/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -230,6 +231,11 @@ class _PostTemplateState extends State<PostTemplate> {
                   fontSize: 16.0);
             });
           },
+          onTap: (){
+            setState(() {
+              customLaunch('tel:${postData[index]['phone']}');
+            });
+          },
           child: Text(
             postData[index]['phone'],
             style: TextStyle(
@@ -238,37 +244,6 @@ class _PostTemplateState extends State<PostTemplate> {
             ),
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-                color: Colors.grey,
-                icon: Icon(Icons.copy_outlined),
-                onPressed: () {
-                  setState(() {
-                    Clipboard.setData(new ClipboardData(text: postData[index]['phone']))
-                        .then((_) => print("copied"));
-                    Fluttertoast.showToast(
-                        msg: "phone number in clipboard",
-                        toastLength: Toast.LENGTH_LONG,
-                        gravity: ToastGravity.BOTTOM,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.grey,
-                        textColor: Colors.white,
-                        fontSize: 16.0);
-                    //Toast.show("phone number in clipboard", context,gravity: Toast.BOTTOM,duration: Toast.LENGTH_LONG,backgroundColor: Colors.grey);
-                  });
-                }),
-            IconButton(
-                color: Colors.grey,
-                icon: Icon(Icons.phone),
-                onPressed: () {
-                  setState(() {
-                    customLaunch('tel:${postData[index]['phone']}');
-                  });
-                }),
-          ],
-        )
       ],
     );
   }
@@ -353,7 +328,8 @@ class _PostTemplateState extends State<PostTemplate> {
       },
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-        child: Image_Carousel(postData[index]['images']),
+        //child: Image_Carousel(postData[index]['images']),
+        child: ImagesContainerTemplate(imageList: postData[index]['images'],),
       ),
     );
   }

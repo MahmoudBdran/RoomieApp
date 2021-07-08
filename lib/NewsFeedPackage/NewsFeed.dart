@@ -1,3 +1,4 @@
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -73,6 +74,13 @@ class _NewsFeedState extends State<NewsFeed> {
         ),
       ),
     );
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // CollectionReference col = FirebaseFirestore.instance.collection("TestCollection");
+    // col.doc().set({'name':"mahmoud"});
   }
   @override
   Widget build(BuildContext context) {

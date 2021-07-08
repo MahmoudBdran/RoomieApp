@@ -1,19 +1,22 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:roommates/APIServices/login_service.dart';
 import 'package:roommates/HomePackage/HomePage.dart';
 import 'package:roommates/constant/data.dart';
 import 'package:roommates/login_package/constants.dart';
+import 'package:roommates/signup_package/API_package/signup_model.dart';
 import 'package:roommates/signup_package/verify_package/verifypage.dart';
 import 'package:roommates/src/Widget/bezierContainer.dart';
 import '../login_package/loginPage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SignUpPage extends StatefulWidget {
-
-
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
@@ -23,17 +26,40 @@ class _SignUpPageState extends State<SignUpPage> {
   final pickerForIdVerification = ImagePicker();
   File _profileImage;
   final profileImagePicker= ImagePicker();
-  Future pickImageForIdVerfication() async {
-    final pickedFile = await pickerForIdVerification.getImage(source: ImageSource.camera);
-    setState(() {
-      if (pickedFile != null) {
-        _imageForIdVerification = File(pickedFile.path);
-        print("path is : "+_imageForIdVerification.path);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
+  String usernameController;
+  String emailController;
+  String passwordController;
+  String phoneController;
+  String workController;
+  String workAtController;
+  String livesInController;
+  String fromController;
+  String studyController;
+  String studyAtController;
+  String downloadUrl;
+  // Future uploadImageToFirebase() async {
+  //   await firebase_storage.FirebaseStorage.instance
+  //       .ref()
+  //       .child('users/${Uri.file(_profileImage.path).pathSegments.last}').putFile(_profileImage).then((value) {
+  //         value.ref.getDownloadURL().then((value) {
+  //           print("The download url is "+ value.toString());
+  //           setState(() {
+  //             downloadUrl=value;
+  //           });
+  //         });
+  //   });
+  // }
+  // Future pickImageForIdVerfication() async {
+  //   final pickedFile = await pickerForIdVerification.getImage(source: ImageSource.camera);
+  //   setState(() {
+  //     if (pickedFile != null) {
+  //       _imageForIdVerification = File(pickedFile.path);
+  //       print("path is : "+_imageForIdVerification.path);
+  //     } else {
+  //       print('No image selected.');
+  //     }
+  //   });
+  // }
   Future pickImageForprofileImage() async {
     final pickedFile = await profileImagePicker.getImage(source: ImageSource.gallery);
     setState(() {
@@ -47,6 +73,52 @@ class _SignUpPageState extends State<SignUpPage> {
   }
   bool hidePassword=true;
   final _formKey = GlobalKey<FormState>();
+  final auth = FirebaseAuth.instance;
+  Future<void> signUp(String email,String password)async{
+    try{
+      print("email is : "+email);
+      print("password is : "+password);
+      await auth.createUserWithEmailAndPassword(email: email, password: password).then((_){
+
+        CollectionReference userInfo=FirebaseFirestore.instance.collection("users");
+        userInfo.doc(FirebaseAuth.instance.currentUser.uid).set({
+          'username':usernameController,
+          'uid':auth.currentUser.uid,
+          "email":auth.currentUser.email,
+          'phone':phoneController,
+          //'profileCoverImage': profileCoverImage,
+          'profile_image':downloadUrl,
+          'work': workController,
+          'work_at':workAtController,
+          'live_in': livesInController,
+          'from':fromController,
+          'study': studyController,
+          'study_at':studyAtController
+        }).then((_) {
+          firebase_storage.FirebaseStorage.instance
+              .ref()
+              .child('users/${auth.currentUser.uid}/profile_image').putFile(_profileImage).then((value) {
+            value.ref.getDownloadURL().then((value) {
+              print("The download url is "+ value.toString());
+              userInfo.doc(FirebaseAuth.instance.currentUser.uid).update({
+                "profile_image":value
+              }).then((_) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage(),)));
+            });
+          });
+        });
+       });
+
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Widget _backButton() {
     return InkWell(
       onTap: () {
@@ -238,6 +310,14 @@ class _SignUpPageState extends State<SignUpPage> {
     }
     return false;
   }
+  // Future<void> _signOut() async {
+  //   await FirebaseAuth.instance.signOut().then((_) {
+  //     print("User logged out from firebase");
+  //     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(),));
+  //     });
+  // }
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+  SignUpRequestModel signUpRequestModel;
   Widget _buildSignupBtn() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
@@ -246,11 +326,35 @@ class _SignUpPageState extends State<SignUpPage> {
         elevation: 5.0,
         onPressed:(){
           if (validateAndSave()){
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => VerifyScreen("01205057427"),
-                ));
+            print("validated successfully");
+            signUp(emailController, passwordController);
+            // _signOut();
+            // LoginService signUpService = LoginService();
+            // signUpService.signUp(avatar: avatar,email: usernameController,password: passwordController).then((value){
+            //
+            //     if(value.id!=null){
+            //       print("id is "+value.id.toString());
+            //       final snackBar=SnackBar(
+            //         content:Text("Login Successful"),
+            //         backgroundColor: Colors.green,
+            //       );
+            //       scaffoldKey.currentState.showSnackBar(snackBar);
+            //       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(),));
+            //     }else{
+            //       print("error");
+            //       final snackBar=SnackBar(
+            //         content:Text(value.message),
+            //         backgroundColor: Colors.red,
+            //       );
+            //       scaffoldKey.currentState.showSnackBar(snackBar);
+            //     }
+            //
+            // });
+            // Navigator.pushReplacement(
+            //     context,
+            //     MaterialPageRoute(
+            //       builder: (context) => LoginPage(),
+            //     ));
           }
 
         },
@@ -297,7 +401,6 @@ class _SignUpPageState extends State<SignUpPage> {
   //     ),
   //   );
   // }
-
   Widget _buildSignUpWithText() {
     return Column(
       children: <Widget>[
@@ -316,7 +419,6 @@ class _SignUpPageState extends State<SignUpPage> {
       ],
     );
   }
-
   Widget _buildSocialBtn(Function onTap, AssetImage logo) {
     return GestureDetector(
       onTap: onTap as void Function(),
@@ -340,7 +442,6 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
-
   Widget _buildSocialBtnRow() {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 30.0),
@@ -363,7 +464,6 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
-
   Widget _buildEmailTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -378,11 +478,21 @@ class _SignUpPageState extends State<SignUpPage> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextFormField(
-            initialValue: "eve.holt@reqres.in",
+
             keyboardType: TextInputType.emailAddress,
             validator: (input) => !input.contains('@')
                 ? "Email Id should be valid"
                 : null,
+            onSaved: (val){
+              // print(val+ " is val");
+              // signUpRequestModel.email=val;
+              // print(signUpRequestModel.email+ " is email");
+              // signUpRequestModel.avatar="https://reqres.in/img/faces/7-image.jpg";
+
+            },
+            onChanged: (val){
+            emailController=val;
+          },
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
@@ -416,6 +526,9 @@ class _SignUpPageState extends State<SignUpPage> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextFormField(
+            onChanged: (val){
+            usernameController=val;
+          },
             initialValue: "mahmoud bdran",
             keyboardType: TextInputType.text,
             validator: (input) => input.isEmpty
@@ -440,7 +553,6 @@ class _SignUpPageState extends State<SignUpPage> {
       ],
     );
   }
-
   Widget _buildPasswordTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -455,11 +567,16 @@ class _SignUpPageState extends State<SignUpPage> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextFormField(
-            initialValue: "12345678",
             keyboardType: TextInputType.text,
             validator: (input) => input.length < 3
                 ? "Password should be more than 3 characters"
                 : null,
+            onSaved: (val){
+              // signUpRequestModel.password=val;
+            },
+            onChanged: (val){
+              passwordController=val;
+            },
             obscureText: hidePassword,
             style: TextStyle(
               color: Colors.white,
@@ -507,7 +624,8 @@ class _SignUpPageState extends State<SignUpPage> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextFormField(
-            initialValue: "123456789",
+            //initialValue: "123456789",
+
             keyboardType: TextInputType.text,
             validator: (input) => input.length < 3
                 ? "Password should be more than 3 characters"
@@ -559,7 +677,10 @@ class _SignUpPageState extends State<SignUpPage> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextFormField(
-            initialValue: "01205057427",
+            onChanged: (val){
+              phoneController=val;
+            },
+            //initialValue: "01205057427",
             keyboardType: TextInputType.number,
             validator: (input) => input.isEmpty
                 ? "Please fill this field"
@@ -583,239 +704,258 @@ class _SignUpPageState extends State<SignUpPage> {
       ],
     );
   }
-  // Widget _buildWorkTF() {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: <Widget>[
-  //       Text(
-  //         'Work',
-  //         style: kLabelStyle,
-  //       ),
-  //       SizedBox(height: 10.0),
-  //       Container(
-  //         alignment: Alignment.centerLeft,
-  //         decoration: kBoxDecorationStyle,
-  //         height: 60.0,
-  //         child: TextFormField(
-  //           initialValue: "Software engineer",
-  //           keyboardType: TextInputType.emailAddress,
-  //           validator: (input) => input.isEmpty
-  //               ? "Please fill this field"
-  //               : null,
-  //           style: TextStyle(
-  //             color: Colors.white,
-  //             fontFamily: 'OpenSans',
-  //           ),
-  //           decoration: InputDecoration(
-  //             border: InputBorder.none,
-  //             contentPadding: EdgeInsets.only(top: 14.0),
-  //             prefixIcon: Icon(
-  //               Icons.work,
-  //               color: Colors.white,
-  //             ),
-  //             hintText: 'ex: Software Enginner',
-  //             hintStyle: kHintTextStyle,
-  //           ),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-  // Widget _buildWorkAtTF() {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: <Widget>[
-  //       Text(
-  //         'Work at',
-  //         style: kLabelStyle,
-  //       ),
-  //       SizedBox(height: 10.0),
-  //       Container(
-  //         alignment: Alignment.centerLeft,
-  //         decoration: kBoxDecorationStyle,
-  //         height: 60.0,
-  //         child: TextFormField(
-  //           initialValue: "IBM company",
-  //           keyboardType: TextInputType.emailAddress,
-  //           validator: (input) => input.isEmpty
-  //               ? "Please fill this field"
-  //               : null,
-  //           style: TextStyle(
-  //             color: Colors.white,
-  //             fontFamily: 'OpenSans',
-  //           ),
-  //           decoration: InputDecoration(
-  //             border: InputBorder.none,
-  //             contentPadding: EdgeInsets.only(top: 14.0),
-  //             prefixIcon: Icon(
-  //               Icons.work,
-  //               color: Colors.white,
-  //             ),
-  //             hintText: 'ex: Alahly Bank',
-  //             hintStyle: kHintTextStyle,
-  //           ),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-  // Widget _buildStudyTF() {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: <Widget>[
-  //       Text(
-  //         'Study',
-  //         style: kLabelStyle,
-  //       ),
-  //       SizedBox(height: 10.0),
-  //       Container(
-  //         alignment: Alignment.centerLeft,
-  //         decoration: kBoxDecorationStyle,
-  //         height: 60.0,
-  //         child: TextFormField(
-  //           initialValue: "Information technology",
-  //           keyboardType: TextInputType.emailAddress,
-  //           validator: (input) => input.isEmpty
-  //               ? "Please fill this field"
-  //               : null,
-  //           style: TextStyle(
-  //             color: Colors.white,
-  //             fontFamily: 'OpenSans',
-  //           ),
-  //           decoration: InputDecoration(
-  //             border: InputBorder.none,
-  //             contentPadding: EdgeInsets.only(top: 14.0),
-  //             prefixIcon: Icon(
-  //               Icons.school,
-  //               color: Colors.white,
-  //             ),
-  //             hintText: 'ex: Information Technology',
-  //             hintStyle: kHintTextStyle,
-  //           ),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-  // Widget _buildStudyAtTF() {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: <Widget>[
-  //       Text(
-  //         'Study At',
-  //         style: kLabelStyle,
-  //       ),
-  //       SizedBox(height: 10.0),
-  //       Container(
-  //         alignment: Alignment.centerLeft,
-  //         decoration: kBoxDecorationStyle,
-  //         height: 60.0,
-  //         child: TextFormField(
-  //           initialValue: "Menoufia university",
-  //           keyboardType: TextInputType.emailAddress,
-  //           validator: (input) => input.isEmpty
-  //               ? "Please fill this field"
-  //               : null,
-  //           style: TextStyle(
-  //             color: Colors.white,
-  //             fontFamily: 'OpenSans',
-  //           ),
-  //           decoration: InputDecoration(
-  //             border: InputBorder.none,
-  //             contentPadding: EdgeInsets.only(top: 14.0),
-  //             prefixIcon: Icon(
-  //               Icons.school,
-  //               color: Colors.white,
-  //             ),
-  //             hintText: 'ex: Menoufia university',
-  //             hintStyle: kHintTextStyle,
-  //           ),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-  // Widget _buildLivesInTF() {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: <Widget>[
-  //       Text(
-  //         'Lives in',
-  //         style: kLabelStyle,
-  //       ),
-  //       SizedBox(height: 10.0),
-  //       Container(
-  //         alignment: Alignment.centerLeft,
-  //         decoration: kBoxDecorationStyle,
-  //         height: 60.0,
-  //         child: TextFormField(
-  //           initialValue: "Menoufia",
-  //           keyboardType: TextInputType.emailAddress,
-  //           validator: (input) => input.isEmpty
-  //               ? "Please fill this field"
-  //               : null,
-  //           style: TextStyle(
-  //             color: Colors.white,
-  //             fontFamily: 'OpenSans',
-  //           ),
-  //           decoration: InputDecoration(
-  //             border: InputBorder.none,
-  //             contentPadding: EdgeInsets.only(top: 14.0),
-  //             prefixIcon: Icon(
-  //               Icons.home,
-  //               color: Colors.white,
-  //             ),
-  //             hintText: 'ex: menoufia',
-  //             hintStyle: kHintTextStyle,
-  //           ),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-  // Widget _buildFromTF() {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: <Widget>[
-  //       Text(
-  //         'From',
-  //         style: kLabelStyle,
-  //       ),
-  //       SizedBox(height: 10.0),
-  //       Container(
-  //         alignment: Alignment.centerLeft,
-  //         decoration: kBoxDecorationStyle,
-  //         height: 60.0,
-  //         child: TextFormField(
-  //           initialValue: "Masrsa matrouh",
-  //           keyboardType: TextInputType.emailAddress,
-  //           validator: (input) => input.isEmpty
-  //               ? "Please fill this field"
-  //               : null,
-  //           style: TextStyle(
-  //             color: Colors.white,
-  //             fontFamily: 'OpenSans',
-  //           ),
-  //           decoration: InputDecoration(
-  //             border: InputBorder.none,
-  //             contentPadding: EdgeInsets.only(top: 14.0),
-  //             prefixIcon: Icon(
-  //               Icons.location_on,
-  //               color: Colors.white,
-  //             ),
-  //             hintText: 'ex: marsa matrouh',
-  //             hintStyle: kHintTextStyle,
-  //           ),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
+  Widget _buildWorkTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Work',
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextFormField(
+            onChanged: (val){
+              workController=val;
+            },
+            //initialValue: "Software engineer",
+            keyboardType: TextInputType.emailAddress,
+            validator: (input) => input.isEmpty
+                ? "Please fill this field"
+                : null,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.work,
+                color: Colors.white,
+              ),
+              hintText: 'ex: Software Enginner',
+              hintStyle: kHintTextStyle,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+  Widget _buildWorkAtTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Work at',
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextFormField(
+            onChanged: (val){
+              workAtController=val;
+            },
+            //initialValue: "IBM company",
+            keyboardType: TextInputType.emailAddress,
+            validator: (input) => input.isEmpty
+                ? "Please fill this field"
+                : null,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.work,
+                color: Colors.white,
+              ),
+              hintText: 'ex: Alahly Bank',
+              hintStyle: kHintTextStyle,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+  Widget _buildStudyTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Study',
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextFormField(
+            onChanged: (val){
+              studyController=val;
+            },
+            //initialValue: "Information technology",
+            keyboardType: TextInputType.emailAddress,
+            validator: (input) => input.isEmpty
+                ? "Please fill this field"
+                : null,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.school,
+                color: Colors.white,
+              ),
+              hintText: 'ex: Information Technology',
+              hintStyle: kHintTextStyle,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+  Widget _buildStudyAtTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Study At',
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextFormField(
+            onChanged: (val){
+              studyAtController=val;
+            },
+            //initialValue: "Menoufia university",
+            keyboardType: TextInputType.emailAddress,
+            validator: (input) => input.isEmpty
+                ? "Please fill this field"
+                : null,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.school,
+                color: Colors.white,
+              ),
+              hintText: 'ex: Menoufia university',
+              hintStyle: kHintTextStyle,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+  Widget _buildLivesInTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Lives in',
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextFormField(
+            onChanged: (val){
+              livesInController=val;
+            },
+            //initialValue: "Menoufia",
+            keyboardType: TextInputType.emailAddress,
+            validator: (input) => input.isEmpty
+                ? "Please fill this field"
+                : null,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.home,
+                color: Colors.white,
+              ),
+              hintText: 'ex: menoufia',
+              hintStyle: kHintTextStyle,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+  Widget _buildFromTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'From',
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextFormField(
+            onChanged: (val){
+              fromController=val;
+            },
+            //initialValue: "Masrsa matrouh",
+            keyboardType: TextInputType.emailAddress,
+            validator: (input) => input.isEmpty
+                ? "Please fill this field"
+                : null,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.location_on,
+                color: Colors.white,
+              ),
+              hintText: 'ex: marsa matrouh',
+              hintStyle: kHintTextStyle,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
+      key: scaffoldKey,
       body: SingleChildScrollView(
         child: Container(
           height: height,
@@ -893,9 +1033,8 @@ class _SignUpPageState extends State<SignUpPage> {
                           width: MediaQuery.of(context).size.width/4,
                           height: MediaQuery.of(context).size.width/4,
                         ),
-                        //_title(),
                         SizedBox(height: 10.0),
-                        _buildUsernameTF(),
+                       _buildUsernameTF(),
                         SizedBox(height: 30.0),
                         _buildEmailTF(),
                         SizedBox(height: 30.0,),
@@ -905,18 +1044,18 @@ class _SignUpPageState extends State<SignUpPage> {
                         SizedBox(height: 30.0),
                         _buildPhoneTF(),
                         SizedBox(height: 30.0),
-                        // _buildWorkTF(),
-                        // SizedBox(height: 30.0),
-                        // _buildWorkAtTF(),
-                        // SizedBox(height: 30.0),
-                        // _buildStudyTF(),
-                        // SizedBox(height: 30.0),
-                        // _buildStudyAtTF(),
-                        // SizedBox(height: 30.0),
-                        // _buildLivesInTF(),
-                        // SizedBox(height: 30.0),
-                        // _buildFromTF(),
-                        // SizedBox(height: 30.0),
+                        _buildWorkTF(),
+                        SizedBox(height: 30.0),
+                        _buildWorkAtTF(),
+                        SizedBox(height: 30.0),
+                        _buildStudyTF(),
+                        SizedBox(height: 30.0),
+                        _buildStudyAtTF(),
+                        SizedBox(height: 30.0),
+                        _buildLivesInTF(),
+                        SizedBox(height: 30.0),
+                        _buildFromTF(),
+                        SizedBox(height: 30.0),
                         Container(
                           width: MediaQuery.of(context).size.width,
                           margin: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
@@ -927,7 +1066,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                         ),
                         SizedBox(height: 10.0),
-                        // _buildPickImageBtn(),
+                         //_buildPickImageBtn(),
                         _buildSignupBtn(),
                         _buildSignUpWithText(),
                         _buildSocialBtnRow(),

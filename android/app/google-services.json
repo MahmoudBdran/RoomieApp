@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "933904303493",
+    "project_id": "roomieapp-22942",
+    "storage_bucket": "roomieapp-22942.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:933904303493:android:691e9a570afb338235f0ec",
+        "android_client_info": {
+          "package_name": "com.example.roommates"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "933904303493-jjik24fr7gcm5ca2vfte2nl657ru1k4u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.roommates",
+            "certificate_hash": "bbd07caafb8add4a57df35ff63e879823b4b5cb8"
+          }
+        },
+        {
+          "client_id": "933904303493-7rb0ovde2ubbfbmkukv8nsqpr163b72e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6wec9OOqR1s9-fzt5PI2SQ8TVR1T6Ly0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "933904303493-7rb0ovde2ubbfbmkukv8nsqpr163b72e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

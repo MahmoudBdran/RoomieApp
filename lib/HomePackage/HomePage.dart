@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:roommates/APIServices/shared_service.dart';
@@ -16,6 +18,7 @@ import 'package:roommates/EditProfilePackage/EditProfile.dart';
 import 'package:roommates/PostDetailsPackage/PostContainer.dart';
 import 'package:roommates/login_package/loginPage.dart';
 import 'package:roommates/theme/colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -23,7 +26,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
+  Future<void> _signOut() async {
+    await FirebaseAuth.instance.signOut().then((_) => print("User logged out from firebase"));
+  }
   List<Widget> pages=[
     NewsFeed(),
     Notifications(),
@@ -48,6 +53,21 @@ class _HomePageState extends State<HomePage> {
             ),
           ]),
     );
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("current user is "+FirebaseAuth.instance.currentUser.email);Future<void> deleteUser() {
+      FirebaseFirestore.instance
+          .collection('chat')
+          .get()
+          .then((QuerySnapshot querySnapshot) {
+        querySnapshot.docs.forEach((doc) {
+          FirebaseFirestore.instance.collection("chat").doc(doc.id).delete();
+        });
+      });
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -139,12 +159,18 @@ class _HomePageState extends State<HomePage> {
                   ),),
                 ),
                 ListTile(
-                  onTap: (){
-                    setState(() {
-                      SharedService.logout().then((_) {
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(),));
-                      });
-                    });},
+                  onTap: () async {
+
+                     // SharedPreferences prefs = await SharedPreferences.getInstance();
+                      //prefs.remove('user_id');
+                      // Navigator.pushReplacement(context,
+                      //     MaterialPageRoute(builder: (BuildContext ctx) => LoginPage()));
+
+                      _signOut();
+                      // SharedService.logout().then((_) {
+                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(),));
+                      // });
+                  },
                   leading: Icon(EvaIcons.logOutOutline,size: 25,color: Colors.teal[800]),
                   title: Text("Log out",style:TextStyle(
                       fontSize: 18,

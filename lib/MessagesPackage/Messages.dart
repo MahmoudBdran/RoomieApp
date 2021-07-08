@@ -2,6 +2,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:roommates/chat_package/chat_detail_page.dart';
+import 'package:roommates/chat_package/testchat.dart';
 import 'package:roommates/constant/data.dart';
 
 class Messages extends StatefulWidget {
@@ -14,6 +15,7 @@ class _MessagesState extends State<Messages> {
     return InkWell(
       onTap: (){
         Navigator.push(context, MaterialPageRoute(builder: (_) => ChatDetailPage()));
+        //Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen()));
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 12,bottom: 8),

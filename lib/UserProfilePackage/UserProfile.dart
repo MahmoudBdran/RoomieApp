@@ -221,14 +221,12 @@ class _UserProfileState extends State<UserProfile> {
             return Cover_Profile_img();
           }else if(index ==1){
             return Username();
-          }else if(index ==2){
-            return UserStatus();
-          }else if(index==3){
+          }else if(index==2){
             return Addfriend_more_btns();
-          }else if(index ==4){
+          }else if(index ==3){
             return User_BasicInfo();
           }else {
-            return PostTemplate(index-5);
+            return PostTemplate(index-4);
           }
         },
       ),

@@ -1,10 +1,18 @@
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:roommates/APIServices/shared_service.dart';
+import 'package:roommates/HomePackage/HomePage.dart';
 import 'package:roommates/Maps_package/adAdd_Map_screen.dart';
 import 'package:roommates/theme/colors.dart';
 
@@ -15,6 +23,7 @@ class AddAd extends StatefulWidget {
 }
 enum SingingCharacter { Separated_persons, family }
 class _AddAdState extends State<AddAd> {
+  String character="separated_persons";
   SingingCharacter _character = SingingCharacter.Separated_persons;
 
 
@@ -102,7 +111,7 @@ class _AddAdState extends State<AddAd> {
       DropdownMenuItem(value: "room",child: Text("room"),),
       DropdownMenuItem(value: "bed", child: Text("bed"),),];
     return Visibility(
-      visible: (_character==SingingCharacter.family)?false:true,
+      visible: (character=="family")?false:true,
       child: Container(
         width: MediaQuery.of(context).size.width,
 
@@ -145,7 +154,7 @@ class _AddAdState extends State<AddAd> {
     List<DropdownMenuItem> petsoptions=[DropdownMenuItem(value: "pets", child: Text("pets"),),
       DropdownMenuItem(value: "no pets",child: Text("no pets"),)];
     return Visibility(
-      visible: (_character==SingingCharacter.family)?false:true,
+      visible: (character=="family")?false:true,
       child: Container(
         width: MediaQuery.of(context).size.width,
 
@@ -189,7 +198,7 @@ class _AddAdState extends State<AddAd> {
     List<DropdownMenuItem> Guestsoptions=[DropdownMenuItem(value: "accept guests", child: Text("accept guests"),),
       DropdownMenuItem(value: "don't accept guests",child: Text("don't accept guests"),)];
     return Visibility(
-      visible: (_character==SingingCharacter.family)?false:true,
+      visible: (character=="family")?false:true,
       child: Container(
         width: MediaQuery.of(context).size.width,
 
@@ -272,7 +281,7 @@ class _AddAdState extends State<AddAd> {
     List<DropdownMenuItem> smokingoptions=[DropdownMenuItem(value: "smoking", child: Text("smoking"),),
       DropdownMenuItem(value: "no smoking",child: Text("no smoking"),)];
     return Visibility(
-      visible: (_character==SingingCharacter.family)?false:true,
+      visible: (character=="family")?false:true,
       child: Container(
         width: MediaQuery.of(context).size.width,
 
@@ -315,7 +324,7 @@ class _AddAdState extends State<AddAd> {
     List<DropdownMenuItem> genderoptions=[DropdownMenuItem(value: "male", child: Text("male"),),
       DropdownMenuItem(value: "female",child: Text("female"),)];
     return Visibility(
-      visible: (_character==SingingCharacter.family)?false:true,
+      visible: (character=="family")?false:true,
       child: Container(
         width: MediaQuery.of(context).size.width,
 
@@ -370,8 +379,38 @@ class _AddAdState extends State<AddAd> {
           color: Colors.white,
         ),),
         onPressed: (){
+          sendPost(
+            imagepath:_postImage.path.toString(),
+            guests: selectedGuestsOption,
+            address: SelectedRegion,
+            character: character,
+            desc: desc,
+            gender: selectedGenderOption,
+            pets: selectedPetsOption,
+            phone: phone,
+            price: price,
+            smoking: selectedSmokingOption,
+            sub_address: subaddress,
+            type: selectedTypeOption
+          );
+
+          print(
+            '''data is :
+                   ${_postImage.path.toString()},
+                   $desc,
+                   $SelectedRegion,
+                   $subaddress,
+                   $phone,
+                   $price,
+                   $character,
+                   $selectedTypeOption,
+                   $selectedPetsOption,
+                   $selectedSmokingOption,
+                   $selectedGuestsOption,
+                   $selectedGenderOption'''
+        );
           if (_formKey.currentState.validate()&& photos_selected>=1) {
-            // If the form is valid, display a Snackbar.
+
           }
         },
       ),
@@ -468,9 +507,85 @@ class _AddAdState extends State<AddAd> {
 
   }
 
+  File _postImage;
+  final postImagePicker= ImagePicker();
+  Future pickImageForpost() async {
+    final pickedFile = await postImagePicker.getImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _postImage = File(pickedFile.path);
+        print("path is : "+_postImage.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+  Future<int> checkThereIsAnyDocuments()async{
+    FirebaseFirestore.instance
+        .collection('posts').doc(auth.currentUser.uid).collection("posts")
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+            if(querySnapshot.docs.length<1){
+              return 1;
+
+            }else{
+              return (querySnapshot.docs.length+1).toInt();
+            }
+    });
+  }
+  FirebaseAuth auth = FirebaseAuth.instance;
+  String imagePostLink;
+  String formattedDate = DateFormat('kk:mm:ss EEE d MMM').format(DateTime.now());
+  CollectionReference postCol= FirebaseFirestore.instance.collection("posts");
+  Future<void>sendPost(
+      {
+        String imagepath,
+        String desc,
+        String address,
+        String sub_address,
+        String phone,
+        String price,
+        String character,
+        String type,
+        String pets,
+        String guests,
+        String smoking,
+        String gender
+      })async{
+      postCol.doc(auth.currentUser.uid).collection("posts").doc(checkThereIsAnyDocuments().toString()).set({
+        "postId": checkThereIsAnyDocuments().toString(),
+        "image":imagePostLink,
+        "description":desc,
+        "address":sub_address,
+        "phone":phone,
+        "price":price,
+        "character":character,
+        "type":type,
+        "pets":pets,
+        "guests":guests,
+        "smoking":smoking,
+        "gender":gender,
+        "time":formattedDate,
+        "availability":"true"
+      }).then((_) {
+
+        firebase_storage.FirebaseStorage.instance
+            .ref()
+            .child('posts/${auth.currentUser.uid}/').putFile(_postImage).then((value) {
+          value.ref.getDownloadURL().then((value) {
+            print("The download url is "+ value.toString());
+            postCol.doc(auth.currentUser.uid).collection("posts").doc(formattedDate).update({
+              "image":value
+            }).then((_) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage(),)));
+          });
+        });
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return _isAddAd?Scaffold(
+    return _isAddAd?
+    Scaffold(
       appBar: AppBar(
         backgroundColor: applicationColor,
         automaticallyImplyLeading: false,
@@ -522,7 +637,7 @@ class _AddAdState extends State<AddAd> {
                             borderRadius: BorderRadius.circular(5),
                           ),
                             child: FlatButton(
-                              onPressed: () {  },
+                              onPressed: () {  pickImageForpost();},
                               child: Text("Add photo",style:TextStyle(
                                 color: Colors.white,
                               )),
@@ -797,23 +912,23 @@ class _AddAdState extends State<AddAd> {
                         ListTile(
                           title: const Text('Separated persons'),
                           leading: Radio(
-                            value: SingingCharacter.Separated_persons,
-                            groupValue: _character,
-                            onChanged: (SingingCharacter value) {
+                            value: "separated_persons",
+                            groupValue: character,
+                            onChanged: ( value) {
                               setState(() {
-                                _character = value;
+                                character = value;
                               });
                             },
                           ),
                         ),
                         ListTile(
                           title: const Text('Family'),
-                          leading: Radio<SingingCharacter>(
-                            value: SingingCharacter.family,
-                            groupValue: _character,
-                            onChanged: (SingingCharacter value) {
+                          leading: Radio(
+                            value: "family",
+                            groupValue: character,
+                            onChanged: (value) {
                               setState(() {
-                                _character = value;
+                                character = value;
                               });
                             },
                           ),

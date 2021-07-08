@@ -106,7 +106,7 @@ class _AdAddMapScreenState extends State<AdAddMapScreen> {
               onPressed: (){
                 // AddAd(subAddressGeneratedFromMap: addr2,subAddressLatitude: target_latitude,subAddressLongtude: tareget_longtude);
                 //     Navigator.of(context).restorablePush((context, arguments) =>  AddAd(subAddressGeneratedFromMap: addr2,subAddressLatitude: target_latitude,subAddressLongtude: tareget_longtude);)
-                SharedService.setMapDetails(addr2, target_latitude, tareget_longtude);
+                //SharedService.setMapDetails(addr2, target_latitude, tareget_longtude);
                 Navigator.pop(context);
               },
 

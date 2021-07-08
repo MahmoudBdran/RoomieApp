@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pinput/pin_put/pin_put.dart';
+import 'package:roommates/login_package/loginPage.dart';
 import 'package:roommates/signup_package/completeinfo_pacakge/completeinfo_page.dart';
 
 class VerifyScreen extends StatefulWidget {
@@ -61,7 +62,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
                     backgroundColor: Colors.grey,
                     textColor: Colors.white,
                     fontSize: 16.0);
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CompleteInfo(),));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(),));
               },
             ),
           ),
