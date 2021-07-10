@@ -28,6 +28,8 @@ dependencies:
   line_icons: ^2.0.1
   google_maps_flutter: ^2.0.6
   geolocator: ^7.1.1
+#  multi_image_picker2: ^5.0.2
+  wechat_assets_picker: ^5.5.8
   geocoder:
   firebase_auth: ^2.0.0
   cloud_firestore: ^2.3.0

@@ -226,7 +226,8 @@ class _UserProfileState extends State<UserProfile> {
           }else if(index ==3){
             return User_BasicInfo();
           }else {
-            return PostTemplate(index-4);
+            //return PostTemplate(index-4);
+            return Container();
           }
         },
       ),

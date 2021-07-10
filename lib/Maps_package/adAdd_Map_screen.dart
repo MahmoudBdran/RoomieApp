@@ -25,10 +25,8 @@ class _AdAddMapScreenState extends State<AdAddMapScreen> {
   GoogleMapController _googleMapController;
   @override
   void dispose() {
-    // TODO: implement dispose
     _googleMapController.dispose();
     super.dispose();
-
   }
   double userLocation_latitude =0;
   double userLocation_longtude =0;
@@ -54,7 +52,6 @@ class _AdAddMapScreenState extends State<AdAddMapScreen> {
     setState(() {
       addr1 = addresses.first.featureName;
       addr2 = addresses.first.addressLine;
-      print("hhhh + "+addr1 +" : "+addr2);
     });
   }
 

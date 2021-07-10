@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
@@ -11,11 +11,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+
+//import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:roommates/APIServices/shared_service.dart';
+import 'package:roommates/AddAdPackage/add_image.dart';
 import 'package:roommates/HomePackage/HomePage.dart';
 import 'package:roommates/Maps_package/adAdd_Map_screen.dart';
 import 'package:roommates/theme/colors.dart';
-
+import 'package:path/path.dart' as Path;
 class AddAd extends StatefulWidget {
 
   @override
@@ -31,14 +34,14 @@ class _AddAdState extends State<AddAd> {
   RangeValues _currentRangeValues = const RangeValues(0, 10000);
   final _formKey = GlobalKey<FormState>();
   String SelectedRegion="Alexandria";
-  var photos_selected=9;
+  //var photos_selected=9;
   String desc="",add="",phone="",price="",type="",pets="",guests="",smoking="",gender="";
   String selectedTypeOption="flat";
   String selectedGuestsOption="accept guests";
   String selectedSmokingOption="smoking";
   String selectedGenderOption="male";
   String selectedPetsOption="pets";
-  Widget RegionWidget(){
+  Widget regionWidget(){
     List<DropdownMenuItem> regionList=[
       DropdownMenuItem(value: "Alexandria", child: Text("Alexandria"),),
       DropdownMenuItem(value: "Aswan",child: Text("Aswan"),),
@@ -105,7 +108,7 @@ class _AddAdState extends State<AddAd> {
       ),
     );
   }
-  Widget TypeWidget(){
+  Widget typeWidget(){
     List<DropdownMenuItem> Typeoptions=[
       DropdownMenuItem(value: "flat", child: Text("flat"),),
       DropdownMenuItem(value: "room",child: Text("room"),),
@@ -150,7 +153,7 @@ class _AddAdState extends State<AddAd> {
       ),
     );
   }
-  Widget PetsWidget(){
+  Widget petsWidget(){
     List<DropdownMenuItem> petsoptions=[DropdownMenuItem(value: "pets", child: Text("pets"),),
       DropdownMenuItem(value: "no pets",child: Text("no pets"),)];
     return Visibility(
@@ -194,7 +197,7 @@ class _AddAdState extends State<AddAd> {
       ),
     );
   }
-  Widget AcceptGuestsWidget(){
+  Widget acceptGuestsWidget(){
     List<DropdownMenuItem> Guestsoptions=[DropdownMenuItem(value: "accept guests", child: Text("accept guests"),),
       DropdownMenuItem(value: "don't accept guests",child: Text("don't accept guests"),)];
     return Visibility(
@@ -237,47 +240,8 @@ class _AddAdState extends State<AddAd> {
         ),
       ),
     );
-    /*
-      Container(
-      width: MediaQuery.of(context).size.width,
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text("Guests:"),
-              RadioButton(
-                description: "accept guests",
-                value: "accept guests",
-                groupValue: _acceptGuestsRadioButtonValue,
-                onChanged: (value) => setState(
-                      () => _acceptGuestsRadioButtonValue = value,
-                ),
-              ),
-              RadioButton(
-                description: "don't accept guests",
-                value: "don't accept guests",
-                groupValue: _acceptGuestsRadioButtonValue,
-                onChanged: (value) => setState(
-                      () => _acceptGuestsRadioButtonValue = value,
-                ),
-              ),
-              RadioButton(
-                description: "default",
-                value: "default",
-                groupValue: _acceptGuestsRadioButtonValue,
-                onChanged: (value) => setState(
-                      () => _acceptGuestsRadioButtonValue = value,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-      */
   }
-  Widget SmokingWdiget(){
+  Widget smokingWdiget(){
     List<DropdownMenuItem> smokingoptions=[DropdownMenuItem(value: "smoking", child: Text("smoking"),),
       DropdownMenuItem(value: "no smoking",child: Text("no smoking"),)];
     return Visibility(
@@ -320,7 +284,7 @@ class _AddAdState extends State<AddAd> {
       ),
     );
   }
-  Widget GenderWidget(){
+  Widget genderWidget(){
     List<DropdownMenuItem> genderoptions=[DropdownMenuItem(value: "male", child: Text("male"),),
       DropdownMenuItem(value: "female",child: Text("female"),)];
     return Visibility(
@@ -364,7 +328,7 @@ class _AddAdState extends State<AddAd> {
       ),
     );
   }
-  Widget AdSubmitButton(){
+  Widget adSubmitButton(){
     return Container(
       height: 50,
       margin: const EdgeInsets.symmetric(horizontal: 50,vertical: 15),
@@ -380,7 +344,6 @@ class _AddAdState extends State<AddAd> {
         ),),
         onPressed: (){
           sendPost(
-            imagepath:_postImage.path.toString(),
             guests: selectedGuestsOption,
             address: SelectedRegion,
             character: character,
@@ -393,10 +356,20 @@ class _AddAdState extends State<AddAd> {
             sub_address: subaddress,
             type: selectedTypeOption
           );
+          sendPostToPublic(guests: selectedGuestsOption,
+              address: SelectedRegion,
+              character: character,
+              desc: desc,
+              gender: selectedGenderOption,
+              pets: selectedPetsOption,
+              phone: phone,
+              price: price,
+              smoking: selectedSmokingOption,
+              sub_address: subaddress,
+              type: selectedTypeOption);
 
           print(
             '''data is :
-                   ${_postImage.path.toString()},
                    $desc,
                    $SelectedRegion,
                    $subaddress,
@@ -409,7 +382,7 @@ class _AddAdState extends State<AddAd> {
                    $selectedGuestsOption,
                    $selectedGenderOption'''
         );
-          if (_formKey.currentState.validate()&& photos_selected>=1) {
+          if (_formKey.currentState.validate()) {
 
           }
         },
@@ -449,9 +422,7 @@ class _AddAdState extends State<AddAd> {
         infoWindow: InfoWindow(title: "current Location"));
     return _initialCameraPosition;
   }
-
   getMarkLocation(double lat,double lon)async{
-    //final geoPosition = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     final coordinates =Coordinates(lat,lon);
     var addresses =  await Geocoder.local.findAddressesFromCoordinates(coordinates);
     setState(() {
@@ -464,9 +435,6 @@ class _AddAdState extends State<AddAd> {
   }
   void _addMarker(LatLng pos) {
     if(_marker==null){
-      //Origin is not set OR origin & destination are both set
-      //set Origin
-
       setState(() {
         _marker=Marker(markerId: MarkerId('address'),
           draggable: true,
@@ -474,7 +442,6 @@ class _AddAdState extends State<AddAd> {
           position: pos,
         );
         getMarkLocation(pos.latitude,pos.longitude);
-
       }
       );
     }else{
@@ -506,40 +473,14 @@ class _AddAdState extends State<AddAd> {
     super.dispose();
 
   }
-
-  File _postImage;
   final postImagePicker= ImagePicker();
-  Future pickImageForpost() async {
-    final pickedFile = await postImagePicker.getImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickedFile != null) {
-        _postImage = File(pickedFile.path);
-        print("path is : "+_postImage.path);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
-  Future<int> checkThereIsAnyDocuments()async{
-    FirebaseFirestore.instance
-        .collection('posts').doc(auth.currentUser.uid).collection("posts")
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-            if(querySnapshot.docs.length<1){
-              return 1;
-
-            }else{
-              return (querySnapshot.docs.length+1).toInt();
-            }
-    });
-  }
   FirebaseAuth auth = FirebaseAuth.instance;
   String imagePostLink;
   String formattedDate = DateFormat('kk:mm:ss EEE d MMM').format(DateTime.now());
   CollectionReference postCol= FirebaseFirestore.instance.collection("posts");
-  Future<void>sendPost(
+  List urls=[];
+  Future<void>sendPostToPublic(
       {
-        String imagepath,
         String desc,
         String address,
         String sub_address,
@@ -551,41 +492,129 @@ class _AddAdState extends State<AddAd> {
         String guests,
         String smoking,
         String gender
-      })async{
-      postCol.doc(auth.currentUser.uid).collection("posts").doc(checkThereIsAnyDocuments().toString()).set({
-        "postId": checkThereIsAnyDocuments().toString(),
-        "image":imagePostLink,
-        "description":desc,
-        "address":sub_address,
-        "phone":phone,
-        "price":price,
-        "character":character,
-        "type":type,
-        "pets":pets,
-        "guests":guests,
-        "smoking":smoking,
-        "gender":gender,
-        "time":formattedDate,
-        "availability":"true"
-      }).then((_) {
+      })async{FirebaseFirestore.instance
+      .collection('posts').doc(auth.currentUser.uid).collection("posts")
+      .get()
+      .then((QuerySnapshot querySnapshot) {
+    int postId = 0;
+    postId = querySnapshot.docs.length + 1;
+    FirebaseFirestore.instance.collection('all_posts').doc(formattedDate).set({
 
+      "postId": postId,
+      "user_Id": auth.currentUser.uid,
+      "image": urls,
+      "description": desc,
+      "address": SelectedRegion,
+      "sub_address":sub_address,
+      "phone": phone,
+      "price": price,
+      "character": character,
+      "type": type,
+      "pets": pets,
+      "guests": guests,
+      "smoking": smoking,
+      "gender": gender,
+      "time": formattedDate,
+      "availability": true
+    }).then((_) {
+      for (var img in _image) {
         firebase_storage.FirebaseStorage.instance
             .ref()
-            .child('posts/${auth.currentUser.uid}/').putFile(_postImage).then((value) {
-          value.ref.getDownloadURL().then((value) {
-            print("The download url is "+ value.toString());
-            postCol.doc(auth.currentUser.uid).collection("posts").doc(formattedDate).update({
-              "image":value
-            }).then((_) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage(),)));
+            .child('posts/${auth.currentUser.uid}/${postId.toString()}/${Path
+            .basename(img.path)}').putFile(img).then((value) {
+          value.ref.getDownloadURL().then((val) {
+            urls.insert(0, val);
+            FirebaseFirestore.instance.collection('all_posts').doc(formattedDate).update({
+              "image": urls
+            }).then((_){
+              FirebaseFirestore.instance.collection("users").doc(auth.currentUser.uid).get().then((value){
+                FirebaseFirestore.instance.collection('all_posts').doc(formattedDate).update(
+                    {
+                      "avatar":value.data()['profile_image'],
+                      "username":value.data()['username'],
+                    });
+              });
+            });
           });
         });
+      }
+    });
+  });
+
+  }
+  Future<void>sendPost({String desc, String address, String sub_address,
+        String phone, String price, String character,
+        String type, String pets, String guests,
+        String smoking, String gender})async{
+    int postId=0;
+    await FirebaseFirestore.instance
+        .collection('posts').doc(auth.currentUser.uid).collection("posts")
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+            postId=querySnapshot.docs.length+1;
+            postCol.doc(auth.currentUser.uid).collection("posts").doc(postId.toString()).set({
+              "postId": postId, "image":urls, "description":desc,
+              "address":SelectedRegion, "sub_address":sub_address, "phone":phone,
+              "price":price, "character":character, "type":type,
+              "pets":pets, "guests":guests, "smoking":smoking,
+              "gender":gender, "time":formattedDate, "availability":true
+            }).then((_) {
+                for (var img in _image) {
+                   firebase_storage.FirebaseStorage.instance
+                      .ref()
+                      .child('posts/${auth.currentUser.uid}/${postId.toString()}/${Path.basename(img.path)}').putFile(img).then((value) {
+                     value.ref.getDownloadURL().then((val) {
+                        urls.insert(0, val);
+                       postCol.doc(auth.currentUser.uid).collection("posts").doc(postId.toString()).update({
+                         "image":urls
+                       }).then((_){
+                         FirebaseFirestore.instance.collection("users").doc(auth.currentUser.uid).get().then((value){
+                           postCol.doc(auth.currentUser.uid).collection("posts").doc(postId.toString()).update(
+                               {
+                                 "avatar":value.data()['profile_image'],
+                                 "username":value.data()['username'],
+                               });
+                         });
+                       });
+                     });
+                   } );
+                }
+
+
+    });
+
+
+
       });
   }
-
+    var _scaffoldKey= GlobalKey<ScaffoldState>();
+  chooseImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      _image.add(File(pickedFile.path));
+    });
+    if (pickedFile.path == null) retrieveLostData();
+  }
+  Future<void> retrieveLostData() async {
+    final LostData response = await picker.getLostData();
+    if (response.isEmpty) {
+      return;
+    }
+    if (response.file != null) {
+      setState(() {
+        _image.add(File(response.file.path));
+      });
+    } else {
+      print(response.file);
+    }
+  }
+  List<File> _image = [];
+  final picker = ImagePicker();
   @override
   Widget build(BuildContext context) {
     return _isAddAd?
     Scaffold(
+      key:_scaffoldKey,
       appBar: AppBar(
         backgroundColor: applicationColor,
         automaticallyImplyLeading: false,
@@ -637,16 +666,60 @@ class _AddAdState extends State<AddAd> {
                             borderRadius: BorderRadius.circular(5),
                           ),
                             child: FlatButton(
-                              onPressed: () {  pickImageForpost();},
+                              onPressed: () {
+                                _scaffoldKey.currentState.showBottomSheet((context) {
+                                  return Scaffold(
+                                      appBar: AppBar(
+                                        actions: [
+                                          FlatButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text(
+                                                'Done',
+                                                style: TextStyle(color: Colors.white),
+                                              ))
+                                        ],
+                                      ),
+                                      body: Stack(
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.all(4),
+                                            child: GridView.builder(
+                                                itemCount: _image.length + 1,
+                                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                                    crossAxisCount: 3),
+                                                itemBuilder: (context, index) {
+                                                  return index == 0
+                                                      ? Center(
+                                                    child: IconButton(
+                                                        icon: Icon(Icons.add),
+                                                        onPressed: () =>chooseImage()),
+                                                  )
+                                                      : Container(
+                                                    margin: EdgeInsets.all(3),
+                                                    decoration: BoxDecoration(
+                                                        image: DecorationImage(
+                                                            image: FileImage(_image[index - 1]),
+                                                            fit: BoxFit.cover)),
+                                                  );
+                                                }),
+                                          ),
+                                        ],
+                                      ));
+                                });
+                                // Navigator.of(context)
+                                //     .push(MaterialPageRoute(builder: (context) => AddImage()));
+                              },
                               child: Text("Add photo",style:TextStyle(
                                 color: Colors.white,
                               )),
                             ),
                           ),
                           Spacer(flex:1),
-                          Text("$photos_selected photos selected.",style: TextStyle(
-                            color: Colors.blueAccent,
-                          ),)
+                          // Text("$photos_selected photos selected.",style: TextStyle(
+                          //   color: Colors.blueAccent,
+                          // ),)
                         ],
                       ),
                     ),
@@ -655,12 +728,12 @@ class _AddAdState extends State<AddAd> {
                       height: 100,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: 9,
+                        itemCount: _image.length,
                         itemBuilder: (context, index) {
                           return Row(
                             children: [
 
-                              Image.asset("images/post_image.png",width: 150,height: 150,),
+                              Image.file(_image[index],width: 150,height: 150,),
                               SizedBox(width: 20,)
                             ],
                           );
@@ -708,7 +781,7 @@ class _AddAdState extends State<AddAd> {
                       ),
                     ),
                     //address drop down
-                    RegionWidget(),
+                    regionWidget(),
                     //specific address in selected region
                     Container(
                       width:MediaQuery.of(context).size.width,
@@ -935,16 +1008,19 @@ class _AddAdState extends State<AddAd> {
                         ),
                       ],
                     ),
-                    TypeWidget(),
-                    PetsWidget(),
-                    AcceptGuestsWidget(),
-                    SmokingWdiget(),
-                    GenderWidget(),
+                    typeWidget(),
+                    petsWidget(),
+                    acceptGuestsWidget(),
+                    smokingWdiget(),
+                    genderWidget(),
                     Divider(),
-                    AdSubmitButton(),
+                    adSubmitButton(),
+
+                    // Text('Error: $_error'),
+                    // buildGridView(),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -953,7 +1029,7 @@ class _AddAdState extends State<AddAd> {
     Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("Bdran Google Maps",style: TextStyle(color: Colors.black),),
+        title: Text("Google Maps",style: TextStyle(color: Colors.black),),
         actions: [
 
           if(_marker!=null)
@@ -1043,12 +1119,6 @@ class _AddAdState extends State<AddAd> {
           }
         },
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: Colors.white,
-      //   foregroundColor: Colors.black,
-      //   onPressed: ()=>_googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(userLocation_latitude,userLocation_longtude),zoom:18.5,tilt: 50.0))),
-      //   child: Icon(Icons.center_focus_strong),
-      // ),
     );
   }
 }

@@ -15,7 +15,6 @@ class _MessagesState extends State<Messages> {
     return InkWell(
       onTap: (){
         Navigator.push(context, MaterialPageRoute(builder: (_) => ChatDetailPage()));
-        //Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen()));
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 12,bottom: 8),

@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+// ignore: must_be_immutable
 class ImagesContainerTemplate extends StatelessWidget {
-  final List<String>imageList;
-  ImagesContainerTemplate({@required this.imageList});
+  List imageList;
+  ImagesContainerTemplate({@required  this.imageList});
   @override
   Widget build(BuildContext context) {
     if (imageList.length == 1) {

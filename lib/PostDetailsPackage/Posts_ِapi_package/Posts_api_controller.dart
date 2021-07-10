@@ -23,7 +23,6 @@ class PostsAPIController{
           images: post['images'],
           images_length: post['images_length'],
           likes_uid:  post['likes_uid'],
-          people_type : post['people_type'],
           pets: post['pets'],
           price: post['price'],
           smoking:  post['smoking'],

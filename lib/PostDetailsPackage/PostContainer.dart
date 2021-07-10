@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:roommates/PostDetailsPackage/Image_Carousel.dart';
+import 'package:roommates/PostDetailsPackage/Posts_%D9%90api_package/PostsModel.dart';
 import 'package:roommates/PostDetailsPackage/post_likes_page.dart';
 import 'package:roommates/PostDetailsPackage/post_photos_only.dart';
 import 'package:roommates/UserProfilePackage/UserProfile.dart';
@@ -16,8 +18,43 @@ import 'package:url_launcher/url_launcher.dart';
 class PostTemplate extends StatefulWidget {
   // ignore: non_constant_identifier_names
   int index;
+  String pets;
+  String smoke;
+  String guests;
+  String gender;
+  String character;
+  String description;
+  String phone;
+  String type;
+  String sub_address;
+  String address;
+  String price;
+  List images;
+  String avatar;
+  String username;
+  String time;
+  String availability;
+  String userId;
 
-  PostTemplate(this.index);
+  PostTemplate(
+      {this.index,
+      this.pets,
+      this.smoke,
+      this.guests,
+      this.gender,
+      this.character,
+      this.description,
+      this.phone,
+      this.type,
+      this.sub_address,
+      this.address,
+      this.price,
+      this.images,
+      this.avatar,
+      this.username,
+      this.time,
+      this.availability,
+      this.userId});
 
   @override
   _PostTemplateState createState() => _PostTemplateState();
@@ -33,18 +70,33 @@ class _PostTemplateState extends State<PostTemplate> {
     }
   }
 
-  String phone = "01205057427";
   List<String> imagesList = [
     'images/post_image.png',
     'images/cover_image.jpg',
     'images/post_image.png',
     'images/cover_image.jpg'
   ];
+ String get phone =>widget.phone;
   int get index => widget.index;
-
-  Widget _buildPetsWD(){
+  String get pets => widget.pets;
+  String get smoke => widget.smoke;
+  String get guests => widget.guests;
+  String get gender => widget.gender;
+  String get character => widget.character;
+  String get description => widget.description;
+  String get type => widget.type;
+  String get sub_address => widget.sub_address;
+  String get address => widget.address;
+  String get price => widget.price;
+  List get images => widget.images;
+  String get avatar => widget.avatar;
+  String get username => widget.username;
+  String get time => widget.time;
+  String get availability => widget.availability;
+  String get userId => widget.userId;
+  Widget _buildPetsWD(String pets){
     return Visibility(
-      visible: (postData[index]["people_type"]!="family")?true:false,
+      visible: (character!="family")?true:false,
       child: Row(
         children: [
           Padding(
@@ -60,7 +112,7 @@ class _PostTemplateState extends State<PostTemplate> {
           Padding(
             padding: const EdgeInsets.fromLTRB(8, 10, 0, 5),
             child: Text(
-              postData[index]['pets'],
+              pets,
               style: TextStyle(
                 color: Colors.black54,
                 fontSize: 20,
@@ -71,9 +123,9 @@ class _PostTemplateState extends State<PostTemplate> {
       ),
     );
   }
-  Widget _buildSmokeWD(){
+  Widget _buildSmokeWD(String smoke){
     return Visibility(
-      visible: (postData[index]["people_type"]!="family")?true:false,
+      visible: (character!="family")?true:false,
       child: Row(
         children: [
           Padding(
@@ -89,7 +141,7 @@ class _PostTemplateState extends State<PostTemplate> {
           Padding(
             padding: const EdgeInsets.fromLTRB(8, 10, 0, 5),
             child: Text(
-              postData[index]['smoking'],
+              smoke,
               style: TextStyle(
                 color: Colors.black54,
                 fontSize: 20,
@@ -100,9 +152,9 @@ class _PostTemplateState extends State<PostTemplate> {
       ),
     );
   }
-  Widget _buildGuestsWD(){
+  Widget _buildGuestsWD(String guests){
     return Visibility(
-      visible: (postData[index]["people_type"]!="family")?true:false,
+      visible: (character!="family")?true:false,
       child: Row(
         children: [
           Padding(
@@ -118,7 +170,7 @@ class _PostTemplateState extends State<PostTemplate> {
           Padding(
             padding: const EdgeInsets.fromLTRB(8, 10, 0, 5),
             child: Text(
-              postData[index]['guests'],
+              guests,
               style: TextStyle(
                 color: Colors.black54,
                 fontSize: 20,
@@ -129,9 +181,9 @@ class _PostTemplateState extends State<PostTemplate> {
       ),
     );
   }
-  Widget _buildGenderWD(){
+  Widget _buildGenderWD(String gender){
     return Visibility(
-      visible: (postData[index]["people_type"]!="family")?true:false,
+      visible: (character!="family")?true:false,
       child: Row(
         children: [
           Padding(
@@ -147,7 +199,7 @@ class _PostTemplateState extends State<PostTemplate> {
           Padding(
             padding: const EdgeInsets.fromLTRB(8, 10, 0, 5),
             child: Text(
-              postData[index]['gender'],
+              gender,
               style: TextStyle(
                 color: Colors.black54,
                 fontSize: 20,
@@ -158,9 +210,9 @@ class _PostTemplateState extends State<PostTemplate> {
       ),
     );
   }
-  Widget _buildPeopleTypeWD(){
+  Widget _buildPeopleTypeWD(String character){
     return Visibility(
-      visible: (postData[index]["people_type"]=="family")?true:false,
+      visible: (character=="family")?true:false,
       child: Row(
         children: [
           Padding(
@@ -187,11 +239,11 @@ class _PostTemplateState extends State<PostTemplate> {
       ),
     );
   }
-  Widget _buildDescriptionWD(){
+  Widget _buildDescriptionWD(String description){
     return Padding(
       padding: const EdgeInsets.fromLTRB(9, 0, 9, 5),
       child: Text(
-        postData[index]['description'],
+        description,
         style: TextStyle(
           color: Colors.grey,
           fontSize: 17,
@@ -199,7 +251,7 @@ class _PostTemplateState extends State<PostTemplate> {
       ),
     );
   }
-  Widget _buildPhoneWD(){
+  Widget _buildPhoneWD(String phone){
     return Row(
       children: [
         Padding(
@@ -219,7 +271,7 @@ class _PostTemplateState extends State<PostTemplate> {
         InkWell(
           onLongPress: (){
             setState(() {
-              Clipboard.setData(new ClipboardData(text: postData[index]['phone']))
+              Clipboard.setData(new ClipboardData(text: phone))
                   .then((_) => print("copied"));
               Fluttertoast.showToast(
                   msg: "phone number in clipboard",
@@ -233,11 +285,11 @@ class _PostTemplateState extends State<PostTemplate> {
           },
           onTap: (){
             setState(() {
-              customLaunch('tel:${postData[index]['phone']}');
+              customLaunch('tel:$phone');
             });
           },
           child: Text(
-            postData[index]['phone'],
+            phone,
             style: TextStyle(
               color: Colors.lightBlueAccent,
               fontSize: 20,
@@ -247,7 +299,7 @@ class _PostTemplateState extends State<PostTemplate> {
       ],
     );
   }
-  Widget _buildTypeWD(){
+  Widget _buildTypeWD(String type){
     return Row(
       children: [
         Padding(
@@ -260,7 +312,7 @@ class _PostTemplateState extends State<PostTemplate> {
         Padding(
           padding: const EdgeInsets.fromLTRB(3, 0, 0, 5),
           child: Text(
-            postData[index]['type'],
+            type,
             style: TextStyle(
               color: Colors.black54,
               fontSize: 21,
@@ -270,11 +322,11 @@ class _PostTemplateState extends State<PostTemplate> {
       ],
     );
   }
-  Widget _buildSubAddressWD(){
+  Widget _buildSubAddressWD(String sub_address){
     return Padding(
       padding: const EdgeInsets.fromLTRB(9, 0, 0, 5),
       child: Text(
-        postData[index]['sub address'],
+        sub_address,
         style: TextStyle(
           color: Colors.grey,
           fontSize: 15,
@@ -282,7 +334,7 @@ class _PostTemplateState extends State<PostTemplate> {
       ),
     );
   }
-  Widget _buildAddressAndPriceWD(){
+  Widget _buildAddressAndPriceWD(String address,String price){
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -295,7 +347,7 @@ class _PostTemplateState extends State<PostTemplate> {
             Padding(
               padding: const EdgeInsets.fromLTRB(3, 5, 0, 5),
               child: Text(
-                postData[index]['address'],
+                address,
                 style: TextStyle(
                   color: Colors.black54,
                   fontSize: 21,
@@ -307,7 +359,7 @@ class _PostTemplateState extends State<PostTemplate> {
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 5, 8, 5),
           child: Text(
-            postData[index]['price'] + " EGP",
+            price + " EGP",
             style: TextStyle(
               color: Colors.green[600],
               fontSize: 20,
@@ -317,23 +369,24 @@ class _PostTemplateState extends State<PostTemplate> {
       ],
     );
   }
-  Widget _buildImageCarouselWD(){
+  Widget _buildImageCarouselWD(List images){
+    print(images.length);
     return GestureDetector(
       onTap: () {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => PostPhotosOnly(postData[index]['images']),
+              builder: (context) => PostPhotosOnly(images),
             ));
       },
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
         //child: Image_Carousel(postData[index]['images']),
-        child: ImagesContainerTemplate(imageList: postData[index]['images'],),
+        child: ImagesContainerTemplate(imageList: images),
       ),
     );
   }
-  Widget _buildAvatarWD(){
+  Widget _buildAvatarWD(String avatar,String username,String time){
     return GestureDetector(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -346,7 +399,7 @@ class _PostTemplateState extends State<PostTemplate> {
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                      image: NetworkImage(postData[index]['avatar']),
+                      image: NetworkImage(avatar),
                       fit: BoxFit.cover)),
             ),
             Padding(
@@ -355,7 +408,7 @@ class _PostTemplateState extends State<PostTemplate> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    postData[index]['username'],
+                    username,
                     style: TextStyle(
                       color: Colors.black54,
                       fontSize: 18,
@@ -363,7 +416,7 @@ class _PostTemplateState extends State<PostTemplate> {
                     ),
                   ),
                   Text(
-                    postData[index]["time"],
+                    time,
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 15,
@@ -441,32 +494,51 @@ class _PostTemplateState extends State<PostTemplate> {
       ),
     );
   }
-  Widget _buildLikesWD(){
-    return InkWell(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => PostLikesPage(postId:postData[index]['post_id']),));
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            Icon(
-              EvaIcons.heart,
-              color: Color(0xFFB30404),
-            ),
-            Text(postData[index]['likes_uid'].length.toString()+" Likes",style: TextStyle(
-              color: Colors.grey
-            ),),
-          ],
-        ),
-      ),
-    );
+
+  List<PostsModel> postsList;
+  List actualPosts;
+  getPosts()async{
+    await FirebaseFirestore.instance
+        .collection('all_posts')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        var userId=doc["user_Id"];
+        FirebaseFirestore.instance.collection("users").doc(userId).get().then((value) {
+          print("avatar is "+value['profile_image']);
+          print("phone is "+doc['phone']);
+          postsList.insert(0, new PostsModel(
+              type: doc['type'],
+              sub_address:doc['sub_address'],
+              avatar: value['profile_image'],
+              username: value['username'],
+              availability: doc["availability"].toString(),
+              character:doc["character"],
+              post_id: doc['postId'],
+              email: doc['email'],
+              phone: doc['phone'],
+              price: doc['price'],
+              pets: doc['pets'],
+              guests: doc['guests'],
+              smoking: doc['smoking'],
+              gender: doc['gender'],
+              time: doc['time'],
+              images: doc['image'],
+              description: doc['description'],
+              address: doc['address']
+          ));
+          //actualPosts.add(postsList[0]);
+        });
+
+      });
+      //print("actual data "+postsList[0].smoking);
+    });
   }
+
 @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(postData[0]['images']);
   }
   @override
   Widget build(BuildContext context) {
@@ -481,7 +553,114 @@ class _PostTemplateState extends State<PostTemplate> {
             borderRadius: BorderRadius.circular(14),
             border: Border.all(color: Colors.grey[300], width: 1),
           ),
-          child: Column(
+          child: SingleChildScrollView(
+            child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildAvatarWD(avatar,username,time),
+                    _buildImageCarouselWD(images),
+                    _buildAddressAndPriceWD(address,price),
+                    _buildSubAddressWD(sub_address),
+                    _buildTypeWD(type),
+                    _buildPhoneWD(phone),
+                    _buildDescriptionWD(description),
+                    Divider(
+                      height: 1,
+                    ),
+                    _buildPeopleTypeWD(character),
+                    _buildPetsWD(pets),
+                    //divider
+                    Visibility(
+                      visible: (character!="family")?true:false,
+                      child: Divider(
+                        height: 1,
+                      ),
+                    ),
+                    _buildSmokeWD(smoke),
+                    //divider
+                    Visibility(
+                      visible: (character!="family")?true:false,
+                      child: Divider(
+                        height: 1,
+                      ),
+                    ),
+                    _buildGuestsWD(guests),
+                    //divider
+                    Visibility(
+                      visible: (character!="family")?true:false,
+                      child: Divider(
+                        height: 1,
+                      ),
+                    ),
+                    _buildGenderWD(gender),
+                    Divider(
+                      height: 1,
+                    ),
+                    _buildInteractionWDs()
+                  ],
+                ),
+          )
+
+        ),
+      ),
+    );
+  }
+}
+
+
+/*
+postsList!=null?
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildAvatarWD(),
+              _buildImageCarouselWD(),
+              _buildAddressAndPriceWD(),
+              _buildSubAddressWD(),
+              _buildTypeWD(),
+              _buildPhoneWD(),
+              _buildDescriptionWD(),
+              Divider(
+                height: 1,
+              ),
+              _buildPeopleTypeWD(),
+              _buildPetsWD(),
+              //divider
+              Visibility(
+                visible: (postsList[index].character!="family")?true:false,
+                child: Divider(
+                  height: 1,
+                ),
+              ),
+              _buildSmokeWD(),
+              //divider
+              Visibility(
+                visible: (postsList[index].character!="family")?true:false,
+                child: Divider(
+                  height: 1,
+                ),
+              ),
+              _buildGuestsWD(),
+              //divider
+              Visibility(
+                visible: (postsList[index].character!="family")?true:false,
+                child: Divider(
+                  height: 1,
+                ),
+              ),
+              _buildGenderWD(),
+              _buildLikesWD(),
+              Divider(
+                height: 1,
+              ),
+              _buildInteractionWDs()
+            ],
+          ):CircularProgressIndicator(),
+ */
+
+
+ /*
+ Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildAvatarWD(),
@@ -526,9 +705,5 @@ class _PostTemplateState extends State<PostTemplate> {
               ),
               _buildInteractionWDs()
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+          )
+  */

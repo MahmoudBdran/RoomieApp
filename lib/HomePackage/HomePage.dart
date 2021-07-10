@@ -29,6 +29,9 @@ class _HomePageState extends State<HomePage> {
   Future<void> _signOut() async {
     await FirebaseAuth.instance.signOut().then((_) => print("User logged out from firebase"));
   }
+  getUserData()async{
+
+  }
   List<Widget> pages=[
     NewsFeed(),
     Notifications(),
@@ -39,7 +42,7 @@ class _HomePageState extends State<HomePage> {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-          text: 'Room',
+          text: 'Roomie',
           style: GoogleFonts.portLligatSans(
             textStyle: Theme.of(context).textTheme.display1,
             fontSize: 30,
@@ -48,7 +51,7 @@ class _HomePageState extends State<HomePage> {
           ),
           children: [
             TextSpan(
-              text: 'mates',
+              text: 'App',
               style: TextStyle(color: Colors.teal[800], fontSize: 30),
             ),
           ]),
@@ -58,7 +61,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("current user is "+FirebaseAuth.instance.currentUser.email);Future<void> deleteUser() {
+    print("current user is "+FirebaseAuth.instance.currentUser.email+" : "+FirebaseAuth.instance.currentUser.uid);Future<void> deleteUser() {
       FirebaseFirestore.instance
           .collection('chat')
           .get()
@@ -71,8 +74,6 @@ class _HomePageState extends State<HomePage> {
   }
   @override
   Widget build(BuildContext context) {
-    final _height=MediaQuery.of(context).size.height;
-    final _width=MediaQuery.of(context).size.width;
     return DefaultTabController(
       length: 4,
       child: Scaffold(
@@ -81,135 +82,147 @@ class _HomePageState extends State<HomePage> {
         ),
         drawer: Drawer(
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                UserAccountsDrawerHeader(
-                  accountName: Text("Mahmoud Bdran"),
-                  accountEmail: Text("mahmoud.bdran20@gmail.com"),
-                  currentAccountPicture: CircleAvatar(
-                    backgroundColor: Colors.transparent,
+            child: FutureBuilder(
+              future:FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser.uid).get(),
+              builder: (context, snapshot) {
+                if(snapshot.hasData){
+                  return Column(
+                    children: [
+                      UserAccountsDrawerHeader(
+                        accountName: Text(snapshot.data['username']),
+                        accountEmail: Text(snapshot.data['email']),
+                        currentAccountPicture:  Container(
+                          width: 140,
+                          height: 140,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image: NetworkImage(snapshot.data['profile_image']))),
+                        ),
+                      ),
+                      ListTile(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => SavedAds(),
+                          ));
+                        },
+                        leading: Icon(EvaIcons.bookmarkOutline,size: 25,color: Colors.teal[800]),
+                        title: Text("Saved ads",style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.normal
+                        ),),
+                      ),
+                      ListTile(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => Following(),
+                          ));
+                        },
+                        leading: Icon(EvaIcons.personOutline,size: 25,color: Colors.teal[800]),
+                        title: Text("Following",style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.normal
+                        ),),
+                      ),
+                      ListTile(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => Followers(),
+                          ));
+                        },
+                        leading: Icon(EvaIcons.personOutline,size: 25,color: Colors.teal[800]),
+                        title: Text("Followers",style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.normal
+                        ),),
+                      ),
+                      ListTile(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => AddFriends(),
+                          ));
+                        },
+                        leading: Icon(EvaIcons.personAddOutline,size: 25,color: Colors.teal[800]),
+                        title: Text("Add friends",style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.normal
+                        ),),
+                      ),
+                      ListTile(
+                        onTap: (){
+                          setState(() {
+                            Navigator.of(context).pop();
+                          });
+                        },
+                        leading: Icon(EvaIcons.creditCardOutline
+                            ,size: 25,color: Colors.teal[800]),
+                        title: Text("Promote ads",style:TextStyle(
+                            fontSize: 18,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.normal
+                        ),),
+                      ),
+                      ListTile(
+                        onTap: () async {
 
-                    child: Image.asset("images/profile_image.png"),
-                  ),
-                ),
-                ListTile(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => SavedAds(),
-                    ));
-                  },
-                  leading: Icon(EvaIcons.bookmarkOutline,size: 25,color: Colors.teal[800]),
-                  title: Text("Saved ads",style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.normal
-                  ),),
-                ),
-                ListTile(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => Following(),
-                    ));
-                  },
-                  leading: Icon(EvaIcons.personOutline,size: 25,color: Colors.teal[800]),
-                  title: Text("Following",style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.normal
-                  ),),
-                ),
-                ListTile(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => Followers(),
-                    ));
-                  },
-                  leading: Icon(EvaIcons.personOutline,size: 25,color: Colors.teal[800]),
-                  title: Text("Followers",style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.normal
-                  ),),
-                ),
-                ListTile(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => AddFriends(),
-                    ));
-                  },
-                  leading: Icon(EvaIcons.personAddOutline,size: 25,color: Colors.teal[800]),
-                  title: Text("Add friends",style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.normal
-                  ),),
-                ),
-                ListTile(
-                  onTap: (){
-                    setState(() {
-                      Navigator.of(context).pop();
-                    });
-                  },
-                  leading: Icon(EvaIcons.creditCardOutline
-                      ,size: 25,color: Colors.teal[800]),
-                  title: Text("Promote ads",style:TextStyle(
-                      fontSize: 18,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.normal
-                  ),),
-                ),
-                ListTile(
-                  onTap: () async {
+                          // SharedPreferences prefs = await SharedPreferences.getInstance();
+                          //prefs.remove('user_id');
+                          // Navigator.pushReplacement(context,
+                          //     MaterialPageRoute(builder: (BuildContext ctx) => LoginPage()));
 
-                     // SharedPreferences prefs = await SharedPreferences.getInstance();
-                      //prefs.remove('user_id');
-                      // Navigator.pushReplacement(context,
-                      //     MaterialPageRoute(builder: (BuildContext ctx) => LoginPage()));
-
-                      _signOut();
-                      // SharedService.logout().then((_) {
-                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(),));
-                      // });
-                  },
-                  leading: Icon(EvaIcons.logOutOutline,size: 25,color: Colors.teal[800]),
-                  title: Text("Log out",style:TextStyle(
-                      fontSize: 18,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.normal
-                  ),),
-                ),
-                Divider(),
-                ListTile(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfile(),));
-                  },
-                  leading: Icon(EvaIcons.settingsOutline,size: 25,color: Colors.teal[800]),
-                  title: Text("Edit profile",style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.normal
-                  ),),
-                ),
-                ListTile(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ContactUs(),));
-                  },
-                  leading: Icon(Icons.contact_mail,size: 25,color: Colors.teal[800]),
-                  title: Text("Contact us",style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.normal
-                  ),),
-                ),
-                ListTile(
-                  leading: Icon(EvaIcons.infoOutline,size: 25,color: Colors.teal[800]),
-                  title: Text("About developers",style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.normal
-                  ),),
-                ),
-              ],
+                          _signOut();
+                          // SharedService.logout().then((_) {
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(),));
+                          // });
+                        },
+                        leading: Icon(EvaIcons.logOutOutline,size: 25,color: Colors.teal[800]),
+                        title: Text("Log out",style:TextStyle(
+                            fontSize: 18,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.normal
+                        ),),
+                      ),
+                      Divider(),
+                      ListTile(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfile(),));
+                        },
+                        leading: Icon(EvaIcons.settingsOutline,size: 25,color: Colors.teal[800]),
+                        title: Text("Edit profile",style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.normal
+                        ),),
+                      ),
+                      ListTile(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ContactUs(),));
+                        },
+                        leading: Icon(Icons.contact_mail,size: 25,color: Colors.teal[800]),
+                        title: Text("Contact us",style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.normal
+                        ),),
+                      ),
+                      ListTile(
+                        leading: Icon(EvaIcons.infoOutline,size: 25,color: Colors.teal[800]),
+                        title: Text("About developers",style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.normal
+                        ),),
+                      ),
+                    ],
+                  );
+                }else{
+                  return SizedBox();
+                }
+              }
             ),
           ),
         ),
@@ -237,7 +250,6 @@ class _HomePageState extends State<HomePage> {
         floatingActionButton: FloatingActionButton(
           onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context) => AddAd(),));
-
           },
           child:Icon(Icons.add,color: Colors.white,)
           ,backgroundColor: applicationColor,

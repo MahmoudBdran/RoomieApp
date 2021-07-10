@@ -18,7 +18,7 @@ class _SavedAdsState extends State<SavedAds> {
       ),
       body: ListView.builder(
         itemCount: postData.length,
-        itemBuilder: (context, index) => PostTemplate(index),
+        itemBuilder: (context, index) => Container()//PostTemplate(index),
       ),
     );
   }

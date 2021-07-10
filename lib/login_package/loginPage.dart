@@ -23,6 +23,17 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+
+
+  signInFirebase()async{
+    await FirebaseAuth.instance.signInWithEmailAndPassword(email: "minna@yahoo.com", password: "1234466345");
+  }
+  signUpFirebase(String email,String password)async{
+    await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+  }
+
+
   LoginRequestModel loginRequestModel;
   bool isApiCallProcess = false;
   bool hidePassword=true;
@@ -648,7 +659,7 @@ class _LoginPageState extends State<LoginPage> {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-          text: 'Room',
+          text: 'Roomie',
           style: GoogleFonts.portLligatSans(
             textStyle: Theme.of(context).textTheme.display1,
             fontSize: 30,
@@ -657,7 +668,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
           children: [
             TextSpan(
-              text: 'mates',
+              text: 'App',
               style: TextStyle(color: Colors.teal[400], fontSize: 30),
             ),
           ]),
@@ -667,6 +678,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> signIn(String email,String password)async{
     try{
       await auth.signInWithEmailAndPassword(email: email, password: password).then((_) {
+
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage(),));
         print("firebase logged in successfully <3\nemail : ${auth.currentUser.email}");
       } );

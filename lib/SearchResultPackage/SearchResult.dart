@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,7 +22,6 @@ class _SearchResultState extends State<SearchResult> {
   String selectedGenderOption="default";
   String selectedPetsOption="default";
   RangeValues _currentRangeValues = const RangeValues(0, 100000);
-
   Widget SpecifiedAddressField() {
     return TextField(
         decoration: InputDecoration(
@@ -358,13 +358,153 @@ class _SearchResultState extends State<SearchResult> {
           ),
         ),
       ),
-      body: ListView.builder(
-        itemCount: postData.length,
-        itemBuilder: (context, index) {
-          return PostTemplate(index);
-
-        },
-      ),
+      body:  FutureBuilder(
+          future: FirebaseFirestore.instance.collection("all_posts").where("address",isEqualTo:widget.selected_region).get(),
+          builder: (BuildContext context, snapshot) {
+            if(snapshot.hasData){
+              final List<DocumentSnapshot> documents = snapshot.data.docs;
+              return ListView(
+                  children: documents.map((doc) =>PostTemplate(
+                      character: doc['character'],
+                      address: doc['address'],
+                      sub_address: doc['sub_address'],
+                      avatar: doc['avatar'],
+                      description: doc['description'],
+                      gender: doc['gender'],
+                      guests : doc['guests'],
+                      pets : doc['pets'],
+                      phone : doc['phone'],
+                      price : doc['price'],
+                      smoke : doc['smoking'],
+                      time : doc['time'],
+                      type : doc['type'],
+                      username: doc['username'],
+                      images: doc['image'],
+                      availability: doc['availability'].toString(),
+                      userId:doc['user_Id']
+                  )).toList()
+              );
+            }else{
+              return Center(child: CircularProgressIndicator(),);
+            }
+            // return ListView.builder(
+            //   itemCount:snapshot.data.toString().length,
+            //   itemBuilder: (context, index) {
+            //     if(snapshot.hasData){
+            //       return PostTemplate(index: index,
+            //           character: snapshot.data[index].character,
+            //           address: snapshot.data[index].address,
+            //           sub_address: snapshot.data[index].sub_address,
+            //           avatar: snapshot.data[index].avatar,
+            //           description: snapshot.data[index].description,
+            //           gender:snapshot.data[index].gender,
+            //           guests : snapshot.data[index].guests,
+            //           pets : snapshot.data[index].pets,
+            //           phone : snapshot.data[index].phone,
+            //           price : snapshot.data[index].price,
+            //           smoke : snapshot.data[index].smoke ,
+            //           time : snapshot.data[index].time ,
+            //           type : snapshot.data[index].type ,
+            //           username: snapshot.data[index].username ,
+            //           //images: data['image'],
+            //           availability: snapshot.data[index].availability.toString(),
+            //           userId:snapshot.data[index].user_Id
+            //       );
+            //     }else{
+            //       return CircularProgressIndicator();
+            //     }
+            //     // if(index==0){
+            //     //   return Header();
+            //     // }else if(index==1){
+            //     //   return Search();
+            //     // }else{
+            //       /*
+            //       if(snapshot.hasData){
+            //                       return PostTemplate(index: index,
+            //                           character: snapshot.data[index].character,
+            //                           address: snapshot.data[index].address,
+            //                           sub_address: snapshot.data[index].sub_address,
+            //                           avatar: snapshot.data[index].avatar,
+            //                           description: snapshot.data[index].description,
+            //                           gender:snapshot.data[index].gender,
+            //                           guests : snapshot.data[index].guests,
+            //                           pets : snapshot.data[index].pets,
+            //                           phone : snapshot.data[index].phone,
+            //                           price : snapshot.data[index].price,
+            //                           smoke : snapshot.data[index].smoke ,
+            //                           time : snapshot.data[index].time ,
+            //                           type : snapshot.data[index].type ,
+            //                           username: snapshot.data[index].username ,
+            //                           //images: data['image'],
+            //                           availability: snapshot.data[index].availability.toString(),
+            //                           userId:snapshot.data[index].user_Id
+            //                       );
+            //                     }else{
+            //                       return CircularProgressIndicator();
+            //                     }
+            //        */
+            //       // FirebaseFirestore.instance.collection("all_posts").doc("02:09:00 Fri 9 Jul").get().then((value) {
+            //       //   print(value.data()['username']);
+            //       //   print(value.data()['sub_address']);
+            //       //
+            //       // });
+            //       return Container();
+            //       // return PostTemplate(
+            //       //     character: postsList[0].character,
+            //       //     address: postsList[0].address ,
+            //       //     sub_address:postsList[0].sub_address ,
+            //       //     avatar: postsList[0].avatar ,
+            //       //     description: postsList[0].description ,
+            //       //     gender:  postsList[0].gender ,
+            //       //     guests : postsList[0].guests ,
+            //       //     pets : postsList[0].pets ,
+            //       //     phone : postsList[0].phone ,
+            //       //     price : postsList[0].price ,
+            //       //     smoke : postsList[0].smoking ,
+            //       //     time : postsList[0].time ,
+            //       //     type : postsList[0].type,
+            //       //     username: postsList[0].username ,
+            //       //     //images: data['image'],
+            //       //     availability: postsList[0].availability.toString(),
+            //       //     //userId:postsList[0].user_Id
+            //       // );
+            //
+            //
+            //
+            //
+            //
+            //
+            //       // if(!snapshot.hasData){
+            //       //   Map<String, dynamic> data = snapshot.data.data() as Map<String, dynamic>;
+            //       //   return PostTemplate(index: index,
+            //       //       character: data['character'],
+            //       //       address: data['address'],
+            //       //       sub_address: data['sub_address'],
+            //       //       avatar: data['avatar'],
+            //       //       description: data['description'],
+            //       //       gender: data['gender'],
+            //       //       guests : data['guests'],
+            //       //       pets : data['pets'],
+            //       //       phone : data['phone'],
+            //       //       price : data['price'],
+            //       //       smoke : data['smoke'],
+            //       //       time : data['time'],
+            //       //       type : data['type'],
+            //       //       username: data['username'],
+            //       //       //images: data['image'],
+            //       //       availability: data['availability'].toString(),
+            //       //       userId:data['user_Id']
+            //       //   );
+            //       // }else{
+            //       //   return CircularProgressIndicator();
+            //       // }
+            //       // return PostTemplate("images/user_avatar.png","Minna Tareq");
+            //     }
+            //
+            //
+            // );
+          }
+      )
     );
   }
 }

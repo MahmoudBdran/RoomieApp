@@ -15,26 +15,11 @@ Widget _defaultHome=LoginPage();
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
-  // bool _isLoggedIn=await SharedService.isLoggedIn();
-  if(/*_isLoggedIn  && */ await FirebaseAuth.instance.currentUser != null){
+  if(await FirebaseAuth.instance.currentUser != null){
     _defaultHome=HomePage();
   }
   runApp(MyApp());
 }
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   SharedPreferences prefs = await SharedPreferences.getInstance();
-//   var email = prefs.getString('user_id');
-//   print(email);
-//   runApp(MaterialApp(theme: ThemeData(
-//     primarySwatch: Colors.teal,
-//     accentColor: Colors.teal,
-//
-//   ),
-//       debugShowCheckedModeBanner: false,
-//       home: email == null ? LoginPage() : HomePage()));
-// }
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -49,35 +34,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// class MyApp extends StatefulWidget {
-//
-//   @override
-//   _MyAppState createState() => _MyAppState();
-// }
-// class _MyAppState extends State<MyApp> {
-//   final pages = [
-//     screen1(),
-//     screen2(),
-//     screen3(),
-//     screen4(),
-//
-//   ];
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//
-//       debugShowCheckedModeBanner: false,
-//       theme: ThemeData(
-//         primarySwatch: Colors.teal,
-//         accentColor: Colors.teal,
-//
-//       ),
-//       title: "Roommates",
-//       home:Builder(
-//         builder: (context) => LiquidSwipe(pages: pages),
-//       )
-//
-//     );
-//   }
-// }

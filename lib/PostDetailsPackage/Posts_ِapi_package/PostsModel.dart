@@ -4,7 +4,7 @@ class PostsModel{
   final String username;
   final String avatar;
   final String phone;
-  final String people_type;
+  final String character;
   final String availability;
   final String price;
   final String type;
@@ -21,17 +21,17 @@ class PostsModel{
   final List<String> likes_uid;
 
   PostsModel({this.post_id, this.email, this.username, this.avatar, this.phone,
-    this.people_type, this.availability, this.price, this.type, this.pets,
+    this.character, this.availability, this.price, this.type, this.pets,
     this.guests, this.smoking, this.gender, this.time, this.images_length,
     this.images, this.description, this.address, this.sub_address, this.likes_uid});
   factory PostsModel.fromJson(Map<String ,dynamic>map){
     return PostsModel(
       post_id: map['post_id'],
         email: map['email'],
+        character: map['character'],
         username: map['username'],
         avatar: map['avatar'],
         phone: map['phone'],
-        people_type: map['people_type'],
         availability: map['availability'],
         price: map['price'],
         type: map['type'],

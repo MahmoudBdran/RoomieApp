@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'image_only_page.dart';
 
 class PostPhotosOnly extends StatefulWidget {
-  List<String>imagesList;
+  List imagesList;
   PostPhotosOnly(this.imagesList);
   @override
   _PostPhotosOnlyState createState() => _PostPhotosOnlyState();
@@ -11,7 +11,7 @@ class PostPhotosOnly extends StatefulWidget {
 
 class _PostPhotosOnlyState extends State<PostPhotosOnly> {
 
-  List<String> get imagesList => widget.imagesList;
+  List get imagesList => widget.imagesList;
   @override
   void initState() {
     // TODO: implement initState
