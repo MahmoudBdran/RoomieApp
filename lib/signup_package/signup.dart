@@ -529,7 +529,6 @@ class _SignUpPageState extends State<SignUpPage> {
             onChanged: (val){
             usernameController=val;
           },
-            initialValue: "mahmoud bdran",
             keyboardType: TextInputType.text,
             validator: (input) => input.isEmpty
                 ? "Please fill this field"

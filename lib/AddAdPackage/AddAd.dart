@@ -382,6 +382,7 @@ class _AddAdState extends State<AddAd> {
                    $selectedGuestsOption,
                    $selectedGenderOption'''
         );
+
           if (_formKey.currentState.validate()) {
 
           }
@@ -478,7 +479,7 @@ class _AddAdState extends State<AddAd> {
   String imagePostLink;
   String formattedDate = DateFormat('kk:mm:ss EEE d MMM').format(DateTime.now());
   CollectionReference postCol= FirebaseFirestore.instance.collection("posts");
-  List urls=[];
+
   Future<void>sendPostToPublic(
       {
         String desc,
@@ -492,7 +493,9 @@ class _AddAdState extends State<AddAd> {
         String guests,
         String smoking,
         String gender
-      })async{FirebaseFirestore.instance
+      })async{
+    List urls=[];
+    FirebaseFirestore.instance
       .collection('posts').doc(auth.currentUser.uid).collection("posts")
       .get()
       .then((QuerySnapshot querySnapshot) {
@@ -532,7 +535,7 @@ class _AddAdState extends State<AddAd> {
                     {
                       "avatar":value.data()['profile_image'],
                       "username":value.data()['username'],
-                    });
+                    }).then((_) => Navigator.pop(context));
               });
             });
           });
@@ -546,6 +549,7 @@ class _AddAdState extends State<AddAd> {
         String phone, String price, String character,
         String type, String pets, String guests,
         String smoking, String gender})async{
+    List urls=[];
     int postId=0;
     await FirebaseFirestore.instance
         .collection('posts').doc(auth.currentUser.uid).collection("posts")

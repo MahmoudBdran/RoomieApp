@@ -1,4 +1,5 @@
 //import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -234,6 +235,7 @@ class _NewsFeedState extends State<NewsFeed> {
     final _height=MediaQuery.of(context).size.height;
     final _width=MediaQuery.of(context).size.width;
     return ListView(
+
       children: [
         Header(),
         Search(),
@@ -242,10 +244,9 @@ class _NewsFeedState extends State<NewsFeed> {
             builder: (BuildContext context, snapshot) {
               if(snapshot.hasData){
                 final List<DocumentSnapshot> documents = snapshot.data.docs;
-
                 //return Center(child: Text(snapshot.data['character']),);
                 return Column(
-                    children: documents.map((doc) =>PostTemplate(
+                    children: documents.reversed.map((doc) =>PostTemplate(
                         character: doc['character'],
                         address: doc['address'],
                         sub_address: doc['sub_address'],

@@ -34,7 +34,6 @@ class _HomePageState extends State<HomePage> {
   }
   List<Widget> pages=[
     NewsFeed(),
-    Notifications(),
     Messages(),
     Profile(),
   ];
@@ -75,7 +74,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 3,
       child: Scaffold(
         body: TabBarView(
           children: pages,
@@ -236,7 +235,6 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Icon(Icons.home,),
               ),
-              Icon(EvaIcons.bellOutline),
               Icon(EvaIcons.messageSquareOutline),
               Icon(EvaIcons.personOutline)
             ],
