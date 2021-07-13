@@ -84,7 +84,7 @@ class _NewsFeedState extends State<NewsFeed> {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                              image: NetworkImage(snapshot.data['profile_image']))),
+                              image: NetworkImage(snapshot.data['profile_image']),fit: BoxFit.cover)),
                     ),
                   )
                 ],
@@ -193,6 +193,7 @@ class _NewsFeedState extends State<NewsFeed> {
       snapshot.docs.forEach((DocumentSnapshot doc) {
         print(doc.data());
         PostsModel postsModel=PostsModel(
+          user_Id:doc['user_Id'],
           availability: doc['availability'].toString(),
           username: doc['username'],
            avatar: doc['avatar'],
@@ -247,6 +248,7 @@ class _NewsFeedState extends State<NewsFeed> {
                 //return Center(child: Text(snapshot.data['character']),);
                 return Column(
                     children: documents.reversed.map((doc) =>PostTemplate(
+                        user_Id: doc['user_Id'],
                         character: doc['character'],
                         address: doc['address'],
                         sub_address: doc['sub_address'],

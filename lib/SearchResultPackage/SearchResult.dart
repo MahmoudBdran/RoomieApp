@@ -258,51 +258,6 @@ class _SearchResultState extends State<SearchResult> {
       ),
     );
   }
-  // ignore: non_constant_identifier_names
-  // Widget FilterContainer(){
-  //   return ExpansionTile(title: Text("Click to add filter on your search"),
-  //     trailing: Icon(Icons.keyboard_arrow_down),
-  //     children: [
-  //       Column(
-  //         crossAxisAlignment: CrossAxisAlignment.start,
-  //         children: [
-  //           Padding(
-  //             padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-  //             child: Text("Select your request Price range",style: GoogleFonts.poppins(
-  //               fontSize: 18,
-  //               color: Colors.black54,
-  //             ),),
-  //           ),
-  //           Padding(
-  //             padding: const EdgeInsets.all(8.0),
-  //             child: RangeSlider(
-  //               values: _currentRangeValues,
-  //               min:0,
-  //               max: 10000,
-  //               divisions: 50,
-  //               labels: RangeLabels(
-  //                 _currentRangeValues.start.round().toString(),
-  //                 _currentRangeValues.end.round().toString(),
-  //               ),
-  //               onChanged: (RangeValues values) {
-  //                 setState(() {
-  //                   _currentRangeValues = values;
-  //                 });
-  //               },
-  //             ),
-  //           ),
-  //           Padding(
-  //             padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 5),
-  //             child: SpecifiedAddressField(),
-  //           ),
-  //           PetsRadioGroup(),
-  //           AcceptGuestsRadioGroup(),
-  //           SmokerRadioGroup(),
-  //           GenderRadioGroup(),
-  //         ],
-  //       )
-  //     ],
-  //   );
     Widget FilterContainer(){
       return  Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -365,6 +320,7 @@ class _SearchResultState extends State<SearchResult> {
               final List<DocumentSnapshot> documents = snapshot.data.docs;
               return ListView(
                   children: documents.map((doc) =>PostTemplate(
+                    user_Id: doc['user_Id'],
                       character: doc['character'],
                       address: doc['address'],
                       sub_address: doc['sub_address'],

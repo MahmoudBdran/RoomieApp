@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -17,6 +18,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class PostTemplate extends StatefulWidget {
   // ignore: non_constant_identifier_names
+  String user_Id;
   int index;
   String pets;
   String smoke;
@@ -37,7 +39,9 @@ class PostTemplate extends StatefulWidget {
   String userId;
 
   PostTemplate(
-      {this.index,
+      {
+      this.user_Id,
+      this.index,
       this.pets,
       this.smoke,
       this.guests,
@@ -76,6 +80,7 @@ class _PostTemplateState extends State<PostTemplate> {
     'images/post_image.png',
     'images/cover_image.jpg'
   ];
+  String get user_Id=>widget.user_Id;
  String get phone =>widget.phone;
   int get index => widget.index;
   String get pets => widget.pets;
@@ -386,63 +391,72 @@ class _PostTemplateState extends State<PostTemplate> {
       ),
     );
   }
-  Widget _buildAvatarWD(String avatar,String username,String time){
-    return GestureDetector(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                      image: NetworkImage(avatar),
-                      fit: BoxFit.cover)),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(3, 5, 0, 0),
-              child: Column(
+  Widget _buildAvatarWD(String user_Id,String time){
+    return FutureBuilder(
+      future: FirebaseFirestore.instance.collection("users").doc(user_Id).get(),
+      builder: (context, snapshot) {
+        if(snapshot.hasData){
+          return GestureDetector(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    username,
-                    style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: NetworkImage(snapshot.data['profile_image']),
+                            fit: BoxFit.cover)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(3, 5, 0, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          snapshot.data['username'],
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        Text(
+                          time,
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  Text(
-                    time,
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 15,
-                    ),
+                  Spacer(
+                    flex: 1,
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(EvaIcons.moreVertical),
+                    color: Colors.grey,
                   ),
                 ],
               ),
             ),
-            Spacer(
-              flex: 1,
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(EvaIcons.moreVertical),
-              color: Colors.grey,
-            ),
-          ],
-        ),
-      ),
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => UserProfile(),
-            ));
-      },
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserProfile(),
+                  ));
+            },
+          );
+        }else{
+          return SizedBox(width: 1,);
+        }
+      }
     );
   }
   Widget _buildInteractionWDs(){
@@ -497,43 +511,6 @@ class _PostTemplateState extends State<PostTemplate> {
 
   List<PostsModel> postsList;
   List actualPosts;
-  getPosts()async{
-    await FirebaseFirestore.instance
-        .collection('all_posts')
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        var userId=doc["user_Id"];
-        FirebaseFirestore.instance.collection("users").doc(userId).get().then((value) {
-          print("avatar is "+value['profile_image']);
-          print("phone is "+doc['phone']);
-          postsList.insert(0, new PostsModel(
-              type: doc['type'],
-              sub_address:doc['sub_address'],
-              avatar: value['profile_image'],
-              username: value['username'],
-              availability: doc["availability"].toString(),
-              character:doc["character"],
-              post_id: doc['postId'],
-              email: doc['email'],
-              phone: doc['phone'],
-              price: doc['price'],
-              pets: doc['pets'],
-              guests: doc['guests'],
-              smoking: doc['smoking'],
-              gender: doc['gender'],
-              time: doc['time'],
-              images: doc['image'],
-              description: doc['description'],
-              address: doc['address']
-          ));
-          //actualPosts.add(postsList[0]);
-        });
-
-      });
-      //print("actual data "+postsList[0].smoking);
-    });
-  }
 
 @override
   void initState() {
@@ -557,7 +534,7 @@ class _PostTemplateState extends State<PostTemplate> {
             child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildAvatarWD(avatar,username,time),
+                    _buildAvatarWD(user_Id,time),
                     _buildImageCarouselWD(images),
                     _buildAddressAndPriceWD(address,price),
                     _buildSubAddressWD(sub_address),

@@ -238,12 +238,13 @@ class _ProfileState extends State<Profile> {
             }
         ),
         FutureBuilder(
-          future: FirebaseFirestore.instance.collection("posts").doc(FirebaseAuth.instance.currentUser.uid).collection("posts").get(),
+          future: FirebaseFirestore.instance.collection("all_posts").where("user_Id",isEqualTo: FirebaseAuth.instance.currentUser.uid).get(),
           builder: (context, snapshot) {
             if(snapshot.hasData){
               final List<DocumentSnapshot> documents = snapshot.data.docs;
               return Column(
                   children: documents.map((doc) =>PostTemplate(
+                    user_Id: doc["user_Id"],
                       character: doc['character'],
                       address: doc['address'],
                       sub_address: doc['sub_address'],

@@ -10,19 +10,24 @@ import 'package:roommates/constant/data.dart';
 import 'package:roommates/theme/colors.dart';
 
 class ChatDetailPage extends StatefulWidget {
+  final String selectedUserId;
+
+  ChatDetailPage(this.selectedUserId);
+
   @override
   _ChatDetailPageState createState() => _ChatDetailPageState();
 }
 
 class _ChatDetailPageState extends State<ChatDetailPage> {
+  String get selectedUserId => widget.selectedUserId;
   String  _sendMessageController;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    ref.doc("17:39:54 Wed 7 Jul").get().then((value) {
-      print(value['message']);
-    });
+    // ref.doc("17:39:54 Wed 7 Jul").get().then((value) {
+    //   print(value['message']);
+    // });
 
   }
   @override
@@ -42,54 +47,50 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
         ),
         title: Row(
           children: <Widget>[
-            Stack(
-              children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: NetworkImage(
-                              "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80"),
-                          fit: BoxFit.cover)),
+                FutureBuilder(
+                  future: FirebaseFirestore.instance.collection("users").doc(selectedUserId).get(),
+                  builder: (context, snapshot) {
+                   if(snapshot.hasData){
+                     return Container(
+                       width: 40,
+                       height: 40,
+                       decoration: BoxDecoration(
+                           shape: BoxShape.circle,
+                           image: DecorationImage(
+                               image: NetworkImage(
+                                   snapshot.data['profile_image']),
+                               fit: BoxFit.cover)),
+                     );
+                   }else{
+                     return SizedBox(width: 1,);
+                   }
+                  }
                 ),
-                Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: Container(
-                      width: 10,
-                      height: 10,
-                      decoration: BoxDecoration(
-                        color: Colors.lightGreenAccent[200],
-                        shape: BoxShape.circle,
-
-                      ),
-                    )
-                ),
-              ],
-            ),
             SizedBox(
               width: 15,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  "Tyler Nix",
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                FutureBuilder(
+                  future: FirebaseFirestore.instance.collection("users").doc(selectedUserId).get(),
+                  builder: (context, snapshot) {
+                    if(snapshot.hasData){
+                      return Text(
+                        snapshot.data['username'],
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      );
+                    }else{
+                      return SizedBox(width: 1,);
+                    }
+                  }
                 ),
                 SizedBox(
                   height: 3,
                 ),
-                Text(
-                  "Active now",
-                  style: TextStyle(
-                      color: Colors.grey[200].withOpacity(0.6), fontSize: 14),
-                )
               ],
             )
           ],
@@ -167,7 +168,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                   color: Colors.grey,),
                 onPressed: (){
                         print(_sendMessageController);
-                        sendMessage(_sendMessageController, FirebaseAuth.instance.currentUser.uid, "fsdfsdfscvsdfs");
+                        sendMessage(_sendMessageController, FirebaseAuth.instance.currentUser.uid, selectedUserId);
                 },
 
               ),
@@ -178,11 +179,17 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
     );
   }
   CollectionReference ref= FirebaseFirestore.instance.collection("chat_channel");
+
+
   FirebaseAuth auth =FirebaseAuth.instance;
   sendMessage(String msg,String senderId,String receiverId)async{
 
     String formattedDate = DateFormat('kk:mm:ss EEE d MMM').format(DateTime.now());
      ref.doc(formattedDate).set({
+       'users':[
+         FirebaseAuth.instance.currentUser.uid,
+         selectedUserId
+       ],
        'message':msg,
        'sender':senderId,
        'receiver':receiverId,
@@ -200,9 +207,8 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
           fit: BoxFit.cover,
           width: MediaQuery.of(context).size.width,
         ),
-
         StreamBuilder<QuerySnapshot>(
-          stream: ref.snapshots(),
+          stream: FirebaseFirestore.instance.collection("chat_channel").snapshots(),
           builder: (context, snapshot) {
 
             List<MessageBubble> messageBubbles=[];
@@ -211,6 +217,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
               for(var message in messages){
                 final messagetext=message['message'];
                 final messageSender=message['sender'];
+                print("the message is "+messagetext);
                 if(auth.currentUser.uid==messageSender){
 
                   messageBubbles.insert(0,MessageBubble(isMe: true,message: messagetext));
